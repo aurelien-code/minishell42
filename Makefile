@@ -6,15 +6,17 @@
 #    By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/07 22:33:15 by aumarin           #+#    #+#              #
-#    Updated: 2023/02/17 13:14:36 by aumarin          ###   ########.fr        #
+#    Updated: 2023/02/17 18:19:42 by aumarin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	minishell
 SRC		= 	minishell.c \
+			src/parser.c \
+			src/prompt.c
 
 OBJ		=	$(SRC:.c=.o)
-C_FLAGS	=	-Wall -Wextra -Werror 
+C_FLAGS	=	-Wall -Wextra -Werror
 CC		=	cc
 
 LIBFT_DIR = ./libft/

@@ -1,28 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/17 12:32:31 by aumarin           #+#    #+#             */
-/*   Updated: 2023/02/17 18:20:07 by aumarin          ###   ########.fr       */
+/*   Created: 2023/02/17 18:03:43 by aumarin           #+#    #+#             */
+/*   Updated: 2023/02/17 18:20:24 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-
-/*  DEFINE STRINGS */
-# ifndef PROMPT_NAME
-#  define PROMPT_NAME "minishell"
-# endif
-
-/*  prompt.c    */
-void	open_prompt(void);
-
-#endif
+void	open_prompt(void)
+{
+	printf("%s$ ", PROMPT_NAME);
+	return ;
+}

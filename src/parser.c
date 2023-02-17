@@ -1,28 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/17 12:32:31 by aumarin           #+#    #+#             */
-/*   Updated: 2023/02/17 18:20:07 by aumarin          ###   ########.fr       */
+/*   Created: 2023/02/17 17:59:35 by aumarin           #+#    #+#             */
+/*   Updated: 2023/02/17 18:00:02 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
-
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-
-/*  DEFINE STRINGS */
-# ifndef PROMPT_NAME
-#  define PROMPT_NAME "minishell"
-# endif
-
-/*  prompt.c    */
-void	open_prompt(void);
-
-#endif
+#include "minishell.h"
