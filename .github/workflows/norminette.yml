@@ -13,9 +13,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+
+    - name: norminette
     - uses: alexandregv/norminette-action@v3
       with:
         flags: '.'
-
-    - name: norminette
-      run: norminette
