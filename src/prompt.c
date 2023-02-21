@@ -6,14 +6,24 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 18:03:43 by aumarin           #+#    #+#             */
-/*   Updated: 2023/02/17 18:20:24 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/02/21 17:02:33 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	open_prompt(void)
+t_line	*ft_prompt(void)
 {
-	printf("%s$ ", PROMPT_NAME);
-	return ;
+	static char	*line = NULL;
+
+	if (line)
+	{
+		free(line);
+		line = NULL;
+	}
+	line = readline(PROMPT_NAME);
+	if (!line)
+		return (NULL);
+	add_history(line);
+	return (create_line(line));
 }
