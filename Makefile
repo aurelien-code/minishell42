@@ -6,7 +6,7 @@
 #    By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/07 22:33:15 by aumarin           #+#    #+#              #
-#    Updated: 2023/02/27 10:49:08 by ypages           ###   ########.fr        #
+#    Updated: 2023/02/27 15:03:32 by ypages           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ SRC		= 	minishell.c \
 			debug/print_utils.c
 
 OBJ		=	$(SRC:.c=.o)
-C_FLAGS	=	-Wall -Wextra -Werror
+C_FLAGS	=	-Wall -Wextra -Werror -g3
 RD_FLAGS = -lreadline
 CC		=	cc
 

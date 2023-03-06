@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 12:32:31 by aumarin           #+#    #+#             */
-/*   Updated: 2023/02/27 12:23:36 by ypages           ###   ########.fr       */
+/*   Updated: 2023/03/01 14:56:46 by ypages           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,16 @@ typedef struct s_line
 
 typedef struct s_env
 {
-	char			*name;
-	char			**value;
-	struct s_line	*prev;
-	struct s_line	*next;
+	char			**content;
+	int				status;
+	struct s_env	*next;
 }	t_env;
 
 /*	environment	*/
-int		check_env_path(char **argv, char **envp);
+t_env	*check_env_path(char **envp);
 
 /*	exec.c	*/
-int		ft_exec(int argc, char **argv, char **envp);
+int		ft_exec(t_env *env);
 
 /*	parser.c	*/
 void	parse_line(t_line *line);
@@ -72,5 +71,6 @@ t_line	*ft_prompt(void);
 /*	DEBUG	*/
 void	print_operator(t_operators op);
 void	print_env(char **envp);
+void	print_list(t_env *list);
 
 #endif
