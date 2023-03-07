@@ -6,7 +6,7 @@
 #    By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/07 22:33:15 by aumarin           #+#    #+#              #
-#    Updated: 2023/02/21 18:24:05 by aumarin          ###   ########.fr        #
+#    Updated: 2023/03/07 08:02:49 by aumarin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ SRC		= 	minishell.c \
 			src/parser.c \
 			src/prompt.c \
 			src/line.c \
+			src/lexer.c \
 			debug/print_utils.c
 
 OBJ		=	$(SRC:.c=.o)
