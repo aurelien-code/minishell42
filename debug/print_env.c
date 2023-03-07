@@ -6,7 +6,7 @@
 /*   By: ypages <ypages@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 19:02:08 by ypages            #+#    #+#             */
-/*   Updated: 2023/02/27 16:27:05 by ypages           ###   ########.fr       */
+/*   Updated: 2023/03/07 11:44:51 by Yoann Pages      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void print_env(char **envp)
 		i++;
 	}
 }
-
+/*
 void	print_list(t_env *list)
 {
 	int i;
@@ -46,4 +46,4 @@ void	print_list(t_env *list)
 		list = list->next;
 	}
 }
-
+*/

@@ -6,7 +6,7 @@
 /*   By: ypages <ypages@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 12:36:50 by ypages            #+#    #+#             */
-/*   Updated: 2023/03/01 14:51:23 by ypages           ###   ########.fr       */
+/*   Updated: 2023/03/06 21:56:48 by Yoann Pages      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,9 @@
 t_env *check_env_path(char **envp)
 {
 	t_env *env;
-	int i;
-	int j;
 
 	env = malloc(sizeof(t_env));
 	env->content = envp ;
-	i = 0;
-	j = 0;
 	if (!env->content || !env->content[0] || !env->content[0][0])
 	{
 		env->status = NOK;
