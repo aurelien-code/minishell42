@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 18:22:47 by aumarin           #+#    #+#             */
-/*   Updated: 2023/03/07 13:56:28 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/03/20 10:00:47 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	print_tokens(t_tokens *tk)
 		else if (tk[i] == QUOTE)
 			printf("'");
 		else if (tk[i] == DOUBLE_QUOTE)
-			printf("quote");
+			printf("\"");
 		else if (tk[i] == DOLLAR)
 			printf("$");
 		else if (tk[i] == SPC)

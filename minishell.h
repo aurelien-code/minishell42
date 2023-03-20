@@ -7,10 +7,14 @@
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 12:32:31 by aumarin           #+#    #+#             */
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*   Updated: 2023/03/01 14:56:46 by ypages           ###   ########.fr       */
 =======
 /*   Updated: 2023/03/07 13:55:02 by aumarin          ###   ########.fr       */
 >>>>>>> ff43190 (add: lexer)
+=======
+/*   Updated: 2023/03/20 12:37:57 by aumarin          ###   ########.fr       */
+>>>>>>> f4841c6 (save 12/03/22: start main parser part)
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +74,6 @@ typedef struct s_line
 {
 	t_operators		type;
 	char			*value;
-	struct s_line	*prev;
 	struct s_line	*next;
 }	t_line;
 
@@ -88,6 +91,7 @@ t_env	*check_env_path(char **envp);
 int		ft_exec(t_env *env);
 
 /*	parser.c	*/
+t_line		*parse(char *str_line, t_tokens	*tokens);
 
 /*	line.c		*/
 

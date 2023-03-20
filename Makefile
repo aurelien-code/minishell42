@@ -6,7 +6,11 @@
 #    By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/07 22:33:15 by aumarin           #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2023/02/21 18:24:05 by aumarin          ###   ########.fr        #
+=======
+#    Updated: 2023/03/20 14:02:55 by aumarin          ###   ########.fr        #
+>>>>>>> f4841c6 (save 12/03/22: start main parser part)
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,10 +20,14 @@ SRC		= 	minishell.c \
 			src/prompt.c \
 			src/line.c \
 			debug/print_utils.c
-
 OBJ		=	$(SRC:.c=.o)
+<<<<<<< HEAD
 C_FLAGS	=	-Wall -Wextra -Werror -g3
 RD_FLAGS = -lreadline
+=======
+C_FLAGS	=	-Wall -Wextra -Werror
+RD_FLAG = -lreadline
+>>>>>>> f4841c6 (save 12/03/22: start main parser part)
 CC		=	cc
 
 LIBFT_DIR = ./libft/
@@ -34,7 +42,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@echo "\033[0;33mlinking... \033[0;37m"	
 	@make -C $(LIBFT_DIR)
-	@$(CC)  $(C_FLAGS) -o $@ $^ ./libft/libft.a $(RD_FLAGS)
+	@$(CC)  $(C_FLAGS) -o $@ $^ ./libft/libft.a $(RD_FLAG)
 
 clean:
 	@echo "\033[0;33mdeleting objects... \033[0;37m"
