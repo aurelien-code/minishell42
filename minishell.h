@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 12:32:31 by aumarin           #+#    #+#             */
-/*   Updated: 2023/03/07 13:55:02 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/03/20 12:37:57 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,11 @@ typedef struct s_line
 {
 	t_operators		type;
 	char			*value;
-	struct s_line	*prev;
 	struct s_line	*next;
 }	t_line;
 
 /*	parser.c	*/
+t_line		*parse(char *str_line, t_tokens	*tokens);
 
 /*	line.c		*/
 

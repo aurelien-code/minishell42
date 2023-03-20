@@ -6,7 +6,7 @@
 #    By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/07 22:33:15 by aumarin           #+#    #+#              #
-#    Updated: 2023/03/07 08:02:49 by aumarin          ###   ########.fr        #
+#    Updated: 2023/03/20 14:02:55 by aumarin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,10 +17,9 @@ SRC		= 	minishell.c \
 			src/line.c \
 			src/lexer.c \
 			debug/print_utils.c
-
 OBJ		=	$(SRC:.c=.o)
 C_FLAGS	=	-Wall -Wextra -Werror
-RD_FLAGS = -lreadline
+RD_FLAG = -lreadline
 CC		=	cc
 
 LIBFT_DIR = ./libft/
@@ -35,7 +34,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@echo "\033[0;33mlinking... \033[0;37m"	
 	@make -C $(LIBFT_DIR)
-	@$(CC)  $(C_FLAGS) -o $@ $^ ./libft/libft.a $(RD_FLAGS)
+	@$(CC)  $(C_FLAGS) -o $@ $^ ./libft/libft.a $(RD_FLAG)
 
 clean:
 	@echo "\033[0;33mdeleting objects... \033[0;37m"
