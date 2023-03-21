@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 17:59:35 by aumarin           #+#    #+#             */
-/*   Updated: 2023/03/20 12:36:51 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/03/21 13:59:47 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	parse_str(char *str_line, t_tokens *tokens, int *idx)
 		str = ft_strjoin(str, tmp);
 		(*idx)++;
 	}
+	printf("str = -> %s\n", str);
 	return ;
 }
 
@@ -40,9 +41,14 @@ void	parse_redirects(void)
 	return ;
 }
 
-void	parse_env(void)
+void	parse_env(char *str_line, t_tokens *tokens, int *idx)
 {
-	return ;
+	int	i;
+
+	i = *idx + 1;
+	if (tokens[i] == CHAR)
+		parse_str(str_line, tokens, &i);
+	*idx = i;
 }
 
 t_line	*parse(char *str_line, t_tokens	*tokens)
@@ -63,7 +69,7 @@ t_line	*parse(char *str_line, t_tokens	*tokens)
 		else if (tokens[i] == GREAT || tokens[i] == LESS)
 			parse_redirects();
 		else if (tokens[i] == DOLLAR)
-			parse_env();
+			parse_env(str_line, tokens, &i);
 		i++;
 	}
 	return (line);

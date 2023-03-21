@@ -7,10 +7,14 @@
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/07 22:33:15 by aumarin           #+#    #+#              #
 <<<<<<< HEAD
+<<<<<<< HEAD
 #    Updated: 2023/02/21 18:24:05 by aumarin          ###   ########.fr        #
 =======
 #    Updated: 2023/03/20 14:02:55 by aumarin          ###   ########.fr        #
 >>>>>>> f4841c6 (save 12/03/22: start main parser part)
+=======
+#    Updated: 2023/03/21 10:11:30 by aumarin          ###   ########.fr        #
+>>>>>>> 1c17cd7 (refactor header files + littles advances on parser)
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +41,7 @@ all: $(NAME)
 
 .c.o:
 	@echo "\033[0;33mcompiling... \033[0;37m"
-	@$(CC) -o $@ -c $< $(C_FLAGS) -I .
+	@$(CC) -o $@ -c $< $(C_FLAGS) -I ./inc/
 
 $(NAME): $(OBJ)
 	@echo "\033[0;33mlinking... \033[0;37m"	
