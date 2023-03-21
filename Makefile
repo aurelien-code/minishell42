@@ -6,7 +6,7 @@
 #    By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/07 22:33:15 by aumarin           #+#    #+#              #
-#    Updated: 2023/03/20 14:02:55 by aumarin          ###   ########.fr        #
+#    Updated: 2023/03/21 10:11:30 by aumarin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ all: $(NAME)
 
 .c.o:
 	@echo "\033[0;33mcompiling... \033[0;37m"
-	@$(CC) -o $@ -c $< $(C_FLAGS) -I .
+	@$(CC) -o $@ -c $< $(C_FLAGS) -I ./inc/
 
 $(NAME): $(OBJ)
 	@echo "\033[0;33mlinking... \033[0;37m"	
