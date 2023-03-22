@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 17:02:15 by aumarin           #+#    #+#             */
-/*   Updated: 2023/03/22 01:44:35 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/03/22 20:26:46 by ypages           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,8 @@ t_line	*new_line_item(t_line **head, t_operators type, char *value)
 			last_line_item(*head)->next = item;
 		else
 			(*head)->next = item;
-
 	}
 	else
 		(*head) = item;
 	return (*head);
 }
-

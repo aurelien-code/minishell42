@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec.c                                             :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ypages <ypages@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/22 16:45:06 by ypages            #+#    #+#             */
-/*   Updated: 2023/03/22 20:29:44 by ypages           ###   ########.fr       */
+/*   Created: 2023/03/21 15:05:45 by ypages            #+#    #+#             */
+/*   Updated: 2023/03/22 20:25:54 by ypages           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
-int	exec_checker(t_env *env)
+void	ft_echo(char *str, int arg)
 {
-	(void)env;
-	return (OK);
-}
-
-int	ft_exec(t_env *env)
-{
-	if (exec_checker(env) == OK)
-		return (printf("RUN COMMAND\n"), OK);
-	return (NOK);
+	if (arg)
+		printf("%s", str);
+	else
+		printf("%s\n", str);
 }
