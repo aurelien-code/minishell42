@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 14:20:15 by aumarin           #+#    #+#             */
-/*   Updated: 2023/03/20 10:01:11 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/03/21 19:35:40 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,5 @@ t_tokens	*lexer(char *str)
 		tokens[i] = char_to_token(str[i]);
 		i++;
 	}
-	print_tokens(tokens);
 	return (tokens);
 }

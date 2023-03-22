@@ -6,13 +6,13 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 17:59:35 by aumarin           #+#    #+#             */
-/*   Updated: 2023/03/21 13:59:47 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/03/21 21:02:24 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	parse_str(char *str_line, t_tokens *tokens, int *idx)
+char	*parse_str(char *str_line, t_tokens *tokens, int *idx)
 {
 	char	*str;
 	char	*tmp;
@@ -20,15 +20,15 @@ void	parse_str(char *str_line, t_tokens *tokens, int *idx)
 	str = NULL;
 	tmp = ft_calloc(2, sizeof(char));
 	if (!tmp)
-		return ;
-	while (tokens[*idx] == CHAR)
+		return (NULL);
+	while (tokens[*idx] && tokens[*idx] == CHAR)
 	{
 		tmp[0] = str_line[*idx];
 		str = ft_strjoin(str, tmp);
 		(*idx)++;
 	}
-	printf("str = -> %s\n", str);
-	return ;
+	printf("str -> %s\n", str);
+	return (str);
 }
 
 void	parse_quotes(void)
@@ -41,36 +41,43 @@ void	parse_redirects(void)
 	return ;
 }
 
-void	parse_env(char *str_line, t_tokens *tokens, int *idx)
+char	*parse_env(char *str_line, t_tokens *tokens, int *idx)
 {
-	int	i;
+	int		i;
+	char	*str;
 
+	str = NULL;
 	i = *idx + 1;
 	if (tokens[i] == CHAR)
-		parse_str(str_line, tokens, &i);
+		str = parse_str(str_line, tokens, &i);
 	*idx = i;
+	return (str);
 }
 
 t_line	*parse(char *str_line, t_tokens	*tokens)
 {
-	t_line	*line;
-	int		i;
+	t_line		*line;
+	int			i;
+	char		*x;
 
-	line = ft_calloc(1, sizeof(t_line));
-	if (!line)
-		return (NULL);
+	x = NULL;
+	line = NULL;
 	i = 0;
 	while (tokens[i])
 	{
 		if (tokens[i] == CHAR)
-			parse_str(str_line, tokens, &i);
+			x = parse_str(str_line, tokens, &i);
 		else if (tokens[i] == QUOTE || tokens[i] == DOUBLE_QUOTE)
 			parse_quotes();
 		else if (tokens[i] == GREAT || tokens[i] == LESS)
 			parse_redirects();
 		else if (tokens[i] == DOLLAR)
-			parse_env(str_line, tokens, &i);
+			x = parse_env(str_line, tokens, &i);
 		i++;
+		if (x)
+			new_line_item(&line, STR, x);
+		x = NULL;
 	}
+	print_line(line);
 	return (line);
 }
