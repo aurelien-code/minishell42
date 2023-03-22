@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:12:50 by aumarin           #+#    #+#             */
-/*   Updated: 2023/03/22 20:13:53 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/03/22 20:35:39 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ char		*ft_prompt(void);
 /*	DEBUG	*/
 void		print_operator(t_operators op);
 void		print_env(char **envp);
-void		print_list(t_env *list);
 
 /*	lexer.c		*/
 t_tokens	*lexer(char *str);
