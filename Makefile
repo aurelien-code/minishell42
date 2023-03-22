@@ -6,7 +6,7 @@
 #    By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/07 22:33:15 by aumarin           #+#    #+#              #
-#    Updated: 2023/03/21 10:11:30 by aumarin          ###   ########.fr        #
+#    Updated: 2023/03/22 17:38:56 by ypages           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,10 +16,11 @@ SRC		= 	minishell.c \
 			src/prompt.c \
 			src/line.c \
 			src/lexer.c \
+			env/env.c \
 			debug/print_utils.c
 OBJ		=	$(SRC:.c=.o)
-C_FLAGS	=	-Wall -Wextra -Werror
-RD_FLAG = -lreadline
+C_FLAGS	=	-Wall -Wextra -Werror -g3
+RD_FLAGS = -lreadline
 CC		=	cc
 
 LIBFT_DIR = ./libft/
