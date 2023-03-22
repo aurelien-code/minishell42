@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 17:59:35 by aumarin           #+#    #+#             */
-/*   Updated: 2023/03/21 21:02:24 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/03/22 01:45:34 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,8 @@ t_line	*parse(char *str_line, t_tokens	*tokens)
 	int			i;
 	char		*x;
 
-	x = NULL;
-	line = NULL;
 	i = 0;
+	line = NULL;
 	while (tokens[i])
 	{
 		if (tokens[i] == CHAR)
@@ -73,6 +72,8 @@ t_line	*parse(char *str_line, t_tokens	*tokens)
 			parse_redirects();
 		else if (tokens[i] == DOLLAR)
 			x = parse_env(str_line, tokens, &i);
+		else if (tokens[i] == PIPE)
+			new_line_item(&line, PIPE_, NULL);
 		i++;
 		if (x)
 			new_line_item(&line, STR, x);
