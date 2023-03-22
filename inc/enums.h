@@ -6,12 +6,12 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 13:55:52 by aumarin           #+#    #+#             */
-/*   Updated: 2023/03/21 14:07:06 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/03/21 15:54:11 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENUMS_H
-# define ENUM
+# define ENUMS_H
 
 typedef enum e_tokens
 {

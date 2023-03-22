@@ -6,6 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 12:32:31 by aumarin           #+#    #+#             */
+<<<<<<< HEAD
 <<<<<<< HEAD:minishell.h
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -19,6 +20,9 @@
 =======
 /*   Updated: 2023/03/21 14:07:19 by aumarin          ###   ########.fr       */
 >>>>>>> 1c17cd7 (refactor header files + littles advances on parser):inc/minishell.h
+=======
+/*   Updated: 2023/03/21 20:44:06 by aumarin          ###   ########.fr       */
+>>>>>>> 6c7085a (fix: parser segfault)
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +43,6 @@
 #  define NOK -1
 #  define OK 0
 # endif
-
 
 typedef struct s_line
 {
@@ -65,6 +68,7 @@ int		ft_exec(t_env *env);
 t_line		*parse(char *str_line, t_tokens	*tokens);
 
 /*	line.c		*/
+t_line		*new_line_item(t_line **head, t_operators type, char *value);
 
 /*  prompt.c    */
 char		*ft_prompt(void);
@@ -81,6 +85,10 @@ t_tokens	*lexer(char *str);
 /*	DEBUG		*/
 void		print_operator(t_operators op);
 void		print_tokens(t_tokens *tk);
+<<<<<<< HEAD
 >>>>>>> ff43190 (add: lexer)
+=======
+void		print_line(t_line *line);
+>>>>>>> 6c7085a (fix: parser segfault)
 
 #endif
