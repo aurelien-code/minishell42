@@ -6,19 +6,7 @@
 #    By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/07 22:33:15 by aumarin           #+#    #+#              #
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-#    Updated: 2023/02/21 18:24:05 by aumarin          ###   ########.fr        #
-=======
-#    Updated: 2023/03/20 14:02:55 by aumarin          ###   ########.fr        #
->>>>>>> f4841c6 (save 12/03/22: start main parser part)
-=======
-#    Updated: 2023/03/21 10:11:30 by aumarin          ###   ########.fr        #
->>>>>>> 1c17cd7 (refactor header files + littles advances on parser)
-=======
 #    Updated: 2023/03/22 17:38:56 by ypages           ###   ########.fr        #
->>>>>>> 5ad4186 (env - Finder implement)
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,20 +15,14 @@ SRC		= 	minishell.c \
 			src/parser.c \
 			src/prompt.c \
 			src/line.c \
-<<<<<<< HEAD
-=======
 			src/lexer.c \
 			env/env.c \
->>>>>>> 5ad4186 (env - Finder implement)
 			debug/print_utils.c
 OBJ		=	$(SRC:.c=.o)
-<<<<<<< HEAD
 C_FLAGS	=	-Wall -Wextra -Werror -g3
 RD_FLAGS = -lreadline
-=======
 C_FLAGS	=	-Wall -Wextra -Werror
 RD_FLAG = -lreadline
->>>>>>> f4841c6 (save 12/03/22: start main parser part)
 CC		=	cc
 
 LIBFT_DIR = ./libft/
