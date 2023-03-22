@@ -4,6 +4,8 @@
 		"**/*.o": true //Hide all object files
 	},
 	"files.associations": {
-		"stat.h": "c"
+		"stat.h": "c",
+		"readline.h": "c",
+		"minishell.h": "c"
 	},
 }

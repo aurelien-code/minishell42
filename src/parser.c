@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 17:59:35 by aumarin           #+#    #+#             */
-/*   Updated: 2023/03/22 14:37:03 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/03/22 20:22:54 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	parse_quotes(void)
 
 void	parse_redirects(void)
 {
-	
 	return ;
 }
 

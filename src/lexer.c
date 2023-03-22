@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 14:20:15 by aumarin           #+#    #+#             */
-/*   Updated: 2023/03/21 19:35:40 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/03/22 20:23:28 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_tokens	*lexer(char *str)
 	int			i;
 
 	i = 0;
-	tokens = ft_calloc(ft_strlen(str) + 1, sizeof(t_tokens));
+	tokens = ft_calloc(ft_strlen(str) + 2, sizeof(t_tokens));
 	if (!tokens)
 		return (NULL);
 	while (str[i])

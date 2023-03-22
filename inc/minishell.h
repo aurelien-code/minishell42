@@ -5,8 +5,9 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/17 12:32:31 by aumarin           #+#    #+#             */
-/*   Updated: 2023/03/01 14:56:46 by ypages           ###   ########.fr       */
+/*   Created: 2023/03/22 20:12:50 by aumarin           #+#    #+#             */
+/*   Updated: 2023/03/22 20:13:53 by aumarin          ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
@@ -42,10 +43,10 @@ typedef struct s_env
 }	t_env;
 
 /*	environment	*/
-t_env	*check_env_path(char **envp);
+t_env		*check_env_path(char **envp);
 
 /*	exec.c	*/
-int		ft_exec(t_env *env);
+int			ft_exec(t_env *env);
 
 /*	parser.c	*/
 t_line		*parse(char *str_line, t_tokens	*tokens);
@@ -57,9 +58,9 @@ t_line		*new_line_item(t_line **head, t_operators type, char *value);
 char		*ft_prompt(void);
 
 /*	DEBUG	*/
-void	print_operator(t_operators op);
-void	print_env(char **envp);
-void	print_list(t_env *list);
+void		print_operator(t_operators op);
+void		print_env(char **envp);
+void		print_list(t_env *list);
 
 /*	lexer.c		*/
 t_tokens	*lexer(char *str);

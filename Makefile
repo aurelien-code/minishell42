@@ -6,7 +6,7 @@
 #    By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/07 22:33:15 by aumarin           #+#    #+#              #
-#    Updated: 2023/03/22 19:06:35 by aumarin          ###   ########.fr        #
+#    Updated: 2023/03/22 20:05:45 by aumarin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,10 +16,10 @@ SRC		= 	minishell.c \
 			src/prompt.c \
 			src/line.c \
 			src/lexer.c \
-			env/env.c \
+			src/env.c \
 			debug/print_utils.c
 OBJ		=	$(SRC:.c=.o)
-C_FLAGS	=	-Wall -Wextra -Werror
+C_FLAGS	=	-Wall -Wextra -Werror -g3
 RD_FLAG = -lreadline
 CC		=	cc
 
