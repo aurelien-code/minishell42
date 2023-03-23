@@ -8,4 +8,11 @@
 		"readline.h": "c",
 		"minishell.h": "c"
 	},
+	"pomodoro.make": {
+		"notification": true,
+		"statusbar": {
+			"alignment": "right",
+			"priority": 1000
+		}
+	},
 }

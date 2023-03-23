@@ -6,16 +6,17 @@
 #    By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/07 22:33:15 by aumarin           #+#    #+#              #
-#    Updated: 2023/03/23 04:40:16 by ypages           ###   ########.fr        #
+#    Updated: 2023/03/23 12:19:14 by aumarin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	minishell
 SRC		= 	minishell.c \
-			src/parser.c \
+			src/parser/parser.c \
+			src/parser/lexer.c \
+			src/parser/parser_utils.c \
 			src/prompt.c \
 			src/line.c \
-			src/lexer.c \
 			src/env.c \
 			src/built/cd.c \
 			src/built/echo.c \

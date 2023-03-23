@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 12:30:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/03/23 04:42:01 by ypages           ###   ########.fr       */
+/*   Updated: 2023/03/23 11:13:19 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,17 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	while (1)
 	{
+		str_line = ft_prompt();
+		tokens = lexer(str_line);
+		parse(str_line, tokens);
+	}
+	rl_clear_history();
+	return (0);
+}
+
+/*
+while (1)
+	{
 		env = check_env_path(envp);
 		if (env->status == NOK)
 			return (printf("[ Error ] - Environment not found\n")NOK);
@@ -35,5 +46,4 @@ int	main(int argc, char **argv, char **envp)
 //		---- TEST PART ----
 	}
 	rl_clear_history();
-	return (0);
-}
+	*/

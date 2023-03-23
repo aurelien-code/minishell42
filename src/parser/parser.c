@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 17:59:35 by aumarin           #+#    #+#             */
-/*   Updated: 2023/03/22 21:14:35 by ypages           ###   ########.fr       */
+/*   Updated: 2023/03/23 12:18:21 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,32 @@ void	parse_quotes(void)
 	return ;
 }
 
-void	parse_redirects(void)
+void	parse_redirects(t_line **line, t_tokens *tokens, int *idx)
 {
-	return ;
+	if (parser_triple_redirects(tokens, *idx, 1))
+		(*idx) += parser_triple_redirects(tokens, *idx, 0);
+	else if (tokens[*idx + 1] == tokens[*idx])
+	{
+		if (tokens[*idx] == GREAT)
+			new_line_item(line, DOUBLE_R_REDIRECT, NULL);
+		else if (tokens[*idx] == LESS)
+			new_line_item(line, DOUBLE_L_REDIRECT, NULL);
+		(*idx)++;
+	}
+	else
+	{
+		if (tokens[*idx] == LESS && tokens[*idx + 1] == GREAT)
+			printf("%s\n", REDIR_NEWLINE_ERR);
+		else if (tokens[*idx] == GREAT && tokens[*idx + 1] == LESS)
+			printf("%s\n", REDIR_SYNTAX_ERR);
+		else
+		{
+			if (tokens[*idx] == GREAT)
+				new_line_item(line, SINGLE_R_REDIRECT, NULL);
+			else
+				new_line_item(line, SINGLE_L_REDIRECT, NULL);
+		}
+	}
 }
 
 char	*parse_env(char *str_line, t_tokens *tokens, int *idx)
@@ -70,7 +93,7 @@ t_line	*parse(char *str_line, t_tokens	*tokens)
 		else if (tokens[i] == QUOTE || tokens[i] == DOUBLE_QUOTE)
 			parse_quotes();
 		else if (tokens[i] == GREAT || tokens[i] == LESS)
-			parse_redirects();
+			parse_redirects(&line, tokens, &i);
 		else if (tokens[i] == DOLLAR)
 			x = parse_env(str_line, tokens, &i);
 		else if (tokens[i] == PIPE)
