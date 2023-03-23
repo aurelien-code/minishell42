@@ -1,0 +1,4 @@
+1/ LOW => parser.c:parse_redirects
+	Met quand meme dans la liste chainee s'il y a une erreur (normalenet pas grave mais attention)
+
+2/ HIGH => Si quote en fin de prompt ne prend pas en compte / ne reagis pas

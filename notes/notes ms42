@@ -1,0 +1,17 @@
+minishell notes :
+'...' n'expand pas
+"..." expand
+
+waitpid(-1) pour attendre le premier child_process qui se fini
+
+Resoude pb de symlink builtin cd:
+https://discord.com/channels/774300457157918772/785407549725736971/1081162411983253594
+
+Tuto pour gerer le multipipe
+https://clemedon.github.io/Multipipe_tutor/
+
+A quel degre de precision creer les builtin 
+https://discord.com/channels/774300457157918772/785407549725736971/1080079337103048734
+
+Attention au prompt minishell | minishell !
+Attention au retour a la ligne de bash (ctrl+v + ctrl+j)
