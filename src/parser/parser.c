@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 17:59:35 by aumarin           #+#    #+#             */
-/*   Updated: 2023/03/23 15:40:27 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/03/23 20:59:02 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,22 +52,25 @@ void	parse_quotes(t_line **line, char *str_line, t_tokens *tokens, int *idx)
 
 	is_closed = 0;
 	quote = tokens[*idx];
-	tmp = *idx;
-	(void)str_line;
-	while (tokens[++tmp])
+	tmp = *idx + 1;
+	while (tokens[tmp] && !is_closed)
 	{
-		if (tokens[tmp] == DOLLAR)
-			parse_env(line, str_line, tokens, &tmp);
-		if (tokens[tmp] == quote)
+		if (tokens[tmp] == DOLLAR && quote == DOUBLE_QUOTE)
 		{
-			is_closed = 1;
-			break ;
+			printf("tmp = %d\n", tmp);
+			parse_env(line, str_line, tokens, &tmp);
+			printf("tmp2 = %d\n", tmp);
 		}
+		if (tokens[tmp] == quote)
+			is_closed = 1;
+		else
+			tmp++;
 	}
-	*idx = tmp;
+	if (is_closed && quote == QUOTE && tmp - 1 - *idx > 0)
+		new_line_item(line, STR, ft_substr(str_line, *idx + 1, tmp - 1 - *idx));
 	if (!is_closed)
 		printf("%s\n", UNCLOSE_QUOTE_ERR);
-
+	*idx = tmp;
 }
 
 void	parse_redirects(t_line **line, t_tokens *tokens, int *idx)
@@ -119,9 +122,9 @@ t_line	*parse(char *str_line, t_tokens	*tokens)
 			parse_env(&line, str_line, tokens, &i);
 		else if (tokens[i] == PIPE)
 			new_line_item(&line, PIPE_, NULL);
-		i++;
 		if (x != NULL)
 			new_line_item(&line, STR, x);
+		i++;
 	}
 	print_line(line);
 	return (line);
