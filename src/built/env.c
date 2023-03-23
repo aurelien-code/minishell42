@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ypages <ypages@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/21 15:05:45 by ypages            #+#    #+#             */
-/*   Updated: 2023/03/23 03:50:04 by ypages           ###   ########.fr       */
+/*   Created: 2023/02/22 19:02:08 by ypages            #+#    #+#             */
+/*   Updated: 2023/03/23 04:44:53 by ypages           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_echo(char *str, int arg)
+void	ft_env(char **envp)
 {
-	if (arg)
-		printf("%s", str);
-	else
-		printf("%s\n", str);
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (envp[i] && envp[i][j])
+	{
+		printf("%s\n", envp[i]);
+		i++;
+	}
 }

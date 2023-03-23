@@ -6,7 +6,7 @@
 /*   By: ypages <ypages@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/03/22 20:33:02 by ypages           ###   ########.fr       */
+/*   Updated: 2023/03/23 04:41:14 by ypages           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,15 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-/*	environment	*/
+/*	builtin	*/
+char		*ft_cd(char *path);
+void		ft_echo(char *str, int arg);
+char		*ft_pwd(void);
+char		**ft_export(char **env, char *var, char *val);
+char		**ft_unset(char **env, char *var);
+void		ft_env(char **envp);
+/** builtin - utils **/
+int			search_var(char **env, char *var);
 
 /*	environment	*/
 t_env		*check_env_path(char **envp);
@@ -62,6 +70,7 @@ char		*ft_prompt(void);
 /*	DEBUG	*/
 void		print_operator(t_operators op);
 void		print_env(char **envp);
+void		print_var(char **envp, char *var);
 void		print_list(t_env *list);
 
 /*	lexer.c		*/

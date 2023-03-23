@@ -6,7 +6,7 @@
 #    By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/07 22:33:15 by aumarin           #+#    #+#              #
-#    Updated: 2023/03/22 20:04:41 by ypages           ###   ########.fr        #
+#    Updated: 2023/03/23 04:40:16 by ypages           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,9 +17,17 @@ SRC		= 	minishell.c \
 			src/line.c \
 			src/lexer.c \
 			src/env.c \
-			debug/print_utils.c
+			src/built/cd.c \
+			src/built/echo.c \
+			src/built/pwd.c \
+			src/built/export.c \
+			src/built/unset.c \
+			src/built/utils.c \
+			src/built/env.c \
+			debug/print_utils.c \
+			debug/print_env.c
 OBJ		=	$(SRC:.c=.o)
-C_FLAGS	=	-Wall -Wextra -Werror
+C_FLAGS	=	-Wall -Wextra -Werror -g3
 RD_FLAG = -lreadline
 CC		=	cc
 
