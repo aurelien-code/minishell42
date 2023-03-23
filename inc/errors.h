@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 13:46:44 by aumarin           #+#    #+#             */
-/*   Updated: 2023/03/21 13:49:29 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/03/23 13:10:11 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@
 
 # ifndef REDIR_SYNTAX_ERR
 #  define REDIR_SYNTAX_ERR "Syntax error: redirection unexpected"
+# endif
+
+# ifndef UNCLOSE_QUOTE_ERR
+#  define UNCLOSE_QUOTE_ERR "Error: quote unclosed"
 # endif
 
 #endif
