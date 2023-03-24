@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 12:18:06 by aumarin           #+#    #+#             */
-/*   Updated: 2023/03/23 12:18:23 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/03/24 04:51:12 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,33 @@ int	parser_triple_redirects(t_tokens *tokens, int idx, int do_print)
 		}
 	}
 	return (0);
+}
+
+void	convert_str_builtin(t_line **line)
+{
+	const char	*builtins[7] = {"echo", "cd", "pwd", "export", "unset", "env",
+		"exit"};
+	int			i;
+	t_line		*tmp;
+
+	tmp = (*line);
+	while (*line)
+	{
+		i = 0;
+		if ((*line)->type > 0 && (*line)->type == STR)
+		{
+			while (i < 7)
+			{
+				if ((*line)->value && !ft_strncmp(builtins[i], \
+					(*line)->value, ft_strlen((*line)->value)))
+				{
+					(*line)->type = BUILTIN;
+					break ;
+				}
+				i++;
+			}
+		}
+		*line = (*line)->next;
+	}
+	*line = tmp;
 }

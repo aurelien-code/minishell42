@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 17:59:35 by aumarin           #+#    #+#             */
-/*   Updated: 2023/03/24 03:46:46 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/03/24 04:49:43 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ t_line	*parse(char *str_line, t_tokens	*tokens)
 			new_line_item(&line, STR, x);
 		i++;
 	}
+	convert_str_builtin(&line);
 	print_line(line);
 	return (line);
 }
