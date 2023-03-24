@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/03/23 12:18:42 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/03/24 03:11:18 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ int			ft_exec(t_env *env);
 /*	parser.c	*/
 t_line		*parse(char *str_line, t_tokens	*tokens);
 
-/*	oarser_utils.	*/
-int	parser_triple_redirects(t_tokens *tokens, int idx, int do_print);
+/*	parser_utils.	*/
+int			parser_triple_redirects(t_tokens *tokens, int idx, int do_print);
 
 /*	line.c		*/
 t_line		*new_line_item(t_line **head, t_operators type, char *value);

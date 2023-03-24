@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 17:59:35 by aumarin           #+#    #+#             */
-/*   Updated: 2023/03/23 20:59:02 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/03/24 03:46:46 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,27 +48,25 @@ void	parse_quotes(t_line **line, char *str_line, t_tokens *tokens, int *idx)
 {
 	int			tmp;
 	t_tokens	quote;
-	int			is_closed;
+	char		*tmp_str;
 
-	is_closed = 0;
 	quote = tokens[*idx];
 	tmp = *idx + 1;
-	while (tokens[tmp] && !is_closed)
+	while (tokens[tmp] && tokens[tmp] != quote)
 	{
 		if (tokens[tmp] == DOLLAR && quote == DOUBLE_QUOTE)
 		{
-			printf("tmp = %d\n", tmp);
+			tmp_str = ft_substr(str_line, *idx + 1, tmp - *idx - 1);
+			new_line_item(line, STR, tmp_str);
 			parse_env(line, str_line, tokens, &tmp);
-			printf("tmp2 = %d\n", tmp);
+			*idx = tmp - 1;
 		}
-		if (tokens[tmp] == quote)
-			is_closed = 1;
 		else
 			tmp++;
 	}
-	if (is_closed && quote == QUOTE && tmp - 1 - *idx > 0)
+	if (tokens[tmp] == quote && tmp - 1 - *idx > 0)
 		new_line_item(line, STR, ft_substr(str_line, *idx + 1, tmp - 1 - *idx));
-	if (!is_closed)
+	if (tokens[tmp] != quote)
 		printf("%s\n", UNCLOSE_QUOTE_ERR);
 	*idx = tmp;
 }
