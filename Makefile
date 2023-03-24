@@ -6,13 +6,16 @@
 #    By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/07 22:33:15 by aumarin           #+#    #+#              #
-#    Updated: 2023/03/23 12:19:14 by aumarin          ###   ########.fr        #
+#    Updated: 2023/03/25 00:26:38 by aumarin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	minishell
-SRC		= 	minishell.c \
-			src/parser/parser.c \
+
+MSRC	=	minishell.c	# main
+MOBJ	=	$(MSRC:.c=.o)
+
+SRC		= 	src/parser/parser.c \
 			src/parser/lexer.c \
 			src/parser/parser_utils.c \
 			src/prompt.c \
@@ -28,6 +31,13 @@ SRC		= 	minishell.c \
 			debug/print_utils.c \
 			debug/print_env.c
 OBJ		=	$(SRC:.c=.o)
+
+TST_SRC =	tests/tst_main.c \
+			munit/munit.c \
+			tests/tst_lexer.c \
+			tests/tst_parser.c
+TST_OBJ =	$(TST_SRC:.c=.o) 
+
 C_FLAGS	=	-Wall -Wextra -Werror -g3
 RD_FLAG = -lreadline
 CC		=	cc
@@ -41,7 +51,12 @@ all: $(NAME)
 	@echo "\033[0;33mcompiling... \033[0;37m"
 	@$(CC) -o $@ -c $< $(C_FLAGS) -I ./inc/
 
-$(NAME): $(OBJ)
+$(NAME): $(MOBJ) $(OBJ)
+	@echo "\033[0;33mlinking... \033[0;37m"	
+	@make -C $(LIBFT_DIR)
+	@$(CC)  $(C_FLAGS) -o $@ $^ ./libft/libft.a $(RD_FLAG)
+
+test: $(TST_OBJ) $(OBJ)
 	@echo "\033[0;33mlinking... \033[0;37m"	
 	@make -C $(LIBFT_DIR)
 	@$(CC)  $(C_FLAGS) -o $@ $^ ./libft/libft.a $(RD_FLAG)
@@ -49,11 +64,14 @@ $(NAME): $(OBJ)
 clean:
 	@echo "\033[0;33mdeleting objects... \033[0;37m"
 	@rm -f $(OBJ)
+	@rm -f $(MOBJ)
+	@rm -f $(TST_OBJ)
 	@make clean -C $(LIBFT_DIR)
 	@echo "\033[0;33mdone \033[0;37m"
 
 fclean: clean
 	@rm -f $(OBJ)
+	@rm -f test
 	@make fclean -C $(LIBFT_DIR)
 	@rm -f $(NAME)
 

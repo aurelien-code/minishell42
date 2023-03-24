@@ -6,7 +6,8 @@
 	"files.associations": {
 		"stat.h": "c",
 		"readline.h": "c",
-		"minishell.h": "c"
+		"minishell.h": "c",
+		"munit.h": "c"
 	},
 	"pomodoro.make": {
 		"notification": true,
