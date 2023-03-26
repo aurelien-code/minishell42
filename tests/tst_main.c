@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 07:02:22 by aumarin           #+#    #+#             */
-/*   Updated: 2023/03/25 17:04:49 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/03/26 19:38:03 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,6 @@ MunitTest tests[] = {
 		NULL /* parameters */
 	},
 	{
-		"/line", /* name */
-		test_line, /* test */
-		NULL, /* setup */
-		NULL, /* tear_down */
-		MUNIT_TEST_OPTION_NONE, /* options */
-		NULL /* parameters */
-	},
-	{
 		"/parser", /* name */
 		test_parser, /* test */
 		NULL, /* setup */
@@ -37,6 +29,9 @@ MunitTest tests[] = {
 		MUNIT_TEST_OPTION_NONE, /* options */
 		NULL /* parameters */
 	},
+	{ "/test_new_line_basic", test_new_line_basic, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL },
+    { "/test_last_line_item_basic", test_last_line_item_basic, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL },
+    { "/test_new_line_item_basic", test_new_line_item_basic, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL },
 	{ NULL, NULL, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL }
 };
 

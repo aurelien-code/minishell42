@@ -6,7 +6,7 @@
 #    By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/07 22:33:15 by aumarin           #+#    #+#              #
-#    Updated: 2023/03/25 17:06:39 by aumarin          ###   ########.fr        #
+#    Updated: 2023/03/26 19:27:26 by aumarin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,8 @@ OBJ		=	$(SRC:.c=.o)
 
 TST_SRC =	tests/tst_main.c \
 			munit/munit.c \
-			tests/tst_parser.c
+			tests/tst_parser.c \
+			tests/tst_line.c
 TST_OBJ =	$(TST_SRC:.c=.o) 
 
 C_FLAGS	=	-Wall -Wextra -Werror -g3
