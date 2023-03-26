@@ -6,7 +6,7 @@
 #    By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/07 22:33:15 by aumarin           #+#    #+#              #
-#    Updated: 2023/03/25 00:26:38 by aumarin          ###   ########.fr        #
+#    Updated: 2023/03/25 17:06:39 by aumarin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,6 @@ OBJ		=	$(SRC:.c=.o)
 
 TST_SRC =	tests/tst_main.c \
 			munit/munit.c \
-			tests/tst_lexer.c \
 			tests/tst_parser.c
 TST_OBJ =	$(TST_SRC:.c=.o) 
 

@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 07:02:22 by aumarin           #+#    #+#             */
-/*   Updated: 2023/03/24 23:10:52 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/03/25 17:04:49 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 MunitTest tests[] = {
 	{
-		"/lexer-test", /* name */
+		"/lexer", /* name */
 		test_lexer, /* test */
 		NULL, /* setup */
 		NULL, /* tear_down */
@@ -22,7 +22,15 @@ MunitTest tests[] = {
 		NULL /* parameters */
 	},
 	{
-		"/parser-test", /* name */
+		"/line", /* name */
+		test_line, /* test */
+		NULL, /* setup */
+		NULL, /* tear_down */
+		MUNIT_TEST_OPTION_NONE, /* options */
+		NULL /* parameters */
+	},
+	{
+		"/parser", /* name */
 		test_parser, /* test */
 		NULL, /* setup */
 		NULL, /* tear_down */
