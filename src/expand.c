@@ -1,36 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/17 12:30:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/03/27 01:37:35 by aumarin          ###   ########.fr       */
+/*   Created: 2023/03/26 19:45:01 by aumarin           #+#    #+#             */
+/*   Updated: 2023/03/26 22:12:30 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**g_env;
-
-int	main(int argc, char **argv, char **envp)
+char	*expand_env_var(char **env, char *var)
 {
-	t_tokens	*tokens;
-	char		*str_line;
+	int	i;
 
-	if (!envp || argc > 1)
-		return (1);
-	(void)argv;
-	if (envp)
-		g_env = envp;
-	printf("env_len = %lu\n", ft_strlen(*envp));
-	while (1)
+	if (!env || !var)
+		return (NULL);
+	i = 0;
+	while (env[i])
 	{
-		str_line = ft_prompt();
-		tokens = lexer(str_line);
-		parse(str_line, tokens);
+		if (!ft_strncmp(var, env[i], ft_strlen(var)))
+		{
+			if (env[i][ft_strlen(var)] == '=')
+				return (ft_strchr(env[i], '=') + 1);
+		}
+		i++;
 	}
-	rl_clear_history();
-	return (0);
+	return (NULL);
 }

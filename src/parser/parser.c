@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 17:59:35 by aumarin           #+#    #+#             */
-/*   Updated: 2023/03/24 23:12:10 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/03/27 00:31:17 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,9 +105,9 @@ t_line	*parse(char *str_line, t_tokens	*tokens)
 	int			i;
 	char		*x;
 
-	i = 0;
+	i = -1;
 	line = NULL;
-	while (tokens[i])
+	while (tokens[++i])
 	{
 		x = NULL;
 		if (tokens[i] == QUOTE || tokens[i] == DOUBLE_QUOTE)
@@ -122,8 +122,8 @@ t_line	*parse(char *str_line, t_tokens	*tokens)
 			new_line_item(&line, PIPE_, NULL);
 		if (x != NULL)
 			new_line_item(&line, STR, x);
-		i++;
 	}
 	convert_str_builtin(&line);
+	print_line(line);
 	return (line);
 }

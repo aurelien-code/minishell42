@@ -15,3 +15,5 @@ https://discord.com/channels/774300457157918772/785407549725736971/1080079337103
 
 Attention au prompt minishell | minishell !
 Attention au retour a la ligne de bash (ctrl+v + ctrl+j)
+
+free quand signaux ou quand exit ou si crash (ne devrait pas arriver)
