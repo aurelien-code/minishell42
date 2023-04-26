@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/04/26 09:58:27 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/04/26 17:22:23 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@
 # endif
 
 # ifndef NOK
-#  define NOK -1
+#  define NOK 0
 # endif
 
 # ifndef OK
-#  define OK 0
+#  define OK 1
 # endif
 
 typedef struct s_line
@@ -47,7 +47,7 @@ typedef struct s_line
 char		*ft_cd(char *path);
 void		ft_echo(char *str, int arg);
 char		*ft_pwd(void);
-char		**ft_export(char **env, char *var, char *val);
+char		**ft_export(char **env, char *var);
 char		**ft_unset(char **env, char *var);
 void		ft_env(char **envp);
 /** builtin - utils **/
@@ -83,6 +83,6 @@ void		print_tokens(t_tokens *tk);
 void		print_line(t_line *line);
 
 /*	exec.c		*/
-int			ft_exec(t_line *line);
+char	**ft_exec(t_line *line, char **envp);
 
 #endif

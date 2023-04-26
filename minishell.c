@@ -6,11 +6,12 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 12:30:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/04/26 09:21:14 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/04/26 17:22:41 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -21,13 +22,17 @@ int	main(int argc, char **argv, char **envp)
 	if (!envp || argc > 1)
 		return (1);
 	(void)argv;
+	str_line = NULL;
+	printf("p = %s\n", getcwd(NULL, 0));
 	while (1)
 	{
 		str_line = ft_prompt();
-		tokens = lexer(str_line);
-		line_parsed = parse(str_line, tokens);
-		//print_line(line_parsed);
-		ft_exec(line_parsed);
+		if (str_line)
+		{
+			tokens = lexer(str_line);
+			line_parsed = parse(str_line, tokens);
+			envp = ft_exec(line_parsed, envp);
+		}
 	}
 	rl_clear_history();
 	return (0);
