@@ -6,30 +6,28 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 12:30:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/03/27 01:37:35 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/04/26 09:21:14 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**g_env;
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_tokens	*tokens;
 	char		*str_line;
+	t_line		*line_parsed;
 
 	if (!envp || argc > 1)
 		return (1);
 	(void)argv;
-	if (envp)
-		g_env = envp;
-	printf("env_len = %lu\n", ft_strlen(*envp));
 	while (1)
 	{
 		str_line = ft_prompt();
 		tokens = lexer(str_line);
-		parse(str_line, tokens);
+		line_parsed = parse(str_line, tokens);
+		//print_line(line_parsed);
+		ft_exec(line_parsed);
 	}
 	rl_clear_history();
 	return (0);

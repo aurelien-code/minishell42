@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/03/27 01:13:32 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/04/26 09:58:27 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <readline/history.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <errno.h>
 # include "../libft/libft.h"
 # include "./errors.h"
 # include "./enums.h"
@@ -25,7 +26,13 @@
 /*  DEFINE STRINGS */
 # ifndef PROMPT_NAME
 #  define PROMPT_NAME "minishell> "
+# endif
+
+# ifndef NOK
 #  define NOK -1
+# endif
+
+# ifndef OK
 #  define OK 0
 # endif
 
@@ -68,11 +75,14 @@ void		print_var(char **envp, char *var);
 t_tokens	*lexer(char *str);
 
 /*	expand.c	*/
-char		*expand_env_var(char **env, char *var);
+t_line		*expand_env_var(t_line **line);
 
-/*	DEBUG		*/
+	/*	DEBUG		*/
 void		print_operator(t_operators op);
 void		print_tokens(t_tokens *tk);
 void		print_line(t_line *line);
+
+/*	exec.c		*/
+int			ft_exec(t_line *line);
 
 #endif

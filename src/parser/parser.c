@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 17:59:35 by aumarin           #+#    #+#             */
-/*   Updated: 2023/03/27 00:31:17 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/04/26 07:01:43 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ char	*parse_env(t_line **line, char *str_line, t_tokens *tokens, int *idx)
 	if (tokens[i] == CHAR)
 		str = parse_str(str_line, tokens, &i);
 	*idx = i;
+	str = ft_strjoin("$", str);
 	new_line_item(line, ENV_VAR, str);
 	return (str);
 }
@@ -124,6 +125,6 @@ t_line	*parse(char *str_line, t_tokens	*tokens)
 			new_line_item(&line, STR, x);
 	}
 	convert_str_builtin(&line);
-	print_line(line);
+	expand_env_var(&line);
 	return (line);
 }

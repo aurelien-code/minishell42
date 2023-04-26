@@ -6,27 +6,32 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 19:45:01 by aumarin           #+#    #+#             */
-/*   Updated: 2023/03/26 22:12:30 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/04/26 07:01:22 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*expand_env_var(char **env, char *var)
+t_line	*expand_env_var(t_line **line)
 {
-	int	i;
+	t_line	*tmp;
+	char	*env_val;
 
-	if (!env || !var)
+	env_val = NULL;
+	if (!(*line))
 		return (NULL);
-	i = 0;
-	while (env[i])
+	tmp = (*line);
+	while ((*line))
 	{
-		if (!ft_strncmp(var, env[i], ft_strlen(var)))
+		if ((*line)->type == ENV_VAR)
 		{
-			if (env[i][ft_strlen(var)] == '=')
-				return (ft_strchr(env[i], '=') + 1);
+			env_val = getenv((*line)->value + 1);
+			if (env_val)
+				(*line)->value = env_val;
+			(*line)->type = STR;
 		}
-		i++;
+		(*line) = (*line)->next;
 	}
-	return (NULL);
+	(*line) = tmp;
+	return ((*line));
 }

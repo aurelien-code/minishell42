@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 18:22:47 by aumarin           #+#    #+#             */
-/*   Updated: 2023/03/21 20:44:42 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/04/25 19:51:40 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ void	print_tokens(t_tokens *tk)
 
 void	print_line(t_line *line)
 {
-	printf("Line Linked List :\n");
 	while (line)
 	{
 		printf("[Val]: %s	||	[Type]: %d\n", line->value, line->type);
