@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/04/26 17:22:23 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/04/26 17:54:34 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,13 @@ typedef struct s_line
 	struct s_line	*next;
 }	t_line;
 
+typedef struct s_env
+{
+	char			*name;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
+
 /*	builtin	*/
 char		*ft_cd(char *path);
 void		ft_echo(char *str, int arg);
@@ -77,12 +84,15 @@ t_tokens	*lexer(char *str);
 /*	expand.c	*/
 t_line		*expand_env_var(t_line **line);
 
-	/*	DEBUG		*/
+/*	DEBUG		*/
 void		print_operator(t_operators op);
 void		print_tokens(t_tokens *tk);
 void		print_line(t_line *line);
 
 /*	exec.c		*/
-char	**ft_exec(t_line *line, char **envp);
+char		**ft_exec(t_line *line, char **envp);
+
+/*	convert.c	*/
+t_env		*convert_env(char **envp);
 
 #endif

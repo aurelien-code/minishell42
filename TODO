@@ -1,0 +1,10 @@
+!!
+Convert env to a linked list, so it's way easier to add/rm elems
+
+- Put correct op on expansion
+	FILE
+- Implement executor
+- Implement heredocs
+- Tests
+	Line.c
+	Parser.c
