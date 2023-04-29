@@ -6,29 +6,24 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 04:22:34 by ypages            #+#    #+#             */
-/*   Updated: 2023/04/26 16:19:44 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/04/27 14:09:15 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	search_var(char **env, char *var)
+int	search_var(t_env *env, char *var)
 {
-	int		i;
-	char	*var_name;
+	char	**name_value;
 
-	if (!var || !env)
+	name_value = ft_split(var, '=');
+	if (!name_value)
 		return (-1);
-	if (!ft_strchr(var, '='))
-		return (-1);
-	var_name = NULL;
-	i = 0;
-	var_name = ft_split(&var[i], '=')[0];
-	while (env[i])
+	while (env)
 	{
-		if (!ft_strncmp(env[i], var, ft_strlen(ft_split(env[i], '=')[0]) + 1))
-			return (i);
-		i++;
+		if (!ft_strncmp(env->name, name_value[0], ft_strlen(env->name)))
+			return (1);
+		env = env->next;
 	}
 	return (-1);
 }

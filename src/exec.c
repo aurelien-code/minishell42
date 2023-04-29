@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 16:45:06 by ypages            #+#    #+#             */
-/*   Updated: 2023/04/26 17:22:09 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/04/27 13:34:09 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*get_next_value(t_line *line)
 		return (NULL);
 }
 
-char	**ft_exec(t_line *line, char **envp)
+t_env	*ft_exec(t_line *line, t_env *env)
 {
 	if (!line)
 		return (NULL);
@@ -35,15 +35,15 @@ char	**ft_exec(t_line *line, char **envp)
 			else if (!ft_strncmp(line->value, "echo", ft_strlen(line->value)))
 				ft_echo(line->next->value, 0);
 			else if (!ft_strncmp(line->value, "env", ft_strlen(line->value)))
-				ft_env(envp);
+				ft_env(env);
 			else if (!ft_strncmp(line->value, "export", ft_strlen(line->value)))
-				ft_export(envp, line->next->value);
+				ft_export(env, line->next->value);
 			else if (!ft_strncmp(line->value, "unset", ft_strlen(line->value)))
-				ft_unset(envp, line->next->value);
+				ft_unset(env, line->next->value);
 			else
 				perror("minishell: command not found");
 		}
 		line = line->next;
 	}
-	return (envp);
+	return (env);
 }

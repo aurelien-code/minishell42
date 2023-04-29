@@ -1,5 +1,4 @@
 !!
-Convert env to a linked list, so it's way easier to add/rm elems
 
 - Put correct op on expansion
 	FILE

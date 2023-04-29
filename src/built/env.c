@@ -6,22 +6,17 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 19:02:08 by ypages            #+#    #+#             */
-/*   Updated: 2023/03/23 04:44:53 by ypages           ###   ########.fr       */
+/*   Updated: 2023/04/27 13:35:20 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_env(char **envp)
+void	ft_env(t_env *env)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (envp[i] && envp[i][j])
+	while (env)
 	{
-		printf("%s\n", envp[i]);
-		i++;
+		printf("%s=%s\n", env->name, env->value);
+		env = env->next;
 	}
 }

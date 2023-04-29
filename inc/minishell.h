@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/04/26 17:54:34 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/04/27 14:05:33 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ typedef struct s_env
 char		*ft_cd(char *path);
 void		ft_echo(char *str, int arg);
 char		*ft_pwd(void);
-char		**ft_export(char **env, char *var);
-char		**ft_unset(char **env, char *var);
-void		ft_env(char **envp);
+t_env		*ft_export(t_env *env, char *var);
+t_env		*ft_unset(t_env *env, char *var);
+void		ft_env(t_env *env);
 /** builtin - utils **/
-int			search_var(char **env, char *var);
+int			search_var(t_env *env, char *var);
 
 /*	parser.c	*/
 t_line		*parse(char *str_line, t_tokens	*tokens);
@@ -90,9 +90,11 @@ void		print_tokens(t_tokens *tk);
 void		print_line(t_line *line);
 
 /*	exec.c		*/
-char		**ft_exec(t_line *line, char **envp);
+t_env		*ft_exec(t_line *line, t_env *env);
 
-/*	convert.c	*/
+/*	ll_env.c	*/
 t_env		*convert_env(char **envp);
+t_env		*add_item(t_env *env, char *name, char *value);
+t_env		*modify_item(t_env *env, char *name, char *value);
 
 #endif

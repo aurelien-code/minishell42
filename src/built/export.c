@@ -6,78 +6,45 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:05:45 by ypages            #+#    #+#             */
-/*   Updated: 2023/04/26 17:31:30 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/04/29 10:23:37 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	add_var(char **env, char *var)
+void	add_var(t_env *env, char *var)
 {
-	char	**new_env;
-	int		i;
+	char	**name_value;
 
-	i = 0;
-	while (env[i])
-		i++;
-	new_env = ft_calloc((i + 1), sizeof(char *));
-	i = 0;
-	while (env[i])
-	{
-		new_env[i] = ft_strdup(env[i]);
-		i++;
-	}
-	new_env[i] = ft_strdup(var);
-	i = 0;
-	while (new_env[i])
-	{
-		env[i] = new_env[i];
-		i++;
-	}
+	name_value = ft_split(var, '=');
+	if (!name_value)
+		return ;
+	env = add_item(env, name_value[0], name_value[1]);
 }
 
-void	modify_var(char **env, char *var, int idx)
+void	modify_var(t_env *env, char *var)
 {
-	char	**new_env;
-	int		i;
+	char	**name_value;
 
-	i = 0;
-	while (env[i])
-		i++;
-	new_env = ft_calloc((i + 1), sizeof(char *));
-	i = 0;
-	while (env[i])
-	{
-		if (i == idx)
-			new_env[i] = ft_strdup(var);
-		else
-			new_env[i] = ft_strdup(env[i]);
-		i++;
-	}
-	i = 0;
-	while (new_env[i])
-	{
-		env[i] = new_env[i];
-		i++;
-	}
-	free(new_env);
+	name_value = ft_split(var, '=');
+	if (!name_value)
+		return ;
+	env = modify_item(env, name_value[0], name_value[1]);
 }
 
-char	**ft_export(char **env, char *var)
+t_env	*ft_export(t_env *env, char *var)
 {
 	int	var_line;
 
 	var_line = search_var(env, var);
 	if (var_line >= 0)
 	{
-		printf("Modify var\n");
-		modify_var(env, var, var_line);
+		modify_var(env, var);
 		if (!env)
 			return (NULL);
 	}
 	else
 	{
-		printf("Add var\n");
 		add_var(env, var);
 		if (!env)
 			return (NULL);

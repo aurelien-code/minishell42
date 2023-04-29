@@ -6,7 +6,7 @@
 #    By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/07 22:33:15 by aumarin           #+#    #+#              #
-#    Updated: 2023/04/26 17:50:45 by aumarin          ###   ########.fr        #
+#    Updated: 2023/04/27 13:42:08 by aumarin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRC		= 	src/parser/parser.c \
 			src/line.c \
 			src/expand.c \
 			src/exec.c \
-			src/convert.c \
+			src/ll_env.c \
 			src/built/cd.c \
 			src/built/echo.c \
 			src/built/pwd.c \
