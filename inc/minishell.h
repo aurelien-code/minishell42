@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/04/27 14:05:33 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/04/29 10:52:07 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,6 @@ t_env		*ft_exec(t_line *line, t_env *env);
 t_env		*convert_env(char **envp);
 t_env		*add_item(t_env *env, char *name, char *value);
 t_env		*modify_item(t_env *env, char *name, char *value);
+t_env		*delete_item(t_env *env, char *name);
 
 #endif
