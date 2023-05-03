@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 16:45:06 by ypages            #+#    #+#             */
-/*   Updated: 2023/05/03 15:58:33 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/05/03 16:29:33 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_env	*ft_exec(t_line *line, t_env *env)
 		if (line->type == BUILTIN)
 		{
 			if (!ft_strncmp(line->value, "cd", ft_strlen(line->value)))
-				ft_cd(get_next_value(line));
+				ft_cd(get_next_value(line), &env);
 			else if (!ft_strncmp(line->value, "pwd", ft_strlen(line->value)))
 				ft_pwd();
 			else if (!ft_strncmp(line->value, "echo", ft_strlen(line->value)))

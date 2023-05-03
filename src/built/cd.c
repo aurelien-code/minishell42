@@ -6,13 +6,13 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:05:45 by ypages            #+#    #+#             */
-/*   Updated: 2023/04/26 10:11:10 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/05/03 16:31:20 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_cd(char *path)
+char	*ft_cd(char *path, t_env **env)
 {
 	char	*a_path;
 
@@ -36,5 +36,6 @@ char	*ft_cd(char *path)
 		return (NULL);
 	}
 	a_path = getcwd(NULL, 0);
+	*env = modify_item(*env, "PWD", getcwd(NULL, 0));
 	return (a_path);
 }

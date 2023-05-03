@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/04/29 15:37:55 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/05/03 16:29:43 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct s_env
 }	t_env;
 
 /*	builtin	*/
-char		*ft_cd(char *path);
+char		*ft_cd(char *path, t_env **env);
 void		ft_echo(char *str, int arg);
 char		*ft_pwd(void);
 t_env		*ft_export(t_env *env, char *var);
