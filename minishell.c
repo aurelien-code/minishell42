@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 12:30:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/04/27 13:42:26 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/05/03 16:22:47 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	ll_env = convert_env(envp);
 	str_line = NULL;
-	printf("p = %s\n", getcwd(NULL, 0));
 	while (1)
 	{
 		str_line = ft_prompt();
@@ -33,7 +32,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			tokens = lexer(str_line);
 			line_parsed = parse(str_line, tokens);
-			ft_exec(line_parsed, ll_env);
+			ll_env = ft_exec(line_parsed, ll_env);
 		}
 	}
 	rl_clear_history();

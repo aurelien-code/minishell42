@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/04/29 10:52:07 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/04/29 15:37:55 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char		*ft_cd(char *path);
 void		ft_echo(char *str, int arg);
 char		*ft_pwd(void);
 t_env		*ft_export(t_env *env, char *var);
-t_env		*ft_unset(t_env *env, char *var);
+t_env		*ft_unset(t_env **env, char *var);
 void		ft_env(t_env *env);
 /** builtin - utils **/
 int			search_var(t_env *env, char *var);
@@ -96,6 +96,6 @@ t_env		*ft_exec(t_line *line, t_env *env);
 t_env		*convert_env(char **envp);
 t_env		*add_item(t_env *env, char *name, char *value);
 t_env		*modify_item(t_env *env, char *name, char *value);
-t_env		*delete_item(t_env *env, char *name);
+t_env		*delete_item(t_env **env, char *name);
 
 #endif

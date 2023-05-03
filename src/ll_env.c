@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 17:50:52 by aumarin           #+#    #+#             */
-/*   Updated: 2023/04/29 11:04:10 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/05/03 16:13:31 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_env	*build_minimal_env(void)
 	if (!tmp)
 		return (NULL);
 	tmp->name = ft_strdup("PWD");
-	tmp->value = ft_strdup(ft_pwd());
+	tmp->value = ft_strdup(getcwd(NULL, 0));
 	tmp->next = NULL;
 	return (tmp);
 }
@@ -99,34 +99,28 @@ t_env	*modify_item(t_env *env, char *name, char *value)
 	return (first);
 }
 
-t_env	*delete_item(t_env *env, char *name)
+t_env	*delete_item(t_env **head, char *name)
 {
-	t_env	*first;
-	t_env	*tmp;
+	t_env	*current;
+	t_env	*prev;
 
-	if (!env)
-		return (NULL);
-	first = env;
-	if (!ft_strncmp(env->name, name, ft_strlen(name)))
+	current = *head;
+	prev = NULL;
+	while (current != NULL)
 	{
-		tmp = env->next;
-		free(env->name);
-		free(env->value);
-		free(env);
-		return (tmp);
-	}
-	while (env->next)
-	{
-		if (!ft_strncmp(env->next->name, name, ft_strlen(name)))
+		if (ft_strncmp(current->name, name, ft_strlen(name)) == 0)
 		{
-			tmp = env->next->next;
-			free(env->next->name);
-			free(env->next->value);
-			free(env->next);
-			env->next = tmp;
-			return (first);
+			if (prev == NULL)
+				*head = current->next;
+			else
+				prev->next = current->next;
+			free(current->name);
+			free(current->value);
+			free(current);
+			return (*head);
 		}
-		env = env->next;
+		prev = current;
+		current = current->next;
 	}
-	return (first);
+	return (*head);
 }
