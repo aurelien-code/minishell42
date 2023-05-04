@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 16:45:06 by ypages            #+#    #+#             */
-/*   Updated: 2023/05/03 16:29:33 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/05/04 13:45:28 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ t_env	*ft_exec(t_line *line, t_env *env)
 			else if (!ft_strncmp(line->value, "env", ft_strlen(line->value)))
 				ft_env(env);
 			else if (!ft_strncmp(line->value, "export", ft_strlen(line->value)))
-					env = ft_export(env, line->next->value);
+				env = ft_export(env, line->next->value);
 			else if (!ft_strncmp(line->value, "unset", ft_strlen(line->value)))
-				env = ft_unset(&env, line->next->value);
+				ft_unset(&env, line->next->value);
 			else
 				perror("minishell: command not found");
 		}
