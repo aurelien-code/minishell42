@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/05/03 16:29:43 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/05/04 15:20:31 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <errno.h>
+# include <signal.h>
 # include "../libft/libft.h"
 # include "./errors.h"
 # include "./enums.h"
@@ -97,5 +98,9 @@ t_env		*convert_env(char **envp);
 t_env		*add_item(t_env *env, char *name, char *value);
 t_env		*modify_item(t_env *env, char *name, char *value);
 t_env		*delete_item(t_env **env, char *name);
+
+/*	sig.c		*/
+void		sig_init(void);
+void		sig_ctrl_d(void);
 
 #endif

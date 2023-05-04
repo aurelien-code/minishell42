@@ -6,7 +6,7 @@
 #    By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/07 22:33:15 by aumarin           #+#    #+#              #
-#    Updated: 2023/04/27 13:42:08 by aumarin          ###   ########.fr        #
+#    Updated: 2023/05/04 14:22:51 by aumarin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRC		= 	src/parser/parser.c \
 			src/built/unset.c \
 			src/built/utils.c \
 			src/built/env.c \
+			src/sig.c \
 			debug/print_utils.c \
 			debug/print_env.c
 OBJ		=	$(SRC:.c=.o)
