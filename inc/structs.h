@@ -1,28 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.h                                           :+:      :+:    :+:   */
+/*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/21 13:46:44 by aumarin           #+#    #+#             */
-/*   Updated: 2023/03/23 13:10:11 by aumarin          ###   ########.fr       */
+/*   Created: 2023/05/22 13:59:13 by aumarin           #+#    #+#             */
+/*   Updated: 2023/05/22 15:13:21 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERRORS_H
-# define ERRORS_H
+#ifndef STRUCTS_H
+# define STRUCTS_H
 
-# ifndef REDIR_NEWLINE_ERR
-#  define REDIR_NEWLINE_ERR "Syntax error: newline unexpected"
-# endif
+typedef struct s_line
+{
+	t_operators		type;
+	char			*value;
+	struct s_line	*next;
+}	t_line;
 
-# ifndef REDIR_SYNTAX_ERR
-#  define REDIR_SYNTAX_ERR "Syntax error: redirection unexpected"
-# endif
+typedef struct s_env
+{
+	char			*name;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
 
-# ifndef UNCLOSE_QUOTE_ERR
-#  define UNCLOSE_QUOTE_ERR "Error: quote unclosed"
-# endif
+typedef struct s_ast
+{
+	t_node_type		type;
+	struct s_ast	*left;
+	struct s_ast	*right;
+	char			*value;
+}	t_ast;
 
 #endif

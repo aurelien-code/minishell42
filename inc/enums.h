@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 13:55:52 by aumarin           #+#    #+#             */
-/*   Updated: 2023/05/17 13:06:15 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/05/22 18:13:49 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,12 @@ typedef enum e_operators
 
 typedef enum e_node_type
 {
-	NODE_COMMAND,
-	NODE_PIPE,
-	NODE_REDIRECT_IN,
-	NODE_REDIRECT_OUT
+	NODE_CMD = 1,
+	NODE_PIPE = 2,
+	NODE_REDIRECT_S_IN = 3,
+	NODE_REDIRECT_S_OUT = 4,
+	NODE_REDIRECT_D_IN = 5,
+	NODE_REDIRECT_D_OUT = 6
 }	t_node_type;
 
 #endif

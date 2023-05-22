@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 18:22:47 by aumarin           #+#    #+#             */
-/*   Updated: 2023/04/25 19:51:40 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/05/22 17:49:55 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,23 @@ void	print_line(t_line *line)
 	{
 		printf("[Val]: %s	||	[Type]: %d\n", line->value, line->type);
 		line = line->next;
+	}
+}
+
+void	print_ast(t_ast *ast)
+{
+	int	i;
+
+	i = 0;
+	while (ast[i].type)
+	{
+		printf("ast[%d].type: %d ; .value: %s\n", i, ast[i].type, ast[i].value);
+		if (ast[i].left)
+			printf("	ast[%d].left->type: %d ; .value: %s\n", i, \
+				ast[i].left->type, ast[i].left->value);
+		if (ast[i].right)
+			printf("	ast[%d].right->type: %d ; .value: %s\n", i, \
+				ast[i].right->type, ast[i].right->value);
+		i++;
 	}
 }

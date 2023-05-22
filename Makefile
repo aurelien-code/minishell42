@@ -6,7 +6,7 @@
 #    By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/07 22:33:15 by aumarin           #+#    #+#              #
-#    Updated: 2023/05/17 12:51:10 by aumarin          ###   ########.fr        #
+#    Updated: 2023/05/22 13:10:40 by aumarin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SRC		= 	src/parser/parser.c \
 			src/parser/lexer.c \
 			src/parser/parser_utils.c \
 			src/parser/tokens.c \
+			src/parser/ast.c \
 			src/prompt.c \
 			src/line.c \
 			src/expand.c \

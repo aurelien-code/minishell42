@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 05:04:06 by n4w4k_            #+#    #+#             */
-/*   Updated: 2023/05/04 15:30:02 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/05/22 14:04:18 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,8 @@ void	sig_init(void)
 	sig_int.sa_sigaction = &sig_int_handler;
 	sig_int.sa_flags = SA_SIGINFO;
 	sigaction(SIGINT, &sig_int, NULL);
-
 	sigemptyset(&sig_quit. sa_mask);
 	sig_quit.sa_handler = SIG_IGN;
 	sig_quit.sa_flags = 0;
 	sigaction(SIGQUIT, &sig_quit, NULL);
-
 }

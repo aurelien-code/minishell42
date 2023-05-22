@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/05/17 13:06:38 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/05/22 18:43:08 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,44 +21,9 @@
 # include <errno.h>
 # include <signal.h>
 # include "../libft/libft.h"
-# include "./errors.h"
+# include "./strings.h"
 # include "./enums.h"
-
-/*  DEFINE STRINGS */
-# ifndef PROMPT_NAME
-#  define PROMPT_NAME "minishell> "
-# endif
-
-# ifndef NOK
-#  define NOK 0
-# endif
-
-# ifndef OK
-#  define OK 1
-# endif
-
-typedef struct s_line
-{
-	t_operators		type;
-	char			*value;
-	struct s_line	*next;
-}	t_line;
-
-typedef struct s_env
-{
-	char			*name;
-	char			*value;
-	struct s_env	*next;
-}	t_env;
-
-typedef struct s_ast
-{
-	t_node_type		type;
-	struct s_ast	*left;
-	struct s_ast	*right;
-	char			*value;
-}	t_ast;
-
+# include "./structs.h"
 /*	builtin	*/
 char		*ft_cd(char *path, t_env **env);
 void		ft_echo(char *str, int arg);
@@ -72,6 +37,7 @@ int			search_var(t_env *env, char *var);
 
 /*	parser.c	*/
 t_line		*tokens_do(char *str_line, t_tokens	*tokens);
+t_ast		*parse(t_ast *ast, t_line **tokens);
 
 /*	parser_utils.	*/
 int			parser_triple_redirects(t_tokens *tokens, int idx, int do_print);
@@ -98,6 +64,7 @@ t_line		*expand_env_var(t_line **line);
 void		print_operator(t_operators op);
 void		print_tokens(t_tokens *tk);
 void		print_line(t_line *line);
+void		print_ast(t_ast *ast);
 
 /*	exec.c		*/
 t_env		*ft_exec(t_line *line, t_env *env);
@@ -112,4 +79,7 @@ t_env		*delete_item(t_env **env, char *name);
 void		sig_init(void);
 void		sig_ctrl_d(void);
 
+/*	ast.c	*/
+int			get_ast_array_size(t_line **tokens);
+t_ast		*ast_new_node(t_node_type type, char *value);
 #endif
