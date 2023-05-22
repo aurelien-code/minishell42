@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 12:30:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/05/04 15:20:49 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/05/17 13:10:04 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_tokens	*tokens;
+	t_tokens	*tokens_chars;
+	t_line		*tokens_words;
 	char		*str_line;
-	t_line		*line_parsed;
 	t_env		*ll_env;
 
 	(void)argv;
@@ -31,9 +31,11 @@ int	main(int argc, char **argv, char **envp)
 		str_line = ft_prompt();
 		if (str_line)
 		{
-			tokens = lexer(str_line);
-			line_parsed = parse(str_line, tokens);
-			ll_env = ft_exec(line_parsed, ll_env);
+			tokens_chars = lexer(str_line);
+			tokens_words = tokens_do(str_line, tokens_chars);
+			//ll_env = ft_exec(tokens_words, ll_env);
+			(void)ll_env;
+			print_line(tokens_words);
 		}
 		else
 			sig_ctrl_d();

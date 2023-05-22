@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/05/04 15:20:31 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/05/17 13:06:38 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,14 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+typedef struct s_ast
+{
+	t_node_type		type;
+	struct s_ast	*left;
+	struct s_ast	*right;
+	char			*value;
+}	t_ast;
+
 /*	builtin	*/
 char		*ft_cd(char *path, t_env **env);
 void		ft_echo(char *str, int arg);
@@ -58,11 +66,12 @@ char		*ft_pwd(void);
 t_env		*ft_export(t_env *env, char *var);
 t_env		*ft_unset(t_env **env, char *var);
 void		ft_env(t_env *env);
+
 /** builtin - utils **/
 int			search_var(t_env *env, char *var);
 
 /*	parser.c	*/
-t_line		*parse(char *str_line, t_tokens	*tokens);
+t_line		*tokens_do(char *str_line, t_tokens	*tokens);
 
 /*	parser_utils.	*/
 int			parser_triple_redirects(t_tokens *tokens, int idx, int do_print);

@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 13:55:52 by aumarin           #+#    #+#             */
-/*   Updated: 2023/03/21 15:54:11 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/05/17 13:06:15 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,13 @@ typedef enum e_operators
 	FILE_ = 8,
 	BUILTIN = 9
 }	t_operators;
+
+typedef enum e_node_type
+{
+	NODE_COMMAND,
+	NODE_PIPE,
+	NODE_REDIRECT_IN,
+	NODE_REDIRECT_OUT
+}	t_node_type;
 
 #endif

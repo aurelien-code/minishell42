@@ -6,7 +6,7 @@
 #    By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/07 22:33:15 by aumarin           #+#    #+#              #
-#    Updated: 2023/05/04 14:22:51 by aumarin          ###   ########.fr        #
+#    Updated: 2023/05/17 12:51:10 by aumarin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,11 +18,13 @@ MOBJ	=	$(MSRC:.c=.o)
 SRC		= 	src/parser/parser.c \
 			src/parser/lexer.c \
 			src/parser/parser_utils.c \
+			src/parser/tokens.c \
 			src/prompt.c \
 			src/line.c \
 			src/expand.c \
 			src/exec.c \
 			src/ll_env.c \
+			src/sig.c \
 			src/built/cd.c \
 			src/built/echo.c \
 			src/built/pwd.c \
@@ -30,7 +32,6 @@ SRC		= 	src/parser/parser.c \
 			src/built/unset.c \
 			src/built/utils.c \
 			src/built/env.c \
-			src/sig.c \
 			debug/print_utils.c \
 			debug/print_env.c
 OBJ		=	$(SRC:.c=.o)
