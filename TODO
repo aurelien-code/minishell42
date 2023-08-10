@@ -1,9 +1,0 @@
-!!
-
-- Put correct op on expansion
-	FILE
-- Implement executor
-- Implement heredocs
-- Tests
-	Line.c
-	Parser.c
