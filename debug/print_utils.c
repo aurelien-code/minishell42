@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 18:22:47 by aumarin           #+#    #+#             */
-/*   Updated: 2023/05/22 17:49:55 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/05/24 21:11:37 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,9 @@ void	print_ast(t_ast *ast)
 	int	i;
 
 	i = 0;
-	while (ast[i].type)
+	if (!ast)
+		return ;
+	while (ast[i].type && ast[i].type <= 6)
 	{
 		printf("ast[%d].type: %d ; .value: %s\n", i, ast[i].type, ast[i].value);
 		if (ast[i].left)

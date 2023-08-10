@@ -6,12 +6,11 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 12:30:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/05/22 18:49:48 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/08/10 16:51:01 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -34,12 +33,16 @@ int	main(int argc, char **argv, char **envp)
 		if (str_line)
 		{
 			tokens_chars = lexer(str_line);
-			tokens_words = tokens_do(str_line, tokens_chars);
+			tokens_words = NULL;
+			if (!tokens_words)
+				continue ;
 			ast = ft_calloc(get_ast_array_size(&tokens_words), sizeof(t_ast));
 			print_ast(parse(ast, &tokens_words));
+			(void)tokens_chars;
 		}
 		else
 			sig_ctrl_d();
+		//return (0);
 	}
 	rl_clear_history();
 	return (0);

@@ -1,5 +1,6 @@
 {
     "C_Cpp.errorSquiggles": "disabled",
+	"editor.tabSize": 4,
     "files.exclude": {
 		"**/*.o": true //Hide all object files
 	},

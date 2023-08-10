@@ -6,7 +6,7 @@
 #    By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/07 22:33:15 by aumarin           #+#    #+#              #
-#    Updated: 2023/05/22 13:10:40 by aumarin          ###   ########.fr        #
+#    Updated: 2023/08/10 16:49:30 by aumarin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,9 +17,10 @@ MOBJ	=	$(MSRC:.c=.o)
 
 SRC		= 	src/parser/parser.c \
 			src/parser/lexer.c \
-			src/parser/parser_utils.c \
-			src/parser/tokens.c \
+			src/parser/utils.c \
 			src/parser/ast.c \
+			src/parser/quotes.c \
+			src/parser/redirects.c \
 			src/prompt.c \
 			src/line.c \
 			src/expand.c \
@@ -37,11 +38,6 @@ SRC		= 	src/parser/parser.c \
 			debug/print_env.c
 OBJ		=	$(SRC:.c=.o)
 
-TST_SRC =	tests/tst_main.c \
-			munit/munit.c \
-			tests/tst_parser.c \
-			tests/tst_line.c
-TST_OBJ =	$(TST_SRC:.c=.o) 
 
 C_FLAGS	=	-Wall -Wextra -Werror -g3
 RD_FLAG = -lreadline
@@ -57,11 +53,6 @@ all: $(NAME)
 	@$(CC) -o $@ -c $< $(C_FLAGS) -I ./inc/
 
 $(NAME): $(MOBJ) $(OBJ)
-	@echo "\033[0;33mlinking... \033[0;37m"	
-	@make -C $(LIBFT_DIR)
-	@$(CC)  $(C_FLAGS) -o $@ $^ ./libft/libft.a $(RD_FLAG)
-
-test: $(TST_OBJ) $(OBJ)
 	@echo "\033[0;33mlinking... \033[0;37m"	
 	@make -C $(LIBFT_DIR)
 	@$(CC)  $(C_FLAGS) -o $@ $^ ./libft/libft.a $(RD_FLAG)

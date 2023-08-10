@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 12:54:26 by aumarin           #+#    #+#             */
-/*   Updated: 2023/05/22 17:40:06 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/05/24 12:02:28 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_ast	*ast_new_node(t_node_type type, char *value)
 	node->type = type;
 	node->left = NULL;
 	node->right = NULL;
+	node->result = NULL;
 	node->value = ft_strdup(value);
 	return (node);
 }

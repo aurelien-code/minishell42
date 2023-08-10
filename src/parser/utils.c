@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_utils.c                                     :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 12:18:06 by aumarin           #+#    #+#             */
-/*   Updated: 2023/03/24 04:51:12 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/06/07 18:16:09 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,52 @@ void	convert_str_builtin(t_line **line)
 		*line = (*line)->next;
 	}
 	*line = tmp;
+}
+
+char	*t_operators_to_string(t_operators op)
+{
+	if (op == ENV_VAR)
+		return ("ENV_VAR");
+	else if (op == STR)
+		return ("STR");
+	else if (op == FILE_)
+		return ("FILE_");
+	else if (op == BUILTIN)
+		return ("GREAT");
+	else if (op == DOUBLE_R_REDIRECT)
+		return ("DOUBLE_R_REDIRECT");
+	else if (op == DOUBLE_L_REDIRECT)
+		return ("DOUBLE_L_REDIRECT");
+	else if (op == SINGLE_R_REDIRECT)
+		return ("SINGLE_R_REDIRECT");
+	else if (op == SINGLE_L_REDIRECT)
+		return ("SINGLE_L_REDIRECT");
+	else if (op == PIPE_)
+		return ("PIPE_");
+	else
+		return (NULL);
+}
+
+t_operators	string_to_t_operators(char *str)
+{
+	if (ft_strncmp(str, "ENV_VAR", 7) == 0)
+		return (ENV_VAR);
+	else if (ft_strncmp(str, "STR", 3) == 0)
+		return (STR);
+	else if (ft_strncmp(str, "FILE_", 5) == 0)
+		return (FILE_);
+	else if (ft_strncmp(str, "BUILTIN", 7) == 0)
+		return (BUILTIN);
+	else if (ft_strncmp(str, "DOUBLE_R_REDIRECT", 17) == 0)
+		return (DOUBLE_R_REDIRECT);
+	else if (ft_strncmp(str, "DOUBLE_L_REDIRECT", 17) == 0)
+		return (DOUBLE_L_REDIRECT);
+	else if (ft_strncmp(str, "SINGLE_R_REDIRECT", 17) == 0)
+		return (SINGLE_R_REDIRECT);
+	else if (ft_strncmp(str, "SINGLE_L_REDIRECT", 17) == 0)
+		return (SINGLE_L_REDIRECT);
+	else if (ft_strncmp(str, "PIPE_", 5) == 0)
+		return (PIPE_);
+	else
+		return (0);
 }

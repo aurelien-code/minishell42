@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:59:13 by aumarin           #+#    #+#             */
-/*   Updated: 2023/05/22 15:13:21 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/06/07 18:45:06 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,13 @@ typedef struct s_ast
 	struct s_ast	*left;
 	struct s_ast	*right;
 	char			*value;
+	char			*result;
 }	t_ast;
+
+typedef struct s_tkobj
+{
+	char			*str;
+	int				id;
+}	t_tkobj;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/05/22 18:43:08 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/06/07 18:16:56 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,12 @@ void		sig_ctrl_d(void);
 /*	ast.c	*/
 int			get_ast_array_size(t_line **tokens);
 t_ast		*ast_new_node(t_node_type type, char *value);
+
+/*  quotes.c    */
+int			check_unclosed(t_tokens *tokens, int tmp, t_tokens quote);
+char		*tokens_redirects(char *str_line, t_tokens *tokens, int *idx);
+
+char		*t_operators_to_string(t_operators op);
+t_operators	string_to_t_operators(char *str);
+
 #endif
