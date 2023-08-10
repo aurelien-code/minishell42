@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/06/07 18:16:56 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/08/10 17:22:59 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,34 +35,17 @@ void		ft_env(t_env *env);
 /** builtin - utils **/
 int			search_var(t_env *env, char *var);
 
-/*	parser.c	*/
-t_line		*tokens_do(char *str_line, t_tokens	*tokens);
-t_ast		*parse(t_ast *ast, t_line **tokens);
-
-/*	parser_utils.	*/
-int			parser_triple_redirects(t_tokens *tokens, int idx, int do_print);
-void		convert_str_builtin(t_line **line);
-
-/*	line.c		*/
-t_line		*new_line_item(t_line **head, t_operators type, char *value);
-
 /*  prompt.c    */
 char		*ft_prompt(void);
 
 /*	DEBUG	*/
-void		print_operator(t_operators op);
 void		print_env(char **envp);
 void		print_var(char **envp, char *var);
-
-/*	lexer.c		*/
-t_tokens	*lexer(char *str);
 
 /*	expand.c	*/
 t_line		*expand_env_var(t_line **line);
 
 /*	DEBUG		*/
-void		print_operator(t_operators op);
-void		print_tokens(t_tokens *tk);
 void		print_line(t_line *line);
 void		print_ast(t_ast *ast);
 
@@ -78,16 +61,5 @@ t_env		*delete_item(t_env **env, char *name);
 /*	sig.c		*/
 void		sig_init(void);
 void		sig_ctrl_d(void);
-
-/*	ast.c	*/
-int			get_ast_array_size(t_line **tokens);
-t_ast		*ast_new_node(t_node_type type, char *value);
-
-/*  quotes.c    */
-int			check_unclosed(t_tokens *tokens, int tmp, t_tokens quote);
-char		*tokens_redirects(char *str_line, t_tokens *tokens, int *idx);
-
-char		*t_operators_to_string(t_operators op);
-t_operators	string_to_t_operators(char *str);
 
 #endif

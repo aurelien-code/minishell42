@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:59:13 by aumarin           #+#    #+#             */
-/*   Updated: 2023/06/07 18:45:06 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/08/10 17:22:28 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 typedef struct s_line
 {
-	t_operators		type;
 	char			*value;
 	struct s_line	*next;
 }	t_line;
@@ -29,7 +28,6 @@ typedef struct s_env
 
 typedef struct s_ast
 {
-	t_node_type		type;
 	struct s_ast	*left;
 	struct s_ast	*right;
 	char			*value;

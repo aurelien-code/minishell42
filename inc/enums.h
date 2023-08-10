@@ -6,24 +6,13 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 13:55:52 by aumarin           #+#    #+#             */
-/*   Updated: 2023/05/22 18:13:49 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/08/10 17:19:51 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENUMS_H
 # define ENUMS_H
 
-typedef enum e_tokens
-{
-	LESS = 1,
-	GREAT = 2,
-	PIPE = 3,
-	QUOTE = 4,
-	DOUBLE_QUOTE = 5,
-	DOLLAR = 6,
-	SPC = 7,
-	CHAR = 8
-}	t_tokens;
 
 typedef enum e_builtins
 {
@@ -35,28 +24,5 @@ typedef enum e_builtins
 	ENV = 6,
 	EXIT = 7
 }	t_builtins;
-
-typedef enum e_operators
-{
-	SINGLE_L_REDIRECT = 1,
-	SINGLE_R_REDIRECT = 2,
-	DOUBLE_L_REDIRECT = 3,
-	DOUBLE_R_REDIRECT = 4,
-	ENV_VAR = 5,
-	PIPE_ = 6,
-	STR = 7,
-	FILE_ = 8,
-	BUILTIN = 9
-}	t_operators;
-
-typedef enum e_node_type
-{
-	NODE_CMD = 1,
-	NODE_PIPE = 2,
-	NODE_REDIRECT_S_IN = 3,
-	NODE_REDIRECT_S_OUT = 4,
-	NODE_REDIRECT_D_IN = 5,
-	NODE_REDIRECT_D_OUT = 6
-}	t_node_type;
 
 #endif

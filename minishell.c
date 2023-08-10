@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 12:30:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/08/10 16:51:01 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/08/10 17:19:16 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,8 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_tokens	*tokens_chars;
-	t_line		*tokens_words;
 	char		*str_line;
 	t_env		*ll_env;
-	t_ast		*ast;
 
 	(void)argv;
 	if (!envp || argc > 1)
@@ -30,19 +27,8 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		str_line = ft_prompt();
-		if (str_line)
-		{
-			tokens_chars = lexer(str_line);
-			tokens_words = NULL;
-			if (!tokens_words)
-				continue ;
-			ast = ft_calloc(get_ast_array_size(&tokens_words), sizeof(t_ast));
-			print_ast(parse(ast, &tokens_words));
-			(void)tokens_chars;
-		}
-		else
+		if (!str_line)
 			sig_ctrl_d();
-		//return (0);
 	}
 	rl_clear_history();
 	return (0);

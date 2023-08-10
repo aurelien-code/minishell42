@@ -6,7 +6,7 @@
 #    By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/07 22:33:15 by aumarin           #+#    #+#              #
-#    Updated: 2023/08/10 16:49:30 by aumarin          ###   ########.fr        #
+#    Updated: 2023/08/10 17:24:45 by aumarin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,16 +15,7 @@ NAME	=	minishell
 MSRC	=	minishell.c	# main
 MOBJ	=	$(MSRC:.c=.o)
 
-SRC		= 	src/parser/parser.c \
-			src/parser/lexer.c \
-			src/parser/utils.c \
-			src/parser/ast.c \
-			src/parser/quotes.c \
-			src/parser/redirects.c \
-			src/prompt.c \
-			src/line.c \
-			src/expand.c \
-			src/exec.c \
+SRC		= 	src/prompt.c \
 			src/ll_env.c \
 			src/sig.c \
 			src/built/cd.c \
@@ -34,8 +25,7 @@ SRC		= 	src/parser/parser.c \
 			src/built/unset.c \
 			src/built/utils.c \
 			src/built/env.c \
-			debug/print_utils.c \
-			debug/print_env.c
+
 OBJ		=	$(SRC:.c=.o)
 
 
