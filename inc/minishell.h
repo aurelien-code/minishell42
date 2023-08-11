@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/08/10 17:22:59 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/08/10 18:31:45 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,10 @@ char		*ft_prompt(void);
 void		print_env(char **envp);
 void		print_var(char **envp, char *var);
 
-/*	expand.c	*/
-t_line		*expand_env_var(t_line **line);
-
 /*	DEBUG		*/
 void		print_line(t_line *line);
 void		print_ast(t_ast *ast);
 
-/*	exec.c		*/
-t_env		*ft_exec(t_line *line, t_env *env);
 
 /*	ll_env.c	*/
 t_env		*convert_env(char **envp);
@@ -61,5 +56,8 @@ t_env		*delete_item(t_env **env, char *name);
 /*	sig.c		*/
 void		sig_init(void);
 void		sig_ctrl_d(void);
+
+/*  lexer.c     */
+t_lexer		*lexer(char *prompt_line);
 
 #endif

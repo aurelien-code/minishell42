@@ -6,7 +6,7 @@
 #    By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/07 22:33:15 by aumarin           #+#    #+#              #
-#    Updated: 2023/08/10 17:24:45 by aumarin          ###   ########.fr        #
+#    Updated: 2023/08/10 18:28:59 by aumarin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRC		= 	src/prompt.c \
 			src/built/unset.c \
 			src/built/utils.c \
 			src/built/env.c \
+			src/parser/lexer.c
 
 OBJ		=	$(SRC:.c=.o)
 

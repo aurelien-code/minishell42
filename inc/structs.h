@@ -6,12 +6,21 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:59:13 by aumarin           #+#    #+#             */
-/*   Updated: 2023/08/10 17:22:28 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/08/10 18:34:17 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
+
+# include "./enums.h"
+
+typedef struct s_lexer
+{
+	t_lexer_enum		type;
+	char				value;
+	struct s_lexer		*next;
+}	t_lexer;
 
 typedef struct s_line
 {
