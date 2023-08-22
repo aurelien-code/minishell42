@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 13:55:52 by aumarin           #+#    #+#             */
-/*   Updated: 2023/08/11 15:32:02 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/08/14 15:50:24 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,16 @@ typedef enum e_lexer_enum
 	REDIRECT = 4,
 	EXPAND = 5
 }	t_lexer_enum;
+
+typedef enum e_tokens_enum
+{
+	T_PIPE = 1,
+	D_REDIR_L,
+	D_REDIR_R,
+	S_REDIR_L,
+	S_REDIR_R,
+	TOKEN,
+}	t_tokens_enum;
 
 typedef enum e_builtins
 {

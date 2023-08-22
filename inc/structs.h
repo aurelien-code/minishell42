@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:59:13 by aumarin           #+#    #+#             */
-/*   Updated: 2023/08/11 16:17:08 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/08/14 15:51:44 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,12 @@ typedef struct s_lexer
 	char				value;
 }	t_lexer;
 
-typedef struct s_line
+typedef struct s_tokens
 {
 	char			*value;
-	struct s_line	*next;
-}	t_line;
+	t_tokens_enum	type;
+	struct s_tokens *next;
+}	t_tokens;
 
 typedef struct s_env
 {
@@ -33,19 +34,5 @@ typedef struct s_env
 	char			*value;
 	struct s_env	*next;
 }	t_env;
-
-typedef struct s_ast
-{
-	struct s_ast	*left;
-	struct s_ast	*right;
-	char			*value;
-	char			*result;
-}	t_ast;
-
-typedef struct s_tkobj
-{
-	char			*str;
-	int				id;
-}	t_tkobj;
 
 #endif

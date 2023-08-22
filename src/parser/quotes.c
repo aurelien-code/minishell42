@@ -1,36 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokens.c                                           :+:      :+:    :+:   */
+/*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/11 15:58:13 by aumarin           #+#    #+#             */
-/*   Updated: 2023/08/14 16:28:32 by aumarin          ###   ########.fr       */
+/*   Created: 2023/08/11 17:08:01 by aumarin           #+#    #+#             */
+/*   Updated: 2023/08/14 17:56:23 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	get_tokens(t_lexer *lexer_arr)
+int			is_quote_closed(t_lexer lexer_arr, int idx)
 {
-	int			i;
-	t_tokens	*tokens;
+	char	quote;
 
-	tokens = NULL;
-	i = 0;
+	if (lexer_arr[i].type == QUOTE)
+		quote = lexer_arr[i].value;
+	else
+		return (0);
 	while (lexer_arr[i].value)
 	{
-		if (lexer_arr[i].type == QUOTE)
-			//do_quote;
-		else if (lexer_arr[i].type == PIPE)
-			//add token pipe
-		else if (lexer_arr[i].type == REDIRECT)
-			//do_redirect
-		else if (lexer_arr[i].type == EXPAND)
-			//do_expand
-		else
-			//do normal, recherche d'espace et du coup du token.
+		if (lexer[i].value == quote)
+			return (1);
 		i++;
 	}
+	return (0);
+}
+
+t_tokens	*get_quote_tokens(t_lexer lexer_arr, int idx, t_tokens **tokens)
+{
+	if (!lexer_arr)
+		return (NULL);
+	
 }

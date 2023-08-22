@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/08/10 18:31:45 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/08/11 16:41:50 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,6 @@ int			search_var(t_env *env, char *var);
 
 /*  prompt.c    */
 char		*ft_prompt(void);
-
-/*	DEBUG	*/
-void		print_env(char **envp);
-void		print_var(char **envp, char *var);
-
-/*	DEBUG		*/
-void		print_line(t_line *line);
-void		print_ast(t_ast *ast);
-
 
 /*	ll_env.c	*/
 t_env		*convert_env(char **envp);
