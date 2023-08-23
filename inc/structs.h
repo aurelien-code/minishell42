@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:59:13 by aumarin           #+#    #+#             */
-/*   Updated: 2023/08/14 15:51:44 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/08/23 00:37:10 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct s_tokens
 {
 	char			*value;
 	t_tokens_enum	type;
-	struct s_tokens *next;
+	struct s_tokens	*next;
 }	t_tokens;
 
 typedef struct s_env

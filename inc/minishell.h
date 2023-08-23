@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/08/11 16:41:50 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/08/23 12:56:13 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,17 @@ void		sig_ctrl_d(void);
 
 /*  lexer.c     */
 t_lexer		*lexer(char *prompt_line);
+char		*substr_lexer(t_lexer *lexer_arr, int start, int stop);
+
+/*	quotes.c	*/
+t_tokens	*get_quote_tokens(t_lexer *lexer_arr, int *i);
+
+/*	tokens.c	*/
+void		get_tokens(t_lexer *lexer_arr);
+t_tokens	*new_token_item(char *str, t_tokens_enum type);
+
+/*	expand.c	*/
+char		*expand(t_lexer *lexer_arr, int i);
+
 
 #endif

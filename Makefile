@@ -6,7 +6,7 @@
 #    By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/07 22:33:15 by aumarin           #+#    #+#              #
-#    Updated: 2023/08/11 15:58:53 by aumarin          ###   ########.fr        #
+#    Updated: 2023/08/23 10:55:27 by aumarin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ SRC		= 	src/prompt.c \
 			src/built/utils.c \
 			src/built/env.c \
 			src/parser/lexer.c \
-			src/parser/tokens.c
+			src/parser/tokens.c \
+			src/parser/quotes.c
 
 OBJ		=	$(SRC:.c=.o)
 
@@ -41,7 +42,7 @@ LIBFT_DIR = ./libft/
 all: $(NAME)
 
 .c.o:
-	@echo "\033[0;33mcompiling... \033[0;37m"
+	@echo "\033[0;33mcompiling $< \033[0;37m"
 	@$(CC) -o $@ -c $< $(C_FLAGS) -I ./inc/
 
 $(NAME): $(MOBJ) $(OBJ)

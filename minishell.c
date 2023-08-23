@@ -6,11 +6,13 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 12:30:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/08/11 16:22:13 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/08/23 12:46:33 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_exit_code = 0;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -33,6 +35,7 @@ int	main(int argc, char **argv, char **envp)
 		lexer_line = lexer(prompt_line);
 		if (!lexer_line)
 			printf("lexer_line is NULL\n");
+		get_tokens(lexer_line);
 	}
 	(void)lexer_line;
 	rl_clear_history();

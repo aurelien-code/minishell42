@@ -6,11 +6,30 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:51:15 by aumarin           #+#    #+#             */
-/*   Updated: 2023/08/11 16:17:56 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/08/23 12:48:30 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*substr_lexer(t_lexer *lexer_arr, int start, int stop)
+{
+	char	*str;
+	int		i;
+
+	if (!lexer_arr)
+		return (NULL);
+	i = 0;
+	str = ft_calloc(stop - start, sizeof(char *));
+	if (!str)
+		return (NULL);
+	while (i < stop - start - 1)
+	{
+		str[i] = lexer_arr[start + i + 1].value;
+		i++;
+	}
+	return (str);
+}
 
 t_lexer	*lexer(char *prompt_line)
 {
