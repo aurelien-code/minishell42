@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/08/23 12:56:13 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/08/24 03:47:52 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include "./strings.h"
 # include "./enums.h"
 # include "./structs.h"
+
 /*	builtin	*/
 char		*ft_cd(char *path, t_env **env);
 void		ft_echo(char *str, int arg);
@@ -61,6 +62,5 @@ t_tokens	*new_token_item(char *str, t_tokens_enum type);
 
 /*	expand.c	*/
 char		*expand(t_lexer *lexer_arr, int i);
-
 
 #endif

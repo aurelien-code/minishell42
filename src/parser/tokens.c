@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:58:13 by aumarin           #+#    #+#             */
-/*   Updated: 2023/08/23 12:48:49 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/08/23 14:25:44 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,21 @@ void	get_tokens(t_lexer *lexer_arr)
 	{
 		if (lexer_arr[i].type == QUOTE)
 			append_token(&tokens, get_quote_tokens(lexer_arr, &i));
-		/*
 		else if (lexer_arr[i].type == EXPAND)
+			expand(lexer_arr, i);
+		/*
 		else if (lexer_arr[i].type == PIPE)
 		else if (lexer_arr[i].type == REDIRECT)
 		else
 		*/
 		i++;
+	}
+	i = 0;
+	while (tokens)
+	{	
+		printf("v = %s | t = %d | n = %p\n", tokens->value, tokens->type,
+			tokens->next);
+		i++;
+		tokens = tokens->next;
 	}
 }
