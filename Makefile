@@ -6,7 +6,7 @@
 #    By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/07 22:33:15 by aumarin           #+#    #+#              #
-#    Updated: 2023/08/23 15:35:47 by aumarin          ###   ########.fr        #
+#    Updated: 2023/08/25 10:16:50 by aumarin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,8 @@ SRC		= 	src/prompt.c \
 			src/parser/lexer.c \
 			src/parser/tokens.c \
 			src/parser/quotes.c \
-			src/parser/expand.c
+			src/parser/expand.c \
+			src/parser/redirects.c
 
 OBJ		=	$(SRC:.c=.o)
 

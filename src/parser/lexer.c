@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:51:15 by aumarin           #+#    #+#             */
-/*   Updated: 2023/08/23 12:48:30 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/08/25 10:56:01 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_lexer	*lexer(char *prompt_line)
 	int		i;
 	t_lexer	*lexer;
 
-	if (!prompt_line)
+	if (!prompt_line || ft_strlen(prompt_line) < 1)
 		return (NULL);
 	i = 0;
 	lexer = ft_calloc(ft_strlen(prompt_line), sizeof(t_lexer));
