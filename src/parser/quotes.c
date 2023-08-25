@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 17:08:01 by aumarin           #+#    #+#             */
-/*   Updated: 2023/08/25 11:01:14 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/08/25 11:21:16 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ t_tokens	*get_quote_token(t_lexer *lexer_arr, int *i)
 	if (!is_quote_closed(lexer_arr, *i))
 	{
 		lexer_arr[*i].type = NORMAL;
+		(*i)--;
 		return (NULL);
 	}
 	while (lexer_arr[j].value)

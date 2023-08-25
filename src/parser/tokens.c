@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:58:13 by aumarin           #+#    #+#             */
-/*   Updated: 2023/08/25 11:12:44 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/08/26 00:29:31 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,22 @@ t_tokens	*get_word_token(t_lexer *lexer_arr, int *i)
 		str = ft_strjoin(str, &lexer_arr[*i].value);
 		(*i)++;
 	}
+	if (lexer_arr[*i].value != ' ')
+		(*i)--;
 	if (str)
 		return (new_token_item(str, TOKEN));
 	else
 		return (NULL);
+}
+
+void	dbg_print_tokens(t_tokens *tokens)
+{
+	while (tokens)
+	{	
+		printf("v = %s | t = %d | n = %p\n", tokens->value, tokens->type,
+			tokens->next);
+		tokens = tokens->next;
+	}
 }
 
 void	get_tokens(t_lexer *lexer_arr)
@@ -81,12 +93,5 @@ void	get_tokens(t_lexer *lexer_arr)
 			append_token(&tokens, get_word_token(lexer_arr, &i));
 		i++;
 	}
-	i = 0;
-	while (tokens)
-	{	
-		printf("v = %s | t = %d | n = %p\n", tokens->value, tokens->type,
-			tokens->next);
-		i++;
-		tokens = tokens->next;
-	}
+	dbg_print_tokens(tokens);
 }

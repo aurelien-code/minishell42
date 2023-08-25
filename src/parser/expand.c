@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:43:39 by aumarin           #+#    #+#             */
-/*   Updated: 2023/08/25 11:02:04 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/08/26 00:37:14 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,30 @@
 
 extern int	g_exit_code;
 
-t_tokens	*expand(t_lexer *lexer_arr, int *i)
+t_tokens	*expand(t_lexer	*lexer_arr, int	*i)
 {
-	int			j;
-	t_tokens	*token;
+	int		j;
+	char	*new_str;
 
-	j = 0;
-	if (lexer_arr[*i].type != EXPAND)
-		return (NULL);
-	if (lexer_arr[*i + 1].value == '?')
-		return (new_token_item(ft_itoa(g_exit_code), TOKEN));
-	while (lexer_arr[*i + j].value && lexer_arr[*i].type == EXPAND)
+	new_str = NULL;
+	j = (*i) + 1;
+	if (lexer_arr[j].value == '?')
 	{
-		j++;
-		if (lexer_arr[*i + j].value == ' ' || lexer_arr[*i + j].value == '\0')
-		{
-			token = new_token_item(getenv(substr_lexer(lexer_arr, *i, *i + j)),
-					TOKEN);
-			(*i) = j - 1;
-			return (token);
-		}
+		(*i)++;
+		return (new_token_item(ft_itoa(g_exit_code), TOKEN));
 	}
-	return (NULL);
+	if (lexer_arr[*i].value == '$')
+	{
+		while (lexer_arr[j].value && \
+			lexer_arr[j].value != ' ' && \
+			lexer_arr[j].value != '$' && \
+			lexer_arr[j].type == NORMAL)
+			j++;
+		new_str = ft_strjoin(new_str, \
+				getenv(substr_lexer(lexer_arr, *i, j)));
+		*i = j - 1;
+	}
+	if (lexer_arr[*i].value != '$')
+		new_str = ft_strjoin(new_str, substr_lexer(lexer_arr, *i, 1));
+	return (new_token_item(new_str, TOKEN));
 }
