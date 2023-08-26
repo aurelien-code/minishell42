@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:58:13 by aumarin           #+#    #+#             */
-/*   Updated: 2023/08/26 00:29:31 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/08/26 14:22:00 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,14 @@ void	append_token(t_tokens **tokens, t_tokens *new_elem)
 t_tokens	*get_word_token(t_lexer *lexer_arr, int *i)
 {
 	char	*str;
+	char	*tmp;
 
 	str = NULL;
 	while (lexer_arr[*i].type == NORMAL && lexer_arr[*i].value != ' ')
 	{
+		tmp = str;
 		str = ft_strjoin(str, &lexer_arr[*i].value);
+		free(tmp);
 		(*i)++;
 	}
 	if (lexer_arr[*i].value != ' ')
@@ -70,7 +73,7 @@ void	dbg_print_tokens(t_tokens *tokens)
 	}
 }
 
-void	get_tokens(t_lexer *lexer_arr)
+t_tokens	*get_tokens(t_lexer *lexer_arr)
 {
 	int			i;
 	t_tokens	*tokens;
@@ -78,7 +81,7 @@ void	get_tokens(t_lexer *lexer_arr)
 	tokens = NULL;
 	i = 0;
 	if (!lexer_arr)
-		return ;
+		return (NULL);
 	while (lexer_arr[i].value)
 	{
 		if (lexer_arr[i].type == QUOTE)
@@ -94,4 +97,5 @@ void	get_tokens(t_lexer *lexer_arr)
 		i++;
 	}
 	dbg_print_tokens(tokens);
+	return (tokens);
 }

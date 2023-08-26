@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 17:08:01 by aumarin           #+#    #+#             */
-/*   Updated: 2023/08/25 11:21:16 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/08/26 19:22:47 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,27 @@ int	is_quote_closed(t_lexer *lexer_arr, int i)
 	return (0);
 }
 
+char	*process_new_str(char *base_str, char *old_str, int i, int j)
+{
+	char	*tmp[2];
+	char	*new_str;
+
+	new_str = NULL;
+	tmp[0] = new_str;
+	tmp[1] = ft_substr(base_str, i, j);
+	if (j != 1)
+		new_str = ft_strjoin(old_str, getenv(tmp[1]));
+	else
+		new_str = ft_strjoin(old_str, tmp[1]);
+	if (tmp[0])
+		free(tmp[0]);
+	if (tmp[1])
+		free(tmp[1]);
+	if (old_str)
+		free(old_str);
+	return (new_str);
+}
+
 char	*expand_in_double_quote(char *str)
 {
 	int		i;
@@ -45,15 +66,16 @@ char	*expand_in_double_quote(char *str)
 			i++;
 			while (str[i + j] != ' ' && str[i + j] && str[i + j] != '$')
 				j++;
-			new_str = ft_strjoin(new_str, getenv(ft_substr(str, i, j)));
+			new_str = process_new_str(str, new_str, i, j);
 			i += j;
 		}
 		if (str[i] != '$')
 		{
-			new_str = ft_strjoin(new_str, ft_substr(str, i, 1));
+			new_str = process_new_str(str, new_str, i, 1);
 			i++;
 		}
 	}
+	free(str);
 	return (new_str);
 }
 
@@ -77,7 +99,7 @@ t_tokens	*get_quote_token(t_lexer *lexer_arr, int *i)
 		if (lexer_arr[j].value == lexer_arr[*i].value)
 		{
 			str = substr_lexer(lexer_arr, *i, j);
-			if (lexer_arr[*i].value == '"' && ft_strchr(str, '$'))
+			if (lexer_arr[*i].value == '"' && ft_strchr(str, '$') && str)
 				str = expand_in_double_quote(str);
 			(*i) = j;
 			return (new_token_item(str, TOKEN));

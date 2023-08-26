@@ -6,7 +6,7 @@
 #    By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/07 22:33:15 by aumarin           #+#    #+#              #
-#    Updated: 2023/08/25 10:16:50 by aumarin          ###   ########.fr        #
+#    Updated: 2023/08/26 13:37:44 by aumarin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ MOBJ	=	$(MSRC:.c=.o)
 SRC		= 	src/prompt.c \
 			src/ll_env.c \
 			src/sig.c \
+			src/free_memory.c \
 			src/built/cd.c \
 			src/built/echo.c \
 			src/built/pwd.c \
