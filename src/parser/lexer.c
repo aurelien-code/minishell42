@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:51:15 by aumarin           #+#    #+#             */
-/*   Updated: 2023/08/25 10:56:01 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/08/26 13:18:18 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*substr_lexer(t_lexer *lexer_arr, int start, int stop)
 	char	*str;
 	int		i;
 
-	if (!lexer_arr)
+	if (!lexer_arr || stop - start < 1)
 		return (NULL);
 	i = 0;
 	str = ft_calloc(stop - start, sizeof(char *));
@@ -39,7 +39,7 @@ t_lexer	*lexer(char *prompt_line)
 	if (!prompt_line || ft_strlen(prompt_line) < 1)
 		return (NULL);
 	i = 0;
-	lexer = ft_calloc(ft_strlen(prompt_line), sizeof(t_lexer));
+	lexer = ft_calloc(ft_strlen(prompt_line) + 1, sizeof(t_lexer));
 	if (!lexer)
 		return (NULL);
 	while (prompt_line[i] != '\0')
