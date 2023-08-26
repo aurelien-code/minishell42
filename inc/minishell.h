@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/08/26 13:37:17 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/08/27 00:29:09 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <readline/history.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <fcntl.h>
 # include <errno.h>
 # include <signal.h>
 # include "../libft/libft.h"
@@ -68,5 +69,8 @@ t_tokens	*get_redirect_token(t_lexer *lexer_arr, int *i);
 
 /*	free_memory.c */
 void		free_tokens(t_tokens *tokens);
+
+/*	history.c	*/
+int			write_history(const char *input);
 
 #endif
