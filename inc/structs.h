@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:59:13 by aumarin           #+#    #+#             */
-/*   Updated: 2023/08/23 00:37:10 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/06 09:07:49 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,22 @@ typedef struct s_env
 	char			*value;
 	struct s_env	*next;
 }	t_env;
+
+typedef struct s_redr
+{
+	t_tokens_enum	type;
+	char			*filename;
+	int				fd;
+}	t_redr;
+
+typedef struct s_cmd
+{
+	char			**cmd;
+	char			*res;
+	int				is_builtin;
+	struct s_redr	*redr_in;
+	struct s_redr	*redr_out;
+	struct s_cmd	*next;
+}	t_cmd;
 
 #endif

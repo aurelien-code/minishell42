@@ -1,0 +1,5 @@
+- modifier la fonction echo pour check direct dans la struct
+
+- tester que si on met le redirect in/out avant la commande ca marche
+
+
