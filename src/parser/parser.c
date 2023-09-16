@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 12:00:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/09/06 09:09:11 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/16 12:53:30 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,33 +39,8 @@ t_redr	*process_redirects(t_tokens **tokens, t_cmd **command)
 	{
 		if ((*tokens)->type > 1 && (*tokens)->type < 7)
 		{
-			if (!redirection)
-			{
-				redirection = ft_calloc(1, sizeof(t_redr));
-				if (!redirection)
-					return (NULL);
-				redirection->fd = -1;
-			}
-			redirection->type = (*tokens)->type;
-			*tokens = (*tokens)->next;
-			if (!*tokens || (*tokens)->type != TOKEN)
+			if (!handle_redirection(tokens, &redirection, command))
 				return (NULL);
-			redirection->filename = ft_strdup((*tokens)->value);
-			if (redirection->type == D_REDIR_L || \
-				redirection->type == S_REDIR_L)
-			{
-				if (!(*command)->redr_in)
-					(*command)->redr_in = redirection;
-				else
-					return (NULL);
-			}
-			else
-			{
-				if (!(*command)->redr_out)
-					(*command)->redr_out = redirection;
-				else
-					return (NULL);
-			}
 		}
 		*tokens = (*tokens)->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:17:04 by aumarin           #+#    #+#             */
-/*   Updated: 2023/08/26 02:09:14 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/16 12:53:25 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,32 @@ t_tokens	*get_redirect_token(t_lexer *lexer_arr, int *i)
 	else
 		return (handle_single_redirect(lexer_arr, i));
 	return (NULL);
+}
+
+int	handle_redirection(t_tokens **tokens, t_redr **redirection, t_cmd **command)
+{
+	if (!*redirection)
+	{
+		*redirection = ft_calloc(1, sizeof(t_redr));
+		if (!*redirection)
+			return (0);
+		(*redirection)->fd = -1;
+	}
+	(*redirection)->type = (*tokens)->type;
+	*tokens = (*tokens)->next;
+	if (!*tokens || (*tokens)->type != TOKEN)
+		return (0);
+	(*redirection)->filename = ft_strdup((*tokens)->value);
+	if ((*redirection)->type == D_REDIR_L || (*redirection)->type == S_REDIR_L)
+	{
+		if (!(*command)->redr_in)
+			(*command)->redr_in = *redirection;
+		else
+			return (0);
+	}
+	else if (!(*command)->redr_out)
+		(*command)->redr_out = *redirection;
+	else
+		return (0);
+	return (1);
 }
