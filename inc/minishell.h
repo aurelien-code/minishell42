@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/09/16 12:53:58 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/16 18:25:11 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <signal.h>
+# include <sys/wait.h>
 # include "../libft/libft.h"
 # include "./strings.h"
 # include "./enums.h"
@@ -77,5 +78,8 @@ int			write_history(const char *input);
 
 
 t_cmd		*parser(t_tokens *tokens);
+
+
+int			executer(t_cmd *cmds, char *env[]);
 
 #endif

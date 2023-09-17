@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 12:00:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/09/16 12:53:30 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/17 14:03:15 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 
 int	is_builtin(char *str)
 {
-	if (!ft_strncmp(str, "echo", 4))
+	if (!ft_strncmp(str, "echo", 5))
 		return (1);
-	else if (!ft_strncmp(str, "cd", 2))
-		return (1);
-	else if (!ft_strncmp(str, "env", 3))
-		return (1);
-	else if (!ft_strncmp(str, "export", 5))
-		return (1);
-	else if (!ft_strncmp(str, "pwd", 3))
-		return (1);
-	else if (!ft_strncmp(str, "unset", 5))
-		return (1);
+	else if (!ft_strncmp(str, "cd", 3))
+		return (2);
+	else if (!ft_strncmp(str, "env", 4))
+		return (3);
+	else if (!ft_strncmp(str, "export", 7))
+		return (4);
+	else if (!ft_strncmp(str, "pwd", 4))
+		return (5);
+	else if (!ft_strncmp(str, "unset", 6))
+		return (6);
 	else
 		return (0);
 }
@@ -92,6 +92,7 @@ t_cmd	*parser(t_tokens *tokens)
 	int			i;
 
 	i = 0;
+	cmds = NULL;
 	tmp = tokens;
 	while (tokens)
 	{
