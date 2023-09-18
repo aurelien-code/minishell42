@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/09/18 11:11:10 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/18 16:06:41 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,8 @@ void		free_tokens(t_tokens *tokens);
 int			write_history(const char *input);
 
 t_cmd		*parser(t_tokens *tokens);
+
+void		*throw_parsing_error(t_lexer *lex, t_tokens *tok, \
+			t_cmd *cmd, char *err);
 
 #endif

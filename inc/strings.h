@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 13:46:44 by aumarin           #+#    #+#             */
-/*   Updated: 2023/05/22 14:02:19 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/18 16:01:23 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,10 @@
 
 # ifndef UNCLOSE_QUOTE_ERR
 #  define UNCLOSE_QUOTE_ERR "Error: quote unclosed"
+# endif
+
+# ifndef TOO_MANY_REDIRS
+#  define TOO_MANY_REDIRS "too many redirection symbols"
 # endif
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:17:04 by aumarin           #+#    #+#             */
-/*   Updated: 2023/09/18 15:00:50 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/18 16:06:32 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,7 @@ t_tokens	*get_redirect_token(t_lexer *lexer_arr, int *i)
 	if (redir_size > 2)
 	{
 		(*i) = j - 1;
-		printf("Too many redirection symbols\n");
-		return (NULL);
+		return (throw_parsing_error(NULL, NULL, NULL, TOO_MANY_REDIRS));
 	}
 	else if (redir_size == 2)
 		return (handle_double_redirect(lexer_arr, i, j));

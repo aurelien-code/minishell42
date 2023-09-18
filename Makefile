@@ -6,7 +6,7 @@
 #    By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/07 22:33:15 by aumarin           #+#    #+#              #
-#    Updated: 2023/09/06 01:40:47 by aumarin          ###   ########.fr        #
+#    Updated: 2023/09/18 15:49:57 by aumarin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRC		= 	src/prompt.c \
 			src/sig.c \
 			src/handle_history.c \
 			src/free_memory.c \
+			src/errors.c \
 			src/built/cd.c \
 			src/built/echo.c \
 			src/built/pwd.c \
