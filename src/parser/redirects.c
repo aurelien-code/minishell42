@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:17:04 by aumarin           #+#    #+#             */
-/*   Updated: 2023/09/18 11:41:41 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/18 14:52:14 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ int	handle_redirection(t_tokens **tokens, t_cmd **command)
 				tmp = tmp->next;
 			tmp->next = new_redr;
 		}
-		printf("add in redirect\n");
 	}
 	else
 	{
@@ -103,7 +102,6 @@ int	handle_redirection(t_tokens **tokens, t_cmd **command)
 				tmp = tmp->next;
 			tmp->next = new_redr;
 		}
-		printf("add out redirect\n");
 	}
 	return (1);
 }

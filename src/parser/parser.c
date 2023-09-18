@@ -6,18 +6,25 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 12:00:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/09/18 12:31:03 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/18 14:51:26 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_builtin(char *str)
+int	is_builtin(t_tokens	*tokens)
 {
+	char	*str;
+
+	str = tokens->value;
 	if (!str)
 		return (0);
 	if (!ft_strncmp(str, "echo", 4))
+	{
+		if (!ft_strncmp(tokens->next->value, "-n", 2))
+			return (2);
 		return (1);
+	}
 	else if (!ft_strncmp(str, "cd", 2))
 		return (1);
 	else if (!ft_strncmp(str, "env", 3))
@@ -51,23 +58,23 @@ void	process_redirects(t_tokens **tokens, t_cmd **command)
 
 t_cmd	*process_command(t_tokens **tokens, int cmd_size)
 {
-	int			i;
 	t_cmd		*command;
+	int			i;
 
+	i = 0;
 	command = ft_calloc(1, sizeof(t_cmd));
 	command->cmd = ft_calloc(cmd_size + 1, sizeof(char *));
 	if (!command->cmd)
 		return (NULL);
-	i = 0;
 	while ((*tokens) && (*tokens)->type != T_PIPE)
 	{
-		if (i == 0)
-			command->is_builtin = is_builtin((*tokens)->value);
+		if (is_builtin(*tokens))
+			command->is_builtin = is_builtin(*tokens);
 		if ((*tokens)->type != T_PIPE && (*tokens)->type != TOKEN)
 			process_redirects(tokens, &command);
 		if ((*tokens) && (*tokens)->value)
 			command->cmd[i] = ft_strdup((*tokens)->value);
-		if (*tokens && (*tokens)->next)
+		if (*tokens)
 			*tokens = (*tokens)->next;
 		i++;
 	}
