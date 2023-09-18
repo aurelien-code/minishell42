@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:17:04 by aumarin           #+#    #+#             */
-/*   Updated: 2023/09/18 14:52:14 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/18 15:00:50 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,27 @@ t_tokens	*get_redirect_token(t_lexer *lexer_arr, int *i)
 	return (NULL);
 }
 
+static void	assign_redirection(t_cmd **command, t_redr *new_redr)
+{
+	t_redr	*tmp;
+
+	if (new_redr->type == D_REDIR_L || new_redr->type == S_REDIR_L)
+		tmp = (*command)->redr_in;
+	else
+		tmp = (*command)->redr_out;
+	if (!tmp)
+		tmp = new_redr;
+	else
+	{
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = new_redr;
+	}
+}
+
 int	handle_redirection(t_tokens **tokens, t_cmd **command)
 {
 	t_redr	*new_redr;
-	t_redr	*tmp;
 
 	new_redr = ft_calloc(1, sizeof(t_redr));
 	if (!new_redr)
@@ -79,29 +96,6 @@ int	handle_redirection(t_tokens **tokens, t_cmd **command)
 		return (0);
 	}
 	new_redr->filename = ft_strdup((*tokens)->value);
-	if (new_redr->type == D_REDIR_L || new_redr->type == S_REDIR_L)
-	{
-		if (!(*command)->redr_in)
-			(*command)->redr_in = new_redr;
-		else
-		{
-			tmp = (*command)->redr_in;
-			while (tmp->next)
-				tmp = tmp->next;
-			tmp->next = new_redr;
-		}
-	}
-	else
-	{
-		if (!(*command)->redr_out)
-			(*command)->redr_out = new_redr;
-		else
-		{
-			tmp = (*command)->redr_out;
-			while (tmp->next)
-				tmp = tmp->next;
-			tmp->next = new_redr;
-		}
-	}
+	assign_redirection(command, new_redr);
 	return (1);
 }
