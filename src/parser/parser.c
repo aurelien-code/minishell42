@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 12:00:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/09/16 12:53:30 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/18 12:31:03 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	is_builtin(char *str)
 {
+	if (!str)
+		return (0);
 	if (!ft_strncmp(str, "echo", 4))
 		return (1);
 	else if (!ft_strncmp(str, "cd", 2))
@@ -30,21 +32,21 @@ int	is_builtin(char *str)
 		return (0);
 }
 
-t_redr	*process_redirects(t_tokens **tokens, t_cmd **command)
+void	process_redirects(t_tokens **tokens, t_cmd **command)
 {
-	t_redr	*redirection;
+	t_tokens	*first_tokens;
 
-	redirection = NULL;
+	first_tokens = *tokens;
 	while (*tokens && (*tokens)->type != T_PIPE)
 	{
 		if ((*tokens)->type > 1 && (*tokens)->type < 7)
 		{
-			if (!handle_redirection(tokens, &redirection, command))
-				return (NULL);
+			if (!handle_redirection(tokens, command))
+				return ;
 		}
 		*tokens = (*tokens)->next;
 	}
-	return (redirection);
+	*tokens = first_tokens;
 }
 
 t_cmd	*process_command(t_tokens **tokens, int cmd_size)
@@ -57,14 +59,16 @@ t_cmd	*process_command(t_tokens **tokens, int cmd_size)
 	if (!command->cmd)
 		return (NULL);
 	i = 0;
-	while ((*tokens)->type != T_PIPE)
+	while ((*tokens) && (*tokens)->type != T_PIPE)
 	{
 		if (i == 0)
 			command->is_builtin = is_builtin((*tokens)->value);
 		if ((*tokens)->type != T_PIPE && (*tokens)->type != TOKEN)
 			process_redirects(tokens, &command);
-		command->cmd[i] = ft_strdup((*tokens)->value);
-		*tokens = (*tokens)->next;
+		if ((*tokens) && (*tokens)->value)
+			command->cmd[i] = ft_strdup((*tokens)->value);
+		if (*tokens && (*tokens)->next)
+			*tokens = (*tokens)->next;
 		i++;
 	}
 	return (command);
@@ -93,6 +97,7 @@ t_cmd	*parser(t_tokens *tokens)
 
 	i = 0;
 	tmp = tokens;
+	cmds = NULL;
 	while (tokens)
 	{
 		if (tokens->type == T_PIPE)
@@ -100,5 +105,7 @@ t_cmd	*parser(t_tokens *tokens)
 		tokens = tokens->next;
 		i++;
 	}
+	if (!cmds)
+		add_cmd_item(&cmds, process_command(&tmp, i));
 	return (cmds);
 }
