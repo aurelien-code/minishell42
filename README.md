@@ -5,7 +5,7 @@ Tout ce qui est barre a ete corrige sur la branche aumarin
 
 To fix :
   -  cat sans rien apres fait une infinite loop
-  -  cat avec un fichier derriere ne rend pas le prompt
+      refaire un cat par derriere avec un fichier derriere ne rend pas le prompt
   -  echo << test ~~fait segfault~~ ne lance pas heredoc
   -  les pipes ne fonctionnent pas (echo t | echo o -> doit print o mais print t), (cat x | grep y n'execute que cat x)
   -  exit renvoie exit : command not found
