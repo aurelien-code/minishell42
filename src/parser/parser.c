@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 12:00:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/09/19 15:39:02 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/19 16:59:32 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	is_builtin(t_tokens	*tokens)
 		return (0);
 	if (!ft_strncmp(str, "echo", 4))
 	{
-		if (!ft_strncmp(tokens->next->value, "-n", 2))
+		if (tokens->next->value && !ft_strncmp(tokens->next->value, "-n", 2))
 			return (2);
 		return (1);
 	}
