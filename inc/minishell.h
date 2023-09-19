@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/09/18 16:06:41 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/19 15:37:36 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <signal.h>
+# include <sys/wait.h>
 # include "../libft/libft.h"
 # include "./strings.h"
 # include "./enums.h"
@@ -75,6 +76,12 @@ void		free_tokens(t_tokens *tokens);
 int			write_history(const char *input);
 
 t_cmd		*parser(t_tokens *tokens);
+
+
+int			executer(t_cmd *cmds, char *env[]);
+
+
+int			executer(t_cmd *cmds, char *env[]);
 
 void		*throw_parsing_error(t_lexer *lex, t_tokens *tok, \
 			t_cmd *cmd, char *err);

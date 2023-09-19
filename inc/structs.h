@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:59:13 by aumarin           #+#    #+#             */
-/*   Updated: 2023/09/18 10:45:06 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/19 15:38:24 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_redr
 	t_tokens_enum	type;
 	char			*filename;
 	int				fd;
+	struct s_redr	*next;
 	struct s_redr	*next;
 }	t_redr;
 

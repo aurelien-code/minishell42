@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 12:00:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/09/18 14:51:26 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/19 15:39:02 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ t_cmd	*parser(t_tokens *tokens)
 	int			i;
 
 	i = 0;
+	cmds = NULL;
 	tmp = tokens;
 	cmds = NULL;
 	while (tokens)
