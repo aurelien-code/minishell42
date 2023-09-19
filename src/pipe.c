@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aagathe <aagathe@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 17:33:45 by aagathe           #+#    #+#             */
-/*   Updated: 2023/09/16 18:33:48 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/09/19 15:44:04 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,7 @@ void	find_cmd(t_cmd *cmds, char **pathes, char *env[])
 	int		ret;
 
 	path = check_path(*(cmds->cmd), pathes);
+	ret = 0;
 	if (path)
 	{
 		execve(path, cmds->cmd, env);
