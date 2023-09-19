@@ -1,6 +1,8 @@
 # minishell42
 As beautiful as a shell
 
+Tout ce qui est barre a ete corrige sur la branche aumarin
+
 To fix :
   -  cat sans rien apres fait une infinite loop
   -  cat avec un fichier derriere ne rend pas le prompt
