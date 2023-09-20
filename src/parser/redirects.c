@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:17:04 by aumarin           #+#    #+#             */
-/*   Updated: 2023/09/20 16:14:55 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/20 17:13:01 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ int	handle_redirection(t_tokens **tokens, t_cmd **command)
 		return (0);
 	new_redr->fd = -1;
 	new_redr->type = (*tokens)->type;
+	new_redr->pfd[0] = -1;
+	new_redr->pfd[1] = -1;
 	*tokens = (*tokens)->next;
 	if (!*tokens || (*tokens)->type != TOKEN)
 	{
