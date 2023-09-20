@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:17:04 by aumarin           #+#    #+#             */
-/*   Updated: 2023/09/18 16:06:32 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/20 16:14:55 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,13 @@ static void	assign_redirection(t_cmd **command, t_redr *new_redr)
 	else
 		tmp = (*command)->redr_out;
 	if (!tmp)
+	{
+		if (new_redr->type == D_REDIR_L || new_redr->type == S_REDIR_L)
+			(*command)->redr_in = new_redr;
+		else
+			(*command)->redr_out = new_redr;
 		tmp = new_redr;
+	}
 	else
 	{
 		while (tmp->next)
