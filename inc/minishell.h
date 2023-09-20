@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/09/20 16:53:31 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/20 17:46:18 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@
 # include "./structs.h"
 
 /*	builtin	*/
-char		*ft_cd(char *path, t_env **env);
-void		ft_echo(char *str, int arg);
-char		*ft_pwd(void);
-t_env		*ft_export(t_env *env, char *var);
-t_env		*ft_unset(t_env **env, char *var);
-void		ft_env(t_env *env);
+int	ft_cd(t_cmd *cmds);
+int	ft_echo(t_cmd *cmds);
+int	ft_pwd(t_cmd *cmds);
+int	ft_export(t_cmd *cmds);
+int	ft_unset(t_cmd *cmds);
+int	ft_env(t_cmd *cmds);
 
 /** builtin - utils **/
 int			search_var(t_env *env, char *var);

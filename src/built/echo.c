@@ -6,16 +6,18 @@
 /*   By: ypages <ypages@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:05:45 by ypages            #+#    #+#             */
-/*   Updated: 2023/03/23 03:50:04 by ypages           ###   ########.fr       */
+/*   Updated: 2023/09/20 17:51:16 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_echo(char *str, int arg)
+int	ft_echo(t_cmd *cmds)
 {
-	if (arg)
+	(void)cmds;
+	/*if (arg)
 		printf("%s", str);
 	else
-		printf("%s\n", str);
+		printf("%s\n", str);*/
+	return (0);
 }

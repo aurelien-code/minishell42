@@ -6,17 +6,19 @@
 /*   By: ypages <ypages@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:05:45 by ypages            #+#    #+#             */
-/*   Updated: 2023/03/22 20:23:04 by ypages           ###   ########.fr       */
+/*   Updated: 2023/09/20 17:52:42 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_pwd(void)
+int	ft_pwd(t_cmd *cmds)
 {
-	const char	*a_path;
+	(void)cmds;
+	/*const char	*a_path;
 
 	a_path = getcwd(NULL, 0);
 	printf("%s\n", a_path);
-	return ((char *)a_path);
+	return ((char *)a_path);*/
+	return (0);
 }

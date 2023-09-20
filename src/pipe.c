@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 17:33:45 by aagathe           #+#    #+#             */
-/*   Updated: 2023/09/20 17:20:13 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/20 17:48:57 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ void	write_entry(t_cmd *cmds)
 
 	if (pipe(pfd) < 0)
 		return ;
-	cmds->redr_in->pfd = pfd;
+	cmds->redr_in->pfd[0] = pfd[0];
+	cmds->redr_in->pfd[1] = pfd[1];
 	cmds->redr_in->fd = pfd[0];
 	buffer = NULL;
 	buffer = readline("> ");
@@ -258,19 +259,31 @@ int	launch_builtin(t_cmd *cmds)
 		return (ft_pwd(cmds));
 	else if (cmds->is_builtin == 6)
 		return (ft_unset(cmds));
+	return (0);
 }
 
-void	launch_cmd(t_cmd *cmds, t_cmd *cmds->cpy, int nb_cmds, int pfd[4])
+t_cmd	*go_to_cmds(t_cmd *cmds, int nb_cmds)
 {
-	char	*path;
-	char	*pathes;
+	while (--nb_cmds)
+		cmds = cmds->next;
+	return (cmds);
+}
 
+int	launch_cmd(t_cmd *cmds, int nb_cmds, int pfd[4], char **env)
+{
+	int		ret;
+	char	*error;
+	char	*path;
+	char	**pathes;
+	t_cmd	*cmds_cpy;
+
+	cmds_cpy = go_to_cmds(cmds, nb_cmds);
 	pathes = find_pathes(env);
-	path = check_path(cmds_cpy, pathes);
+	path = check_path(cmds_cpy->cmd[0], pathes);
 	switch_files(cmds_cpy, nb_cmds, pfd);
-	close_files(cmds, pfd);
+	close_files(cmds, pfd, nb_cmds);
 	if (cmds->is_builtin)
-		ret = launch_builtin(cmds->cpy);
+		ret = launch_builtin(cmds_cpy);
 	else if (path)
 	{
 		execve(path, cmds->cmd, env);
@@ -286,7 +299,9 @@ void	launch_cmd(t_cmd *cmds, t_cmd *cmds->cpy, int nb_cmds, int pfd[4])
 		ret = 127;
 	}
 	free_commands(cmds);
-	exit(ret);
+	if (pfd)
+		exit(ret);
+	return (ret);
 }
 
 int	check_status(int wstatus)
@@ -308,6 +323,7 @@ int	check_status(int wstatus)
 			return (131);
 		}
 	}
+	return (0);	// a revoir
 }
 
 int	executer(t_cmd *cmds, char *env[])
@@ -320,23 +336,23 @@ int	executer(t_cmd *cmds, char *env[])
 
 	nb_cmds = 0;
 	if (open_files(cmds))
-		return (close_files(cmds), 1);
+		return (close_files(cmds, NULL, nb_cmds), 1);
 	cmds_cpy = cmds;
 	if (cmds->is_builtin && !cmds->next)
-		return (launch_cmd(cmds, cmds, 1, NULL));
+		return (launch_cmd(cmds, 1, NULL, env));
 	while (cmds_cpy && ++nb_cmds)
 	{
-		if (open_pipe(pfd, nb_cmds, cmds->cpy->next))
+		if (open_pipe(pfd, nb_cmds, cmds_cpy->next))
 			return (129);
 		pid = try_fork();
 		if (pid < 0)
 			return (254);
 		if (pid == 0)
-			launch_cmd(cmds, cmds->cpy, nb_cmds, pfd);
+			launch_cmd(cmds, nb_cmds, pfd, env);
 		cmds_cpy = cmds_cpy->next;
 	}
-	close_files(cmds, pfd);
+	close_files(cmds, pfd, nb_cmds);
 	while (nb_cmds--)
-		wait(-1, &wstatus, 0);
+		waitpid(-1, &wstatus, 0);
 	return (check_status(wstatus));
 }

@@ -6,15 +6,16 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:05:45 by ypages            #+#    #+#             */
-/*   Updated: 2023/05/03 15:45:13 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/20 17:53:58 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env	*ft_unset(t_env **env, char *var)
+int	ft_unset(t_cmd *cmds)
 {
-	int	var_line;
+	(void)cmds;
+	/*int	var_line;
 
 	var_line = search_var((*env), var);
 	if (var_line >= 0)
@@ -25,5 +26,6 @@ t_env	*ft_unset(t_env **env, char *var)
 	}
 	else
 		return (*env);
-	return (*env);
+	return (*env);*/
+	return (0);
 }

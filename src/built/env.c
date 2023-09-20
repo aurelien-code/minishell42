@@ -6,15 +6,16 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 19:02:08 by ypages            #+#    #+#             */
-/*   Updated: 2023/05/03 16:19:31 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/20 17:54:16 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_env(t_env *env)
+int	ft_env(t_cmd *cmds)
 {
-	if (!env || !env->name)
+	(void)cmds;
+	/*if (!env || !env->name)
 		return ;
 	while (env)
 	{
@@ -25,5 +26,6 @@ void	ft_env(t_env *env)
 		else
 			return ;
 		env = env->next;
-	}
+	}*/
+	return (0);
 }
