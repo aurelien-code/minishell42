@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 17:33:45 by aagathe           #+#    #+#             */
-/*   Updated: 2023/09/19 15:44:04 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/20 17:16:53 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	write_entry(char *filename, int fd)
 		entry_error(filename); // VERIFIER PHRASE ANGLAIS
 }
 
-int	open_files(t_cmd *cmds, int pfd[4])
+int	open_files(t_cmd *cmds, int pfd[2])
 {
 	int		ret;
 	char	*error;
@@ -71,7 +71,6 @@ int	open_files(t_cmd *cmds, int pfd[4])
 			else
 			{
 				write_entry(cmds->redr_in->filename, pfd[3]);
-				cmds->redr_in->fd = pfd[2];
 			}
 			if (cmds->redr_in->fd < 0 && ++ret)
 			{
@@ -103,7 +102,7 @@ int	open_files(t_cmd *cmds, int pfd[4])
 	return (ret);
 }
 
-void	close_files(t_cmd *cmds, int pfd[2])
+void	close_files(t_cmd *cmds, int pfd[4])
 {
 	t_redr	*redr_in;
 	t_redr	*redr_out;
@@ -134,7 +133,7 @@ void	close_files(t_cmd *cmds, int pfd[2])
 	close(pfd[3]);
 }
 
-void	switch_files(t_cmd *cmds, int id_cmd, int pfd[2])
+void	switch_files(t_cmd *cmds, int id_cmd, int pfd[4])
 {
 	t_redr	*redr_in;
 	t_redr	*redr_out;
@@ -182,35 +181,6 @@ char	*check_path(char *cmd, char **pathes)
 	return (NULL);
 }
 
-void	find_cmd(t_cmd *cmds, char **pathes, char *env[])
-{
-	char	*path;
-	char	*error;
-	int		ret;
-
-	path = check_path(*(cmds->cmd), pathes);
-	ret = 0;
-	if (path)
-	{
-		execve(path, cmds->cmd, env);
-		free(path);
-		perror(*(cmds->cmd));
-		ret = 126;
-	}
-	else if (cmds->is_builtin)
-	{
-		printf("C'est un builtin\n");
-	}
-	else
-	{
-		error = ft_strjoin(cmds->cmd[0], " : command not found");
-		ft_putendl_fd(error, 2);
-		free(error);
-		ret = 127;
-	}
-	exit(ret); // GESTION LEAK
-}
-
 char **find_pathes(char *env[])
 {
 	while (*env && ft_strncmp(*env, "PATH", 4))
@@ -220,18 +190,23 @@ char **find_pathes(char *env[])
 	return (ft_split(*env, ':'));
 }
 
-int	open_pipe(int pfd[4])
+int	open_pipe(int pfd[4], int nb_cmds, t_cmd *next)
 {
-	if (pipe(pfd) < 0)
+	const int	modulo = nb_cmds % 2;
+
+	if (nb_cmds > 2 - modulo)
 	{
-		perror("minishell");
-		return (1);
+		close(pfd[2 - (modulo * 2)]);
+		close(pfd[3 - (modulo * 2)]);
 	}
-	if (pipe(pfd + 2) < 0)
+	if (next && pipe(pfd + 2 - (modulo * 2)))
 	{
-		perror("minishell");
-		close(pfd[0]);
-		close(pfd[1]);
+		perror("minishell: pipe error");
+		if (nb_cmds > 1)
+		{
+			close(pfd[modulo * 2]);
+			close(pfd[1 + (modulo * 2)]);
+		}
 		return (1);
 	}
 	return (0);
@@ -254,34 +229,61 @@ int	try_fork()
 	return (pid);
 }
 
+void	launch_cmd(t_cmd *cmds, t_cmds *cmds->cpy, char **pathes, int pfd[4])
+{
+	char	*path;
+
+	path = check_path(cmds_cpy, pathes);
+	switch_files(cmds_cpy, nb_cmds, pfd);
+	close_files(cmds, pfd);
+	if (cmds->is_builtin)
+		launch_builtin(cmds->cpy);
+	else if (path)
+	{
+		execve(path, cmds->cmd, env);
+		perror(path);
+		free(path);
+		ret = 126;
+	}
+	else
+	{
+		error = ft_strjoin(cmds->cmd[0], " : command not found");
+		ft_putendl_fd(error, 2);
+		free(error);
+		ret = 127;
+	}
+	//fonction de free
+	exit(ret);
+}
+
 int	executer(t_cmd *cmds, char *env[])
 {
-	int			pfd[4];
-	int			pid;
-	int			nb_cmds;
-	t_cmd		*cmds_cpy;
+	int		pfd[4];
+	int		pid;
+	int		status;
+	int		nb_cmds;
+	t_cmd	*cmds_cpy;
 
-	if (open_pipe(pfd))
-		return (129);
-	if (open_files(cmds, pfd))
-		return (close_files(cmds, pfd), 1);
+	if (open_files(cmds))
+		return (close_files(cmds), 1);
 	cmds_cpy = cmds;
 	nb_cmds = 0;
+	if (cmds->is_builtin && !cmds->next)
+		return (launch_builtin(cmds));
+	pathes = find_pathes(env);
 	while (cmds_cpy && ++nb_cmds)
 	{
+		if (open_pipe(pfd, nb_cmds, cmds->cpy->next))
+			return (129);
 		pid = try_fork();
 		if (pid < 0)
 			return (254);
 		if (pid == 0)
-		{
-			switch_files(cmds_cpy, nb_cmds, pfd);
-			close_files(cmds, pfd);
-			find_cmd(cmds_cpy, find_pathes(env), env);
-		}
+			launch_cmd(cmds, cmds->cpy, pathes, pfd);
 		cmds_cpy = cmds_cpy->next;
 	}
 	close_files(cmds, pfd);
 	while (nb_cmds--)
-		wait(NULL);
-	return (0);
+		wait(-1, &status, 0);
+	return (check_status(status));
 }
