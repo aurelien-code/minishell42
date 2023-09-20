@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 12:30:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/09/19 15:38:35 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/20 16:27:30 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,16 @@ int	main(int argc, char **argv, char **envp)
 		if (!prompt_line)
 			sig_ctrl_d();
 		write_history(prompt_line);
+		history_size(1);
 		lexer_line = lexer(prompt_line);
 		if (!lexer_line)
 			continue ;
 		tokens = get_tokens(lexer_line);
 		commands = parser(tokens);
-		executer(commands, envp);
 		free_tokens(tokens);
 		free(lexer_line);
+		executer(commands, envp);
+		free_commands(commands);
 	}
 	rl_clear_history();
 	return (0);

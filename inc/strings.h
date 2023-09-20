@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 13:46:44 by aumarin           #+#    #+#             */
-/*   Updated: 2023/09/18 16:01:23 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/20 14:58:03 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,27 @@
 # endif
 
 # ifndef REDIR_NEWLINE_ERR
-#  define REDIR_NEWLINE_ERR "Syntax error: newline unexpected"
+#  define REDIR_NEWLINE_ERR "Syntax error: newline unexpected.\n"
 # endif
 
 # ifndef REDIR_SYNTAX_ERR
-#  define REDIR_SYNTAX_ERR "Syntax error: redirection unexpected"
+#  define REDIR_SYNTAX_ERR "Syntax error: redirection unexpected.\n"
 # endif
 
 # ifndef UNCLOSE_QUOTE_ERR
-#  define UNCLOSE_QUOTE_ERR "Error: quote unclosed"
+#  define UNCLOSE_QUOTE_ERR "Error: quote unclosed.\n"
 # endif
 
 # ifndef TOO_MANY_REDIRS
-#  define TOO_MANY_REDIRS "too many redirection symbols"
+#  define TOO_MANY_REDIRS "Syntax error: too many redirection symbols.\n"
+# endif
+
+# ifndef NO_PIPE_ENTRY
+#  define NO_PIPE_ENTRY "Syntax error: missing command before '|'.\n"
+# endif
+
+# ifndef NO_FILE_TO_REDR
+#  define NO_FILE_TO_REDR "Syntax error: missing command after '>'.\n"
 # endif
 
 #endif

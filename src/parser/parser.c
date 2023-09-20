@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 12:00:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/09/19 15:39:02 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/20 16:26:30 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,21 @@ int	is_builtin(t_tokens	*tokens)
 	str = tokens->value;
 	if (!str)
 		return (0);
-	if (!ft_strncmp(str, "echo", 4))
+	if (!ft_strncmp(str, "echo", 5))
 	{
-		if (!ft_strncmp(tokens->next->value, "-n", 2))
+		if (tokens->next->value && !ft_strncmp(tokens->next->value, "-n", 2))
 			return (2);
 		return (1);
 	}
-	else if (!ft_strncmp(str, "cd", 2))
+	else if (!ft_strncmp(str, "cd", 3))
 		return (1);
-	else if (!ft_strncmp(str, "env", 3))
+	else if (!ft_strncmp(str, "env", 4))
 		return (1);
-	else if (!ft_strncmp(str, "export", 5))
+	else if (!ft_strncmp(str, "export", 7))
 		return (1);
-	else if (!ft_strncmp(str, "pwd", 3))
+	else if (!ft_strncmp(str, "pwd", 4))
 		return (1);
-	else if (!ft_strncmp(str, "unset", 5))
+	else if (!ft_strncmp(str, "unset", 6))
 		return (1);
 	else
 		return (0);
@@ -73,10 +73,12 @@ t_cmd	*process_command(t_tokens **tokens, int cmd_size)
 		if ((*tokens)->type != T_PIPE && (*tokens)->type != TOKEN)
 			process_redirects(tokens, &command);
 		if ((*tokens) && (*tokens)->value)
+		{
 			command->cmd[i] = ft_strdup((*tokens)->value);
+			i++;
+		}
 		if (*tokens)
 			*tokens = (*tokens)->next;
-		i++;
 	}
 	return (command);
 }

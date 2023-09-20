@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:17:04 by aumarin           #+#    #+#             */
-/*   Updated: 2023/09/18 16:06:32 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/20 17:13:01 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,13 @@ static void	assign_redirection(t_cmd **command, t_redr *new_redr)
 	else
 		tmp = (*command)->redr_out;
 	if (!tmp)
+	{
+		if (new_redr->type == D_REDIR_L || new_redr->type == S_REDIR_L)
+			(*command)->redr_in = new_redr;
+		else
+			(*command)->redr_out = new_redr;
 		tmp = new_redr;
+	}
 	else
 	{
 		while (tmp->next)
@@ -88,6 +94,8 @@ int	handle_redirection(t_tokens **tokens, t_cmd **command)
 		return (0);
 	new_redr->fd = -1;
 	new_redr->type = (*tokens)->type;
+	new_redr->pfd[0] = -1;
+	new_redr->pfd[1] = -1;
 	*tokens = (*tokens)->next;
 	if (!*tokens || (*tokens)->type != TOKEN)
 	{
