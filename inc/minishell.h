@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/09/20 17:46:18 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/09/20 18:19:42 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,6 @@ void		*throw_parsing_error(t_lexer *lex, t_tokens *tok, \
 
 int			history_size(int should_increment);
 void		free_commands(t_cmd *commands);
+void	dbg_print_tokens(t_tokens *tokens);
 
 #endif

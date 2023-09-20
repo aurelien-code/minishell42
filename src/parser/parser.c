@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 12:00:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/09/20 16:26:30 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/20 18:34:43 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ t_cmd	*process_command(t_tokens **tokens, int cmd_size)
 			process_redirects(tokens, &command);
 		if ((*tokens) && (*tokens)->value)
 		{
+			printf("tokens->value : %s || i value = %d\n", (*tokens)->value, i);
 			command->cmd[i] = ft_strdup((*tokens)->value);
 			i++;
 		}
@@ -115,7 +116,7 @@ t_cmd	*parser(t_tokens *tokens)
 		tokens = tokens->next;
 		i++;
 	}
-	if (!cmds)
-		add_cmd_item(&cmds, process_command(&tmp, i));
+	if (!cmds || tmp)
+		add_cmd_item(&cmds, process_command(&tmp->next, i));
 	return (cmds);
 }
