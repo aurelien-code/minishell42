@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 13:35:34 by aumarin           #+#    #+#             */
-/*   Updated: 2023/09/20 16:27:05 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/20 16:52:48 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	free_tokens(t_tokens *tokens)
 void	free_redirs(t_redr	*redr)
 {
 	t_redr	*tmp;
+
 	tmp = NULL;
 	while (redr)
 	{
@@ -49,7 +50,6 @@ void	free_commands(t_cmd *commands)
 	t_cmd	*tmp_cmds;
 	int		i;
 
-	tmp_cmds = NULL;
 	i = 0;
 	while (commands)
 	{
