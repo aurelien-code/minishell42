@@ -6,23 +6,23 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 17:33:45 by aagathe           #+#    #+#             */
-/*   Updated: 2023/09/20 17:16:53 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/20 17:20:13 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	entry_error(char *filename)
+void	entry_error(const char *filename)
 {
 	char	*error;
 	char	*error2;
 	char	*nb_line;
 
-	nb_line = ft_itoa(25/*nb_line_history*/);
-	error = ft_strjoin("minishell: warning : « here-document » at the line ",
+	nb_line = ft_itoa(history_size(0));
+	error = ft_strjoin("minishell: warning : here-document at the line ",
 			nb_line);
 	free(nb_line);
-	error2 = ft_strjoin(error, " delimited by EOF (instead of `");
+	error2 = ft_strjoin(error, " delimited by end-of-file (wanted `");
 	free(error);
 	error = ft_strjoin(error2, filename);
 	free(error2);
@@ -32,28 +32,33 @@ void	entry_error(char *filename)
 	free(error2);
 }
 
-void	write_entry(char *filename, int fd)
+void	write_entry(t_cmd *cmds)
 {
-	int		name_size;
-	char	*buffer;
+	const char	*filename = cmds->redr_in->filename;
+	const int	name_size = ft_strlen(filename);
+	char		*buffer;
+	int			pfd[2];
 
+	if (pipe(pfd) < 0)
+		return ;
+	cmds->redr_in->pfd = pfd;
+	cmds->redr_in->fd = pfd[0];
 	buffer = NULL;
-	name_size = ft_strlen(filename);
 	buffer = readline("> ");
 	while (buffer)
 	{
 		if (!ft_strncmp(buffer, filename, name_size + 1))
 			break ;
-		write(fd, buffer, ft_strlen(buffer));
-		write(fd, "\n", 1);
+		write(pfd[1], buffer, ft_strlen(buffer));
+		write(pfd[1], "\n", 1);
 		free(buffer);
 		buffer = readline("> ");
 	}
 	if (!buffer)
-		entry_error(filename); // VERIFIER PHRASE ANGLAIS
+		entry_error(filename);
 }
 
-int	open_files(t_cmd *cmds, int pfd[2])
+int	open_files(t_cmd *cmds)
 {
 	int		ret;
 	char	*error;
@@ -69,12 +74,10 @@ int	open_files(t_cmd *cmds, int pfd[2])
 			if (cmds->redr_in->type == S_REDIR_L)
 				cmds->redr_in->fd = open(cmds->redr_in->filename, O_RDONLY);
 			else
+				write_entry(cmds);
+			if (cmds->redr_in->fd < 0 && *cmds->redr_in->pfd < 0 && ++ret)
 			{
-				write_entry(cmds->redr_in->filename, pfd[3]);
-			}
-			if (cmds->redr_in->fd < 0 && ++ret)
-			{
-				error = ft_strjoin("minishell: ", cmds->redr_in->filename);
+				error = ft_strjoin("minishell: ", cmds->redr_in->filename); //message pour double
 				perror(error);
 				free(error);
 			}
@@ -87,7 +90,7 @@ int	open_files(t_cmd *cmds, int pfd[2])
 			if (cmds->redr_out->type == S_REDIR_R)
 				cmds->redr_out->fd = open(cmds->redr_out->filename, O_CREAT | O_TRUNC | O_WRONLY, 0660);
 			else
-				cmds->redr_out->fd = open(cmds->redr_out->filename, O_WRONLY | O_APPEND);
+				cmds->redr_out->fd = open(cmds->redr_out->filename, O_CREAT | O_WRONLY | O_APPEND, 0660);
 			if (cmds->redr_out->fd < 0 && ++ret)
 			{
 				error = ft_strjoin("minishell: ", cmds->redr_out->filename);
@@ -102,35 +105,47 @@ int	open_files(t_cmd *cmds, int pfd[2])
 	return (ret);
 }
 
-void	close_files(t_cmd *cmds, int pfd[4])
+void	close_pfd(int nb_cmds, int pfd[4])
 {
-	t_redr	*redr_in;
-	t_redr	*redr_out;
+	if (nb_cmds)
+	{
+		close(pfd[0]);
+		close(pfd[1]);
+		if (nb_cmds > 1)
+		{
+			close(pfd[2]);
+			close(pfd[3]);
+		}
+	}
+}
 
+void	close_files(t_cmd *cmds, int pfd[4], int nb_cmds)
+{
+	int		redr;
+	t_redr	*redr_cpy;
+
+	redr = 0;
 	while (cmds)
 	{
-		redr_in = cmds->redr_in;
-		while (cmds->redr_in)
+		redr_cpy = cmds->redr_in;
+		if (redr)
+			redr_cpy = cmds->redr_out;
+		while (redr_cpy)
 		{
-			if (cmds->redr_in->fd > 0)
-				close(cmds->redr_in->fd);
-			cmds->redr_in = cmds->redr_in->next;
+			if (redr_cpy->fd > 0)
+				close(redr_cpy->fd);
+			if (redr_cpy->pfd[0] > 0)
+				close(redr_cpy->pfd[0]);
+			if (redr_cpy->pfd[1] > 0)
+				close(redr_cpy->pfd[1]);
+			redr_cpy = redr_cpy->next;
 		}
-		cmds->redr_in = redr_in;
-		redr_out = cmds->redr_out;
-		while (cmds->redr_out)
-		{
-			if (cmds->redr_out->fd > 0)
-				close(cmds->redr_out->fd);
-			cmds->redr_out = cmds->redr_out->next;
-		}
-		cmds->redr_out = redr_out;
-		cmds = cmds->next;
+		if (redr)
+			cmds = cmds->next;
+		if (redr++)
+			redr = 0;
 	}
-	close(pfd[0]);
-	close(pfd[1]);
-	close(pfd[2]);
-	close(pfd[3]);
+	close_pfd(nb_cmds, pfd);
 }
 
 void	switch_files(t_cmd *cmds, int id_cmd, int pfd[4])
@@ -229,15 +244,33 @@ int	try_fork()
 	return (pid);
 }
 
-void	launch_cmd(t_cmd *cmds, t_cmds *cmds->cpy, char **pathes, int pfd[4])
+int	launch_builtin(t_cmd *cmds)
+{
+	if (cmds->is_builtin == 1)
+		return (ft_echo(cmds));
+	else if (cmds->is_builtin == 2)
+		return (ft_cd(cmds));
+	else if (cmds->is_builtin == 3)
+		return (ft_env(cmds));
+	else if (cmds->is_builtin == 4)
+		return (ft_export(cmds));
+	else if (cmds->is_builtin == 5)
+		return (ft_pwd(cmds));
+	else if (cmds->is_builtin == 6)
+		return (ft_unset(cmds));
+}
+
+void	launch_cmd(t_cmd *cmds, t_cmd *cmds->cpy, int nb_cmds, int pfd[4])
 {
 	char	*path;
+	char	*pathes;
 
+	pathes = find_pathes(env);
 	path = check_path(cmds_cpy, pathes);
 	switch_files(cmds_cpy, nb_cmds, pfd);
 	close_files(cmds, pfd);
 	if (cmds->is_builtin)
-		launch_builtin(cmds->cpy);
+		ret = launch_builtin(cmds->cpy);
 	else if (path)
 	{
 		execve(path, cmds->cmd, env);
@@ -252,25 +285,45 @@ void	launch_cmd(t_cmd *cmds, t_cmds *cmds->cpy, char **pathes, int pfd[4])
 		free(error);
 		ret = 127;
 	}
-	//fonction de free
+	free_commands(cmds);
 	exit(ret);
+}
+
+int	check_status(int wstatus)
+{
+	if (WIFEXITED(wstatus))
+		return (WEXITSTATUS(wstatus));
+	else if (WIFSIGNALED(wstatus))
+	{
+		if (WTERMSIG(wstatus) == 2)
+		{
+			write(2, "\n", 1);
+			rl_on_new_line();
+			return (130);
+		}
+		else if (WTERMSIG(wstatus) == 3)
+		{
+			write(2, "Quit (core dumped)\n", 19);
+			rl_on_new_line();
+			return (131);
+		}
+	}
 }
 
 int	executer(t_cmd *cmds, char *env[])
 {
 	int		pfd[4];
 	int		pid;
-	int		status;
+	int		wstatus;
 	int		nb_cmds;
 	t_cmd	*cmds_cpy;
 
+	nb_cmds = 0;
 	if (open_files(cmds))
 		return (close_files(cmds), 1);
 	cmds_cpy = cmds;
-	nb_cmds = 0;
 	if (cmds->is_builtin && !cmds->next)
-		return (launch_builtin(cmds));
-	pathes = find_pathes(env);
+		return (launch_cmd(cmds, cmds, 1, NULL));
 	while (cmds_cpy && ++nb_cmds)
 	{
 		if (open_pipe(pfd, nb_cmds, cmds->cpy->next))
@@ -279,11 +332,11 @@ int	executer(t_cmd *cmds, char *env[])
 		if (pid < 0)
 			return (254);
 		if (pid == 0)
-			launch_cmd(cmds, cmds->cpy, pathes, pfd);
+			launch_cmd(cmds, cmds->cpy, nb_cmds, pfd);
 		cmds_cpy = cmds_cpy->next;
 	}
 	close_files(cmds, pfd);
 	while (nb_cmds--)
-		wait(-1, &status, 0);
-	return (check_status(status));
+		wait(-1, &wstatus, 0);
+	return (check_status(wstatus));
 }
