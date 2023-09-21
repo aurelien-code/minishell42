@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 12:00:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/09/20 18:47:09 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/21 19:04:10 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,15 +110,17 @@ t_cmd	*parser(t_tokens *tokens)
 	cmds = NULL;
 	while (tokens)
 	{
-		i++;
 		if (tokens->type == T_PIPE)
 		{
 			add_cmd_item(&cmds, process_command(&tmp, i));
 			i = 1;
 		}
+		i++;
 		tokens = tokens->next;
 	}
+	if (tmp->type == T_PIPE)
+		tmp = tmp->next;
 	if (!cmds || tmp)
-		add_cmd_item(&cmds, process_command(&tmp->next, i));
+		add_cmd_item(&cmds, process_command(&tmp, i));
 	return (cmds);
 }
