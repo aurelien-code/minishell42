@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:58:13 by aumarin           #+#    #+#             */
-/*   Updated: 2023/09/18 14:55:32 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/22 12:24:24 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,15 @@ void	append_token(t_tokens **tokens, t_tokens *new_elem)
 t_tokens	*get_word_token(t_lexer *lexer_arr, int *i)
 {
 	char	*str;
-	char	*tmp;
 
 	str = NULL;
 	while (lexer_arr[*i].type == NORMAL && lexer_arr[*i].value != ' ')
 	{
-		tmp = str;
-		str = ft_strjoin(str, &lexer_arr[*i].value);
-		free(tmp);
+		if (!str && lexer_arr[*i].value)
+			str = &lexer_arr[*i].value;
+		else
+			str = ft_strjoin(str, &lexer_arr[*i].value);
+
 		(*i)++;
 	}
 	if (lexer_arr[*i].value != ' ')
@@ -65,6 +66,8 @@ t_tokens	*get_word_token(t_lexer *lexer_arr, int *i)
 
 void	dbg_print_tokens(t_tokens *tokens)
 {
+	if (!tokens)
+		printf("tokens is null\n");
 	while (tokens)
 	{	
 		printf("v = %s | t = %d | n = %p\n", tokens->value, tokens->type,
