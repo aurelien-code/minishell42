@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 13:46:44 by aumarin           #+#    #+#             */
-/*   Updated: 2023/09/20 14:58:03 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/26 02:41:53 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
 # endif
 
 # ifndef NO_FILE_TO_REDR
-#  define NO_FILE_TO_REDR "Syntax error: missing command after '>'.\n"
+#  define NO_FILE_TO_REDR "Syntax error: missing command after redirection.\n"
 # endif
 
 #endif

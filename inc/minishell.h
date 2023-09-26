@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/09/20 18:19:42 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/26 01:45:47 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@
 # include "./structs.h"
 
 /*	builtin	*/
-int	ft_cd(t_cmd *cmds);
-int	ft_echo(t_cmd *cmds);
-int	ft_pwd(t_cmd *cmds);
-int	ft_export(t_cmd *cmds);
-int	ft_unset(t_cmd *cmds);
-int	ft_env(t_cmd *cmds);
+int			ft_cd(t_cmd *cmds);
+int			ft_echo(t_cmd *cmds);
+int			ft_pwd(t_cmd *cmds);
+int			ft_export(t_cmd *cmds);
+int			ft_unset(t_cmd *cmds);
+int			ft_env(t_cmd *cmds);
 
 /** builtin - utils **/
 int			search_var(t_env *env, char *var);
@@ -67,8 +67,7 @@ t_tokens	*expand(t_lexer *lexer_arr, int *i);
 
 /*	redirects.c	*/
 t_tokens	*get_redirect_token(t_lexer *lexer_arr, int *i);
-int			handle_redirection(t_tokens **tokens, t_cmd **command);
-
+t_tokens	*handle_redirection(t_cmd *cmd, t_tokens *tokens);
 /*	free_memory.c */
 void		free_tokens(t_tokens *tokens);
 
@@ -79,13 +78,11 @@ t_cmd		*parser(t_tokens *tokens);
 
 int			executer(t_cmd *cmds, char *env[]);
 
-int			executer(t_cmd *cmds, char *env[]);
-
 void		*throw_parsing_error(t_lexer *lex, t_tokens *tok, \
 			t_cmd *cmd, char *err);
 
 int			history_size(int should_increment);
 void		free_commands(t_cmd *commands);
-void	dbg_print_tokens(t_tokens *tokens);
+void		dbg_print_tokens(t_tokens *tokens);
 
 #endif

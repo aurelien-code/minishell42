@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:17:04 by aumarin           #+#    #+#             */
-/*   Updated: 2023/09/20 17:13:01 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/26 02:44:04 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,6 @@ t_tokens	*handle_double_redirect(t_lexer *lexer_arr, int *i, int j)
 	return (token);
 }
 
-t_tokens	*handle_single_redirect(t_lexer *lexer_arr, int *i)
-{
-	if (lexer_arr[*i].value == '<')
-		return (new_token_item(NULL, S_REDIR_L));
-	else
-		return (new_token_item(NULL, S_REDIR_R));
-}
-
 t_tokens	*get_redirect_token(t_lexer *lexer_arr, int *i)
 {
 	int			redir_size;
@@ -57,52 +49,65 @@ t_tokens	*get_redirect_token(t_lexer *lexer_arr, int *i)
 	else if (redir_size == 2)
 		return (handle_double_redirect(lexer_arr, i, j));
 	else
-		return (handle_single_redirect(lexer_arr, i));
+	{
+		if (lexer_arr[*i].value == '<')
+			return (new_token_item(NULL, S_REDIR_L));
+		else
+			return (new_token_item(NULL, S_REDIR_R));
+	}
 	return (NULL);
 }
 
-static void	assign_redirection(t_cmd **command, t_redr *new_redr)
+void	add_input_redirection(t_cmd *cmd, t_redr *redirection)
 {
 	t_redr	*tmp;
 
-	if (new_redr->type == D_REDIR_L || new_redr->type == S_REDIR_L)
-		tmp = (*command)->redr_in;
-	else
-		tmp = (*command)->redr_out;
-	if (!tmp)
+	if (!cmd->redr_in)
 	{
-		if (new_redr->type == D_REDIR_L || new_redr->type == S_REDIR_L)
-			(*command)->redr_in = new_redr;
-		else
-			(*command)->redr_out = new_redr;
-		tmp = new_redr;
+		cmd->redr_in = redirection;
+		return ;
 	}
-	else
-	{
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = new_redr;
-	}
+	tmp = cmd->redr_in;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = redirection;
 }
 
-int	handle_redirection(t_tokens **tokens, t_cmd **command)
+void	add_output_redirection(t_cmd *cmd, t_redr *redirection)
 {
-	t_redr	*new_redr;
+	t_redr	*tmp;
 
-	new_redr = ft_calloc(1, sizeof(t_redr));
-	if (!new_redr)
-		return (0);
-	new_redr->fd = -1;
-	new_redr->type = (*tokens)->type;
-	new_redr->pfd[0] = -1;
-	new_redr->pfd[1] = -1;
-	*tokens = (*tokens)->next;
-	if (!*tokens || (*tokens)->type != TOKEN)
+	if (!cmd->redr_out)
 	{
-		free(new_redr);
-		return (0);
+		cmd->redr_out = redirection;
+		return ;
 	}
-	new_redr->filename = ft_strdup((*tokens)->value);
-	assign_redirection(command, new_redr);
-	return (1);
+	tmp = cmd->redr_out;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = redirection;
+}
+
+t_tokens	*handle_redirection(t_cmd *cmd, t_tokens *tokens)
+{
+	t_redr	*redirection;
+
+	redirection = ft_calloc(1, sizeof(t_redr));
+	redirection->type = tokens->type;
+	redirection->fd = -1;
+	redirection->pfd[0] = -1;
+	redirection->pfd[1] = -1;
+	tokens = tokens->next;
+	if (!tokens || tokens->type != TOKEN)
+	{
+		free(redirection);
+		throw_parsing_error(NULL, tokens, cmd, NO_FILE_TO_REDR);
+		return (NULL);
+	}
+	redirection->filename = ft_strdup(tokens->value);
+	if (redirection->type == D_REDIR_L || redirection->type == S_REDIR_L)
+		add_input_redirection(cmd, redirection);
+	else
+		add_output_redirection(cmd, redirection);
+	return (tokens);
 }

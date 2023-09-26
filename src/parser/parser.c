@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 12:00:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/09/22 12:24:49 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/26 02:59:57 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,107 +20,119 @@ int	is_builtin(t_tokens	*tokens)
 	if (!str)
 		return (0);
 	if (!ft_strncmp(str, "echo", 5))
-	{
-		if (tokens->next->value && !ft_strncmp(tokens->next->value, "-n", 2))
-			return (2);
 		return (1);
-	}
 	else if (!ft_strncmp(str, "cd", 3))
-		return (1);
+		return (2);
 	else if (!ft_strncmp(str, "env", 4))
-		return (1);
+		return (3);
 	else if (!ft_strncmp(str, "export", 7))
-		return (1);
+		return (4);
 	else if (!ft_strncmp(str, "pwd", 4))
-		return (1);
+		return (5);
 	else if (!ft_strncmp(str, "unset", 6))
-		return (1);
+		return (6);
 	else
 		return (0);
 }
 
-void	process_redirects(t_tokens **tokens, t_cmd **command)
+void	dbg_print_cmd(t_cmd *cmds)
 {
-	t_tokens	*first_tokens;
+	int	i;
+	int	j;
 
-	first_tokens = *tokens;
-	while (*tokens && (*tokens)->type != T_PIPE)
+	j = 0;
+	i = 1;
+	while (cmds)
 	{
-		if ((*tokens)->type > 1 && (*tokens)->type < 7)
+		printf("command #%d\n", i);
+		printf("	-> is_builtin = %d\n	-> cmd = ", cmds->is_builtin);
+		while (cmds->cmd[j])
 		{
-			if (!handle_redirection(tokens, command))
-				return ;
+			printf("%s ", cmds->cmd[j]);
+			j++;
 		}
-		*tokens = (*tokens)->next;
+		printf("\n");
+		if (cmds->redr_in)
+			printf("	-> redr_in = (%d)%s\n", cmds->redr_in->type, \
+				cmds->redr_in->filename);
+		if (cmds->redr_out)
+			printf("	-> redr_out = (%d)%s\n", cmds->redr_out->type, \
+				cmds->redr_out->filename);
+		j = 0;
+		i++;
+		cmds = cmds->next;
 	}
-	*tokens = first_tokens;
 }
 
-t_cmd	*process_command(t_tokens **tokens, int cmd_size)
+void	add_to_cmd(t_cmd *cmd, char *value)
 {
-	t_cmd		*command;
-	int			i;
+	int		i;
+	int		j;
+	char	**new_cmd;
 
 	i = 0;
-	command = ft_calloc(1, sizeof(t_cmd));
-	command->cmd = ft_calloc(cmd_size + 1, sizeof(char *));
-	if (!command->cmd)
-		return (NULL);
-	while ((*tokens) && (*tokens)->type != T_PIPE)
+	while (cmd->cmd && cmd->cmd[i])
+		i++;
+	new_cmd = ft_calloc(i + 2, sizeof(char *));
+	j = 0;
+	while (j < i)
 	{
-		if (is_builtin(*tokens))
-			command->is_builtin = is_builtin(*tokens);
-		if ((*tokens)->type != T_PIPE && (*tokens)->type != TOKEN)
-			process_redirects(tokens, &command);
-		if ((*tokens) && (*tokens)->value)
-		{
-			command->cmd[i] = ft_strdup((*tokens)->value);
-			i++;
-		}
-		if (*tokens)
-			*tokens = (*tokens)->next;
+		new_cmd[j] = cmd->cmd[j];
+		j++;
 	}
-	return (command);
+	new_cmd[i] = ft_strdup(value);
+	free(cmd->cmd);
+	cmd->cmd = new_cmd;
 }
 
-void	add_cmd_item(t_cmd **cmds, t_cmd *new_cmd)
+t_cmd	*init_or_get_cmd(t_cmd **head_cmds, t_cmd *current_cmd)
 {
 	t_cmd	*tmp;
 
-	if (!(*cmds))
-		(*cmds) = new_cmd;
-	else
+	tmp = NULL;
+	if (!current_cmd)
 	{
-		tmp = (*cmds);
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = new_cmd;
+		current_cmd = ft_calloc(1, sizeof(t_cmd));
+		if (!(*head_cmds))
+			*head_cmds = current_cmd;
+		else
+		{
+			tmp = *head_cmds;
+			while (tmp->next)
+				tmp = tmp->next;
+			tmp->next = current_cmd;
+		}
 	}
+	return (current_cmd);
 }
 
 t_cmd	*parser(t_tokens *tokens)
 {
-	t_cmd		*cmds;
-	t_tokens	*tmp;
-	int			i;
+	t_cmd	*head_cmds;
+	t_cmd	*current_cmd;
 
-	i = 0;
-	cmds = NULL;
-	tmp = tokens;
-	cmds = NULL;
+	head_cmds = NULL;
+	current_cmd = NULL;
 	while (tokens)
 	{
-		if (tokens->type == T_PIPE)
+		current_cmd = init_or_get_cmd(&head_cmds, current_cmd);
+		if (tokens->type == TOKEN)
 		{
-			add_cmd_item(&cmds, process_command(&tmp, i));
-			i = 1;
+			add_to_cmd(current_cmd, tokens->value);
+			if (!current_cmd->cmd[1])
+				current_cmd->is_builtin = is_builtin(tokens);
 		}
-		i++;
+		else if (tokens->type >= D_REDIR_L && tokens->type <= S_REDIR_R)
+			tokens = handle_redirection(current_cmd, tokens);
+		else if (tokens->type == T_PIPE && (!current_cmd || !current_cmd->cmd))
+			return (throw_parsing_error(NULL, NULL, head_cmds, NO_PIPE_ENTRY));
+		else if (tokens->type == T_PIPE)
+			current_cmd = NULL;
+		if (!tokens)
+			return (NULL);
 		tokens = tokens->next;
 	}
-	if (tmp && tmp->type == T_PIPE)
-		tmp = tmp->next;
-	if (!cmds || tmp)
-		add_cmd_item(&cmds, process_command(&tmp, i));
-	return (cmds);
+	dbg_print_cmd(head_cmds);
+	return (head_cmds);
 }
+

@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 13:35:34 by aumarin           #+#    #+#             */
-/*   Updated: 2023/09/20 16:52:48 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/26 02:53:35 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,15 @@ void	free_tokens(t_tokens *tokens)
 	t_tokens	*current;
 	t_tokens	*next;
 
+	if (!tokens)
+		return ;
 	current = tokens;
 	while (current)
 	{
-		next = current->next;
+		if (current->next)
+			next = current->next;
+		else
+			next = NULL;
 		if (current->value)
 			free(current->value);
 		if (current)
@@ -34,6 +39,8 @@ void	free_redirs(t_redr	*redr)
 	t_redr	*tmp;
 
 	tmp = NULL;
+	if (!redr)
+		return ;
 	while (redr)
 	{
 		if (redr->filename)
