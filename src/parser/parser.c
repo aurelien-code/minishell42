@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 12:00:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/09/26 02:59:57 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/26 09:25:26 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,10 @@ void	add_to_cmd(t_cmd *cmd, char *value)
 		new_cmd[j] = cmd->cmd[j];
 		j++;
 	}
-	new_cmd[i] = ft_strdup(value);
+	if (value)
+		new_cmd[i] = ft_strdup(value);
+	else
+		new_cmd[i] = NULL;
 	free(cmd->cmd);
 	cmd->cmd = new_cmd;
 }
@@ -132,7 +135,5 @@ t_cmd	*parser(t_tokens *tokens)
 			return (NULL);
 		tokens = tokens->next;
 	}
-	dbg_print_cmd(head_cmds);
 	return (head_cmds);
 }
-

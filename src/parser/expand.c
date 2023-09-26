@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:43:39 by aumarin           #+#    #+#             */
-/*   Updated: 2023/08/26 15:32:42 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/26 09:22:42 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,9 @@ t_tokens	*expand(t_lexer	*lexer_arr, int	*i)
 {
 	int		j;
 	char	*new_str;
-	char	*tmp;
 	char	*tmp_sublxr;
 
-	new_str = NULL;
+	new_str = "";
 	j = (*i) + 1;
 	if (lexer_arr[j].value == '?')
 	{
@@ -33,10 +32,8 @@ t_tokens	*expand(t_lexer	*lexer_arr, int	*i)
 		while (lexer_arr[j].value && lexer_arr[j].value != ' ' && \
 			lexer_arr[j].value != '$' && lexer_arr[j].type == NORMAL)
 				j++;
-		tmp = new_str;
 		tmp_sublxr = substr_lexer(lexer_arr, *i, j);
 		new_str = ft_strjoin(new_str, getenv(tmp_sublxr));
-		free(tmp);
 		free(tmp_sublxr);
 		*i = j - 1;
 	}

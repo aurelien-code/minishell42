@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 12:30:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/09/26 02:51:06 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/26 09:22:27 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,10 @@ int	main(int argc, char **argv, char **envp)
 		free_tokens(tokens);
 		free(lexer_line);
 		if (commands)
+		{
 			executer(commands, envp);
-		free_commands(commands);
+			free_commands(commands);
+		}
 	}
 	rl_clear_history();
 	return (0);
