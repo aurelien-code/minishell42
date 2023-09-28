@@ -6,31 +6,61 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:05:45 by ypages            #+#    #+#             */
-/*   Updated: 2023/09/26 08:36:16 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/28 12:46:16 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static int	is_option(char *arg)
+{
+	if (!arg)
+		return (0);
+	if (*arg++ != '-')
+		return (0);
+	if (!*arg)
+		return (0);
+	ft_putstr_fd("minishell: ft_cd: -", 2);
+	ft_putchar_fd(*arg, 2);
+	ft_putendl_fd(" : invalid option", 2);
+	return (1);
+}
+
+void	change_pwd(char *env[])
+{
+	while (*env && ft_strncmp("PWD", *env, 3))
+		env++;
+	if (!*env)
+		ft_export();
+	else
+		bas
+}
+
 int	ft_cd(t_cmd *cmds)
 {
 	char	*path;
 
+	if (is_option(cmds->cmd[1]))
+		return (2);
 	if (!cmds->cmd[1])
 	{
 		path = getenv("HOME");
 		if (!path)
-		{
-			ft_putstr_fd("ft_cd: HOME not set\n", 2);
-			return (1);
-		}
+			return (ft_putstr_fd("ft_cd: HOME not set\n", 2), 1);
 	}
 	else
 		path = cmds->cmd[1];
-	if (chdir(path) != 0)
+	if (cmds->cmd[1] && cmds->cmd[2])
 	{
-		perror("ft_cd");
+		ft_putendl_fd("minishell: ft_cd: too many arguments", 2);
 		return (1);
 	}
+	if (chdir(path) != 0)
+	{
+		ft_putstr_fd("minishell: ft_cd: ", 2);
+		perror(path);
+		return (1);
+	}
+	change_pwd(env);
 	return (0);
 }

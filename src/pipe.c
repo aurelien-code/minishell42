@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 17:33:45 by aagathe           #+#    #+#             */
-/*   Updated: 2023/09/20 17:48:57 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/09/27 17:07:48 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	open_files(t_cmd *cmds)
 
 void	close_pfd(int nb_cmds, int pfd[4])
 {
-	if (nb_cmds)
+	if (nb_cmds && pfd)
 	{
 		close(pfd[0]);
 		close(pfd[1]);
@@ -197,13 +197,11 @@ char	*check_path(char *cmd, char **pathes)
 	return (NULL);
 }
 
-char **find_pathes(char *env[])
+char	**find_pathes(char *env[])
 {
 	while (*env && ft_strncmp(*env, "PATH", 4))
 		env++;
-	if (*env)
-		*env += 5;
-	return (ft_split(*env, ':'));
+	return (ft_split(*env + 5, ':'));
 }
 
 int	open_pipe(int pfd[4], int nb_cmds, t_cmd *next)
@@ -298,9 +296,11 @@ int	launch_cmd(t_cmd *cmds, int nb_cmds, int pfd[4], char **env)
 		free(error);
 		ret = 127;
 	}
-	free_commands(cmds);
 	if (pfd)
+	{
+		free_commands(cmds);
 		exit(ret);
+	}
 	return (ret);
 }
 
