@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:05:45 by ypages            #+#    #+#             */
-/*   Updated: 2023/09/28 12:46:16 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/09/28 15:14:51 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,54 @@ static int	is_option(char *arg)
 
 void	change_pwd(char *env[])
 {
+	char	*pwd;
+	char	buf[4096];
+
 	while (*env && ft_strncmp("PWD", *env, 3))
 		env++;
-	if (!*env)
-		ft_export();
-	else
-		bas
+	if (*env)
+	{
+		if (getcwd(buf, sizeof(buf)) == NULL)
+			return ;
+		pwd = ft_strdup(buf);
+		if (!pwd)
+			return (perror("minishell: malloc"));
+		free(*env);
+		*env = pwd;
+	}
 }
 
-int	ft_cd(t_cmd *cmds)
+void	change_oldpwd(char *env[], char *oldpwd)
+{
+	change_pwd(env);
+	while (*env && ft_strncmp("OLDPWD", *env, 6))
+		env++;
+	if (*env)
+	{
+		free(*env);
+		*env = oldpwd;
+	}
+	//else
+		// ft_export(oldpwd);
+}
+
+char	*get_oldpwd(void)
+{
+	char	*pwd;
+	char	buf[4096];
+
+	if (getcwd(buf, sizeof(buf)) == NULL)
+		return (NULL);
+	pwd = ft_strdup(buf);
+	if (!pwd)
+		perror("minishell: malloc");
+	return (pwd);
+}
+
+int	ft_cd(t_cmd *cmds, char *env[])
 {
 	char	*path;
+	char	*oldpwd;
 
 	if (is_option(cmds->cmd[1]))
 		return (2);
@@ -51,16 +88,14 @@ int	ft_cd(t_cmd *cmds)
 	else
 		path = cmds->cmd[1];
 	if (cmds->cmd[1] && cmds->cmd[2])
-	{
-		ft_putendl_fd("minishell: ft_cd: too many arguments", 2);
-		return (1);
-	}
+		return (ft_putendl_fd("minishell: ft_cd: too many arguments", 2), 1);
+	oldpwd = get_oldpwd();
 	if (chdir(path) != 0)
 	{
 		ft_putstr_fd("minishell: ft_cd: ", 2);
 		perror(path);
 		return (1);
 	}
-	change_pwd(env);
+	change_oldpwd(env, oldpwd);
 	return (0);
 }

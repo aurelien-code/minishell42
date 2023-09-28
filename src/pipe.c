@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 17:33:45 by aagathe           #+#    #+#             */
-/*   Updated: 2023/09/27 17:07:48 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/09/28 15:17:47 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,14 +243,14 @@ int	try_fork()
 	return (pid);
 }
 
-int	launch_builtin(t_cmd *cmds)
+int	launch_builtin(t_cmd *cmds, char **env)
 {
 	if (cmds->is_builtin == 1)
 		return (ft_echo(cmds));
 	else if (cmds->is_builtin == 2)
-		return (ft_cd(cmds));
+		return (ft_cd(cmds, env));
 	else if (cmds->is_builtin == 3)
-		return (ft_env(cmds));
+		return (ft_env(cmds, env));
 	else if (cmds->is_builtin == 4)
 		return (ft_export(cmds));
 	else if (cmds->is_builtin == 5)
@@ -281,7 +281,7 @@ int	launch_cmd(t_cmd *cmds, int nb_cmds, int pfd[4], char **env)
 	switch_files(cmds_cpy, nb_cmds, pfd);
 	close_files(cmds, pfd, nb_cmds);
 	if (cmds->is_builtin)
-		ret = launch_builtin(cmds_cpy);
+		ret = launch_builtin(cmds_cpy, env);
 	else if (path)
 	{
 		execve(path, cmds->cmd, env);

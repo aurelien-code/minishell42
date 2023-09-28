@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 19:02:08 by ypages            #+#    #+#             */
-/*   Updated: 2023/09/28 12:03:23 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/09/28 14:28:37 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ static int	is_option(char *arg)
 
 int	ft_env(t_cmd *cmds, char *env[])
 {
+	int	i;
+
 	if (is_option(cmds->cmd[1]))
 		return (2);
 	if (cmds->cmd[1])
@@ -35,6 +37,8 @@ int	ft_env(t_cmd *cmds, char *env[])
 		ft_putendl_fd("minishell: ft_env: too many arguments", 2);
 		return (1);
 	}
-	while (env)
+	i = 0;
+	while (env[i])
+		ft_putendl_fd(env[i++], 1);
 	return (0);
 }
