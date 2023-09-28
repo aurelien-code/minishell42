@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 13:35:34 by aumarin           #+#    #+#             */
-/*   Updated: 2023/09/26 02:53:35 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/28 01:07:32 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	free_commands(t_cmd *commands)
 	i = 0;
 	while (commands)
 	{
-		if (commands->cmd)
+		if (commands && commands->cmd)
 		{
 			while (commands->cmd[i])
 			{
@@ -69,11 +69,11 @@ void	free_commands(t_cmd *commands)
 			}
 			free(commands->cmd);
 		}
-		if (commands->res)
+		if (commands && commands->res)
 			free(commands->res);
-		if (commands->redr_in)
+		if (commands && commands->redr_in)
 			free_redirs(commands->redr_in);
-		if (commands->redr_out)
+		if (commands && commands->redr_out)
 			free_redirs(commands->redr_out);
 		tmp_cmds = commands;
 		commands = commands->next;

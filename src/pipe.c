@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 17:33:45 by aagathe           #+#    #+#             */
-/*   Updated: 2023/09/28 15:17:47 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/09/28 17:14:32 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,10 @@ void	close_pfd(int nb_cmds, int pfd[4])
 {
 	if (nb_cmds && pfd)
 	{
-		close(pfd[0]);
-		close(pfd[1]);
+		if (pfd && pfd[0])
+			close(pfd[0]);
+		if (pfd && pfd[1])
+			close(pfd[1]);
 		if (nb_cmds > 1)
 		{
 			close(pfd[2]);
@@ -243,16 +245,19 @@ int	try_fork()
 	return (pid);
 }
 
-int	launch_builtin(t_cmd *cmds, char **env)
+int	launch_builtin(t_cmd *cmds, char ***env)
 {
 	if (cmds->is_builtin == 1)
 		return (ft_echo(cmds));
 	else if (cmds->is_builtin == 2)
-		return (ft_cd(cmds, env));
+		return (ft_cd(cmds, *env));
 	else if (cmds->is_builtin == 3)
-		return (ft_env(cmds, env));
+		return (ft_env(cmds, *env));
 	else if (cmds->is_builtin == 4)
-		return (ft_export(cmds));
+	{
+		ft_export(cmds, env);
+		return (0);
+	}
 	else if (cmds->is_builtin == 5)
 		return (ft_pwd(cmds));
 	else if (cmds->is_builtin == 6)
@@ -267,7 +272,21 @@ t_cmd	*go_to_cmds(t_cmd *cmds, int nb_cmds)
 	return (cmds);
 }
 
-int	launch_cmd(t_cmd *cmds, int nb_cmds, int pfd[4], char **env)
+void free_pathes(char **pathes)
+{
+	int	i;
+
+	i = 0;
+	while ((pathes[i]))
+	{
+		if (pathes[i])
+			free(pathes[i]);
+		i++;
+	}
+	return ;
+}
+
+int	launch_cmd(t_cmd *cmds, int nb_cmds, int pfd[4], char ***env)
 {
 	int		ret;
 	char	*error;
@@ -276,7 +295,7 @@ int	launch_cmd(t_cmd *cmds, int nb_cmds, int pfd[4], char **env)
 	t_cmd	*cmds_cpy;
 
 	cmds_cpy = go_to_cmds(cmds, nb_cmds);
-	pathes = find_pathes(env);
+	pathes = find_pathes(*env);
 	path = check_path(cmds_cpy->cmd[0], pathes);
 	switch_files(cmds_cpy, nb_cmds, pfd);
 	close_files(cmds, pfd, nb_cmds);
@@ -284,7 +303,7 @@ int	launch_cmd(t_cmd *cmds, int nb_cmds, int pfd[4], char **env)
 		ret = launch_builtin(cmds_cpy, env);
 	else if (path)
 	{
-		execve(path, cmds->cmd, env);
+		execve(path, cmds->cmd, *env);
 		perror(path);
 		free(path);
 		ret = 126;
@@ -326,7 +345,7 @@ int	check_status(int wstatus)
 	return (0);	// a revoir
 }
 
-int	executer(t_cmd *cmds, char *env[])
+int	executer(t_cmd *cmds, char **env[])
 {
 	int		pfd[4];
 	int		pid;

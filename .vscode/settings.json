@@ -9,7 +9,8 @@
 		"readline.h": "c",
 		"minishell.h": "c",
 		"munit.h": "c",
-		"enums.h": "c"
+		"enums.h": "c",
+		"fcntl.h": "c"
 	},
 	"pomodoro.make": {
 		"notification": true,
