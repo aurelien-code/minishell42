@@ -6,33 +6,17 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:05:45 by ypages            #+#    #+#             */
-/*   Updated: 2023/09/29 11:42:38 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/29 11:49:11 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_free_split(char **list)
-{
-	int	i;
-
-	i = 0;
-	if (!list)
-		return ;
-	while (list[i])
-	{
-		free(list[i]);
-		i++;
-	}
-	free(list);
-}
-
-int		should_modify(char **env, char *new_var)
+int	should_modify(char **env, char *new_var)
 {
 	int		i;
 	char	**var_kv;
 	char	**env_kv;
-	int		j;
 
 	var_kv = ft_split(new_var, '=');
 	if (!var_kv[0])
@@ -50,13 +34,7 @@ int		should_modify(char **env, char *new_var)
 			ft_free_split(env_kv);
 			return (i);
 		}
-		j = 0;
-		while (env_kv[j])
-		{
-			free(env_kv[j]);
-			j++;
-		}
-		free(env_kv);
+		ft_free_split(env_kv);
 		i++;
 	}
 	ft_free_split(var_kv);
@@ -71,10 +49,8 @@ char	**add_new_env_var(char **env, char *new_var)
 	int		modify;
 
 	modify = should_modify(env, new_var);
-	env_size = 0;
+	env_size = get_env_size(env);
 	i = 0;
-	while (env[env_size])
-		env_size++;
 	if (modify < 0)
 		new_env = ft_calloc(env_size + 2, sizeof(char *));
 	else
@@ -92,16 +68,6 @@ char	**add_new_env_var(char **env, char *new_var)
 	if (modify < 0)
 		new_env[i] = ft_strdup(new_var);
 	return (new_env);
-}
-
-int	get_env_size(char **env)
-{
-	int	size;
-
-	size = 0;
-	while (env[size])
-		size++;
-	return (size);
 }
 
 int	ft_export_no_options(char **env)

@@ -6,24 +6,33 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 04:22:34 by ypages            #+#    #+#             */
-/*   Updated: 2023/05/03 16:33:12 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/29 11:49:13 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	search_var(t_env *env, char *var)
+int	get_env_size(char **env)
 {
-	char	**name_value;
+	int	size;
 
-	name_value = ft_split(var, '=');
-	if (!name_value)
-		return (-1);
-	while (env)
+	size = 0;
+	while (env[size])
+		size++;
+	return (size);
+}
+
+void	ft_free_split(char **list)
+{
+	int	i;
+
+	i = 0;
+	if (!list)
+		return ;
+	while (list[i])
 	{
-		if (!ft_strncmp(env->name, name_value[0], ft_strlen(name_value[0])))
-			return (1);
-		env = env->next;
+		free(list[i]);
+		i++;
 	}
-	return (-1);
+	free(list);
 }
