@@ -6,13 +6,13 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:05:45 by ypages            #+#    #+#             */
-/*   Updated: 2023/09/29 01:32:48 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/29 11:42:38 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	t_free_split(char **list)
+void	ft_free_split(char **list)
 {
 	int	i;
 
@@ -38,7 +38,7 @@ int		should_modify(char **env, char *new_var)
 	if (!var_kv[0])
 	{
 		ft_free_split(var_kv);
-		return (0);
+		return (-1);
 	}
 	i = 0;
 	while (env[i])
@@ -130,6 +130,8 @@ int	is_valid_identifier(char *id)
 	id_split = ft_split(id, '=');
 	if (id_split[0] && ft_strchr(id_split[0], '-') != NULL)
 		ret_value = 0;
+	else if (!ft_strchr(id, '='))
+		ret_value = 0;
 	else
 		ret_value = 1;
 	if (id_split[0])
@@ -164,5 +166,5 @@ int	ft_export(t_cmd *cmds, char ***env)
 	}
 	free(*env);
 	*env = new_env;
-	return (126);
+	return (1);
 }

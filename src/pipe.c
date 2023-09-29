@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 17:33:45 by aagathe           #+#    #+#             */
-/*   Updated: 2023/09/28 17:14:32 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/29 11:20:22 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,14 +254,11 @@ int	launch_builtin(t_cmd *cmds, char ***env)
 	else if (cmds->is_builtin == 3)
 		return (ft_env(cmds, *env));
 	else if (cmds->is_builtin == 4)
-	{
-		ft_export(cmds, env);
-		return (0);
-	}
+		return (ft_export(cmds, env));
 	else if (cmds->is_builtin == 5)
 		return (ft_pwd(cmds));
 	else if (cmds->is_builtin == 6)
-		return (ft_unset(cmds));
+		return (ft_unset(cmds, env));
 	return (0);
 }
 
