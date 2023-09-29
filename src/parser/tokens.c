@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:58:13 by aumarin           #+#    #+#             */
-/*   Updated: 2023/09/23 12:45:56 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/29 12:01:45 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ t_tokens	*get_word_token(t_lexer *lexer_arr, int *i)
 
 	tmp = NULL;
 	str = NULL;
-	while (lexer_arr[*i].type == NORMAL && lexer_arr[*i].value != ' ')
+	while (lexer_arr[*i].type == NORMAL && lexer_arr[*i].value != ' ' && \
+		lexer_arr[*i].value != '\t')
 	{
 		if (!str && lexer_arr[*i].value)
 			str = ft_strdup(&lexer_arr[*i].value);
@@ -61,7 +62,7 @@ t_tokens	*get_word_token(t_lexer *lexer_arr, int *i)
 		}
 		(*i)++;
 	}
-	if (lexer_arr[*i].value != ' ')
+	if (lexer_arr[*i].value != ' ' && lexer_arr[*i].value != '\t')
 		(*i)--;
 	if (str)
 		return (new_token_item(str, TOKEN));
