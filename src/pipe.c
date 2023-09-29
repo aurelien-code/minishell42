@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 17:33:45 by aagathe           #+#    #+#             */
-/*   Updated: 2023/09/29 11:20:22 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/29 19:54:02 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,7 +245,7 @@ int	try_fork()
 	return (pid);
 }
 
-int	launch_builtin(t_cmd *cmds, char ***env)
+int	launch_builtin(t_cmd *cmds, char ***env, int pfd[4])
 {
 	if (cmds->is_builtin == 1)
 		return (ft_echo(cmds));
@@ -259,6 +259,8 @@ int	launch_builtin(t_cmd *cmds, char ***env)
 		return (ft_pwd(cmds));
 	else if (cmds->is_builtin == 6)
 		return (ft_unset(cmds, env));
+	else if (cmds->is_builtin == 7)
+		return (ft_exit(cmds, pfd));
 	return (0);
 }
 
@@ -297,7 +299,7 @@ int	launch_cmd(t_cmd *cmds, int nb_cmds, int pfd[4], char ***env)
 	switch_files(cmds_cpy, nb_cmds, pfd);
 	close_files(cmds, pfd, nb_cmds);
 	if (cmds->is_builtin)
-		ret = launch_builtin(cmds_cpy, env);
+		ret = launch_builtin(cmds_cpy, env, pfd);
 	else if (path)
 	{
 		execve(path, cmds->cmd, *env);
@@ -339,7 +341,7 @@ int	check_status(int wstatus)
 			return (131);
 		}
 	}
-	return (0);	// a revoir
+	return (-1);
 }
 
 int	executer(t_cmd *cmds, char **env[])

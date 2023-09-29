@@ -6,7 +6,7 @@
 #    By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/07 22:33:15 by aumarin           #+#    #+#              #
-#    Updated: 2023/09/19 15:36:18 by aumarin          ###   ########.fr        #
+#    Updated: 2023/09/29 20:05:22 by aagathe          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRC		= 	src/prompt.c \
 			src/built/unset.c \
 			src/built/utils.c \
 			src/built/env.c \
+			src/built/exit.c \
 			src/parser/lexer.c \
 			src/parser/tokens.c \
 			src/parser/quotes.c \

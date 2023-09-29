@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/09/29 11:49:23 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/29 20:04:54 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int			ft_pwd(t_cmd *cmds);
 int			ft_export(t_cmd *cmds, char ***env);
 int			ft_unset(t_cmd *cmds, char ***env);
 int			ft_env(t_cmd *cmds, char *env[]);
+int			ft_exit(t_cmd *cmds, int pfd[4]);
 
 /** builtin - utils **/
 int			get_env_size(char **env);
