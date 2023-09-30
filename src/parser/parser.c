@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 12:00:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/09/27 16:43:19 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/09/30 16:22:28 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	is_builtin(t_tokens	*tokens)
 		return (5);
 	else if (!ft_strncmp(str, "unset", 6))
 		return (6);
+	else if (!ft_strncmp(str, "exit", 5))
+		return (7);
 	else
 		return (0);
 }

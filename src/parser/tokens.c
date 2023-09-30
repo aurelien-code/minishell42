@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:58:13 by aumarin           #+#    #+#             */
-/*   Updated: 2023/09/29 12:01:45 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/09/30 16:35:40 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	dbg_print_tokens(t_tokens *tokens)
 	}
 }
 
-t_tokens	*get_tokens(t_lexer *lexer_arr)
+t_tokens	*get_tokens(t_lexer *lexer_arr, char **env)
 {
 	int			i;
 	t_tokens	*tokens;
@@ -94,9 +94,9 @@ t_tokens	*get_tokens(t_lexer *lexer_arr)
 	while (lexer_arr[i].value)
 	{
 		if (lexer_arr[i].type == QUOTE)
-			append_token(&tokens, get_quote_token(lexer_arr, &i));
+			append_token(&tokens, get_quote_token(lexer_arr, &i, env));
 		else if (lexer_arr[i].type == EXPAND)
-			append_token(&tokens, expand(lexer_arr, &i));
+			append_token(&tokens, expand(lexer_arr, &i, env));
 		else if (lexer_arr[i].type == PIPE)
 			append_token(&tokens, new_token_item(NULL, T_PIPE));
 		else if (lexer_arr[i].type == REDIRECT)

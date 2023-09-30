@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/09/29 20:04:54 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/09/30 16:37:39 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,15 @@ t_lexer		*lexer(char *prompt_line);
 char		*substr_lexer(t_lexer *lexer_arr, int start, int stop);
 
 /*	quotes.c	*/
-t_tokens	*get_quote_token(t_lexer *lexer_arr, int *i);
+t_tokens	*get_quote_token(t_lexer *lexer_arr, int *i, char **env);
 
 /*	tokens.c	*/
-t_tokens	*get_tokens(t_lexer *lexer_arr);
+t_tokens	*get_tokens(t_lexer *lexer_arr, char **env);
 t_tokens	*new_token_item(char *str, t_tokens_enum type);
 
 /*	expand.c	*/
-t_tokens	*expand(t_lexer *lexer_arr, int *i);
+t_tokens	*expand(t_lexer *lexer_arr, int *i, char **env);
+char		*ft_getenv(char **env, char *var);
 
 /*	redirects.c	*/
 t_tokens	*get_redirect_token(t_lexer *lexer_arr, int *i);
