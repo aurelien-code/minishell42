@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/09/30 16:37:39 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/01 17:38:39 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,23 @@ int			write_history(const char *input);
 
 t_cmd		*parser(t_tokens *tokens);
 
+/* execute.c*/
 int			executer(t_cmd *cmds, char **env[]);
+
+/* manage_files */
+int			open_pipe(int pfd[4], int nb_cmds, t_cmd *next);
+void		close_files(t_cmd *cmds, int pfd[4], int nb_cmds);
+void		switch_files(t_cmd *cmds, int id_cmd, int pfd[4]);
+
+/* open_files.c */
+int			open_files(t_cmd *cmds);
+
+/* pipe_utils.c */
+t_cmd		*go_to_cmds(t_cmd *cmds, int nb_cmds);
+char		*check_path(char *cmd, char **pathes);
+char		**find_pathes(char *env[]);
+int			try_fork(void);
+void		free_pathes(char **pathes);
 
 void		*throw_parsing_error(t_lexer *lex, t_tokens *tok, \
 			t_cmd *cmd, char *err);

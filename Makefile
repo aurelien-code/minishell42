@@ -6,7 +6,7 @@
 #    By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/07 22:33:15 by aumarin           #+#    #+#              #
-#    Updated: 2023/09/29 20:05:22 by aagathe          ###   ########.fr        #
+#    Updated: 2023/10/01 17:30:06 by aagathe          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,6 @@ SRC		= 	src/prompt.c \
 			src/sig.c \
 			src/handle_history.c \
 			src/free_memory.c \
-			src/pipe.c \
 			src/errors.c \
 			src/built/cd.c \
 			src/built/echo.c \
@@ -35,7 +34,11 @@ SRC		= 	src/prompt.c \
 			src/parser/quotes.c \
 			src/parser/expand.c \
 			src/parser/redirects.c \
-			src/parser/parser.c
+			src/parser/parser.c \
+			src/pipe/execute.c \
+			src/pipe/manage_files.c \
+			src/pipe/open_files.c \
+			src/pipe/pipe_utils.c
 
 OBJ		=	$(SRC:.c=.o)
 
