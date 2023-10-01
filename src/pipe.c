@@ -6,11 +6,18 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 17:33:45 by aagathe           #+#    #+#             */
-/*   Updated: 2023/09/29 19:54:02 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/01 03:24:38 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_cmd	*go_to_cmds(t_cmd *cmds, int nb_cmds)
+{
+	while (--nb_cmds)
+		cmds = cmds->next;
+	return (cmds);
+}
 
 void	entry_error(const char *filename)
 {
@@ -34,13 +41,15 @@ void	entry_error(const char *filename)
 
 void	write_entry(t_cmd *cmds)
 {
-	const char	*filename = cmds->redr_in->filename;
-	const int	name_size = ft_strlen(filename);
+	const int	name_size = ft_strlen(cmds->redr_in->filename);
 	char		*buffer;
 	int			pfd[2];
 
 	if (pipe(pfd) < 0)
+	{
+		perror(TEMP_FILE_ERR);
 		return ;
+	}
 	cmds->redr_in->pfd[0] = pfd[0];
 	cmds->redr_in->pfd[1] = pfd[1];
 	cmds->redr_in->fd = pfd[0];
@@ -48,7 +57,7 @@ void	write_entry(t_cmd *cmds)
 	buffer = readline("> ");
 	while (buffer)
 	{
-		if (!ft_strncmp(buffer, filename, name_size + 1))
+		if (!ft_strncmp(buffer, cmds->redr_in->filename, name_size + 1))
 			break ;
 		write(pfd[1], buffer, ft_strlen(buffer));
 		write(pfd[1], "\n", 1);
@@ -56,7 +65,7 @@ void	write_entry(t_cmd *cmds)
 		buffer = readline("> ");
 	}
 	if (!buffer)
-		entry_error(filename);
+		entry_error(cmds->redr_in->filename);
 }
 
 int	open_files(t_cmd *cmds)
@@ -76,9 +85,9 @@ int	open_files(t_cmd *cmds)
 				cmds->redr_in->fd = open(cmds->redr_in->filename, O_RDONLY);
 			else
 				write_entry(cmds);
-			if (cmds->redr_in->fd < 0 && *cmds->redr_in->pfd < 0 && ++ret)
+			if (cmds->redr_in->fd < 0 && cmds->redr_in->type == 4 && ++ret)
 			{
-				error = ft_strjoin("minishell: ", cmds->redr_in->filename); //message pour double
+				error = ft_strjoin("minishell: ", cmds->redr_in->filename);
 				perror(error);
 				free(error);
 			}
@@ -106,14 +115,20 @@ int	open_files(t_cmd *cmds)
 	return (ret);
 }
 
-void	close_pfd(int nb_cmds, int pfd[4])
+void	close_pfd(int nb_cmds, int pfd[4], t_cmd *cmds)
 {
-	if (nb_cmds && pfd)
+	if (!cmds->next)
 	{
-		if (pfd && pfd[0])
-			close(pfd[0]);
-		if (pfd && pfd[1])
-			close(pfd[1]);
+		if (nb_cmds > 1)
+		{
+			close(pfd[nb_cmds % 2 * 2]);
+			close(pfd[nb_cmds % 2 * 2 + 1]);
+		}
+	}
+	else
+	{
+		close(pfd[0]);
+		close(pfd[1]);
 		if (nb_cmds > 1)
 		{
 			close(pfd[2]);
@@ -127,6 +142,7 @@ void	close_files(t_cmd *cmds, int pfd[4], int nb_cmds)
 	int		redr;
 	t_redr	*redr_cpy;
 
+	close_pfd(nb_cmds, pfd, go_to_cmds(cmds, nb_cmds));
 	redr = 0;
 	while (cmds)
 	{
@@ -148,7 +164,6 @@ void	close_files(t_cmd *cmds, int pfd[4], int nb_cmds)
 		if (redr++)
 			redr = 0;
 	}
-	close_pfd(nb_cmds, pfd);
 }
 
 void	switch_files(t_cmd *cmds, int id_cmd, int pfd[4])
@@ -228,7 +243,7 @@ int	open_pipe(int pfd[4], int nb_cmds, t_cmd *next)
 	return (0);
 }
 
-int	try_fork()
+int	try_fork(void)
 {
 	int	i;
 	int	pid;
@@ -264,14 +279,7 @@ int	launch_builtin(t_cmd *cmds, char ***env, int pfd[4])
 	return (0);
 }
 
-t_cmd	*go_to_cmds(t_cmd *cmds, int nb_cmds)
-{
-	while (--nb_cmds)
-		cmds = cmds->next;
-	return (cmds);
-}
-
-void free_pathes(char **pathes)
+void	free_pathes(char **pathes)
 {
 	int	i;
 
@@ -285,10 +293,29 @@ void free_pathes(char **pathes)
 	return ;
 }
 
+int	launch_cmd_next(char *path, char **cmd, char **env)
+{
+	char	*error;
+
+	if (path)
+	{
+		execve(path, cmd, env);
+		perror(path);
+		free(path);
+		return (126);
+	}
+	else
+	{
+		error = ft_strjoin(cmd[0], " : command not found");
+		ft_putendl_fd(error, 2);
+		free(error);
+		return (127);
+	}
+}
+
 int	launch_cmd(t_cmd *cmds, int nb_cmds, int pfd[4], char ***env)
 {
 	int		ret;
-	char	*error;
 	char	*path;
 	char	**pathes;
 	t_cmd	*cmds_cpy;
@@ -300,20 +327,8 @@ int	launch_cmd(t_cmd *cmds, int nb_cmds, int pfd[4], char ***env)
 	close_files(cmds, pfd, nb_cmds);
 	if (cmds->is_builtin)
 		ret = launch_builtin(cmds_cpy, env, pfd);
-	else if (path)
-	{
-		execve(path, cmds->cmd, *env);
-		perror(path);
-		free(path);
-		ret = 126;
-	}
 	else
-	{
-		error = ft_strjoin(cmds->cmd[0], " : command not found");
-		ft_putendl_fd(error, 2);
-		free(error);
-		ret = 127;
-	}
+		ret = launch_cmd_next(path, cmds_cpy->cmd, *env);
 	if (pfd)
 	{
 		free_commands(cmds);

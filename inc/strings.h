@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 13:46:44 by aumarin           #+#    #+#             */
-/*   Updated: 2023/09/26 02:41:53 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/01 03:22:57 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,10 @@
 
 # ifndef NO_FILE_TO_REDR
 #  define NO_FILE_TO_REDR "Syntax error: missing command after redirection.\n"
+# endif
+
+# ifndef TEMP_FILE_ERR 
+#  define TEMP_FILE_ERR "minishell : cannot create temp file for here-document"
 # endif
 
 #endif
