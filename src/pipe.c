@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 17:33:45 by aagathe           #+#    #+#             */
-/*   Updated: 2023/10/01 03:24:38 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/01 03:58:34 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,48 +68,69 @@ void	write_entry(t_cmd *cmds)
 		entry_error(cmds->redr_in->filename);
 }
 
+int	open_redr_in(t_cmd *cmds)
+{
+	int		ret;
+	t_redr	*redr_in;
+	char	*error;
+
+	ret = 0;
+	redr_in = cmds->redr_in;
+	while (cmds->redr_in)
+	{
+		if (cmds->redr_in->type == S_REDIR_L)
+			cmds->redr_in->fd = open(cmds->redr_in->filename, O_RDONLY);
+		else
+			write_entry(cmds);
+		if (cmds->redr_in->fd < 0 && cmds->redr_in->type == 4 && ++ret)
+		{
+			error = ft_strjoin("minishell: ", cmds->redr_in->filename);
+			perror(error);
+			free(error);
+		}
+		cmds->redr_in = cmds->redr_in->next;
+	}
+	cmds->redr_in = redr_in;
+	return (ret);
+}
+
+int	open_redr_out(t_cmd *cmds)
+{
+	int		ret;
+	t_redr	*redr_out;
+	char	*error;
+
+	ret = 0;
+	redr_out = cmds->redr_out;
+	while (cmds->redr_out)
+	{
+		if (cmds->redr_out->type == S_REDIR_R)
+			cmds->redr_out->fd = open(cmds->redr_out->filename,
+					O_CREAT | O_TRUNC | O_WRONLY, 0660);
+		else
+			cmds->redr_out->fd = open(cmds->redr_out->filename,
+					O_CREAT | O_WRONLY | O_APPEND, 0660);
+		if (cmds->redr_out->fd < 0 && ++ret)
+		{
+			error = ft_strjoin("minishell: ", cmds->redr_out->filename);
+			perror(error);
+			free(error);
+		}
+		cmds->redr_out = cmds->redr_out->next;
+	}
+	cmds->redr_out = redr_out;
+	return (ret);
+}
+
 int	open_files(t_cmd *cmds)
 {
 	int		ret;
-	char	*error;
-	t_redr	*redr_in;
-	t_redr	*redr_out;
 
 	ret = 0;
 	while (cmds)
 	{
-		redr_in = cmds->redr_in;
-		while (cmds->redr_in)
-		{
-			if (cmds->redr_in->type == S_REDIR_L)
-				cmds->redr_in->fd = open(cmds->redr_in->filename, O_RDONLY);
-			else
-				write_entry(cmds);
-			if (cmds->redr_in->fd < 0 && cmds->redr_in->type == 4 && ++ret)
-			{
-				error = ft_strjoin("minishell: ", cmds->redr_in->filename);
-				perror(error);
-				free(error);
-			}
-			cmds->redr_in = cmds->redr_in->next;
-		}
-		cmds->redr_in = redr_in;
-		redr_out = cmds->redr_out;
-		while (cmds->redr_out)
-		{
-			if (cmds->redr_out->type == S_REDIR_R)
-				cmds->redr_out->fd = open(cmds->redr_out->filename, O_CREAT | O_TRUNC | O_WRONLY, 0660);
-			else
-				cmds->redr_out->fd = open(cmds->redr_out->filename, O_CREAT | O_WRONLY | O_APPEND, 0660);
-			if (cmds->redr_out->fd < 0 && ++ret)
-			{
-				error = ft_strjoin("minishell: ", cmds->redr_out->filename);
-				perror(error);
-				free(error);
-			}
-			cmds->redr_out = cmds->redr_out->next;
-		}
-		cmds->redr_out = redr_out;
+		ret += open_redr_in(cmds);
+		ret += open_redr_out(cmds);
 		cmds = cmds->next;
 	}
 	return (ret);
@@ -187,7 +208,7 @@ void	switch_files(t_cmd *cmds, int id_cmd, int pfd[4])
 		redr_out = cmds->redr_out;
 		while (redr_out->next)
 			redr_out = redr_out->next;
-		dup2(redr_out->fd, 0);
+		dup2(redr_out->fd, 1);
 	}
 	else if (cmds->next && id_cmd % 2)
 		dup2(pfd[1], 1);
