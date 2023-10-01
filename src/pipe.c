@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 17:33:45 by aagathe           #+#    #+#             */
-/*   Updated: 2023/10/01 03:58:34 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/01 16:58:41 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -306,11 +306,8 @@ void	free_pathes(char **pathes)
 
 	i = 0;
 	while ((pathes[i]))
-	{
-		if (pathes[i])
-			free(pathes[i]);
-		i++;
-	}
+		free(pathes[i++]);
+	free(pathes);
 	return ;
 }
 
@@ -344,6 +341,7 @@ int	launch_cmd(t_cmd *cmds, int nb_cmds, int pfd[4], char ***env)
 	cmds_cpy = go_to_cmds(cmds, nb_cmds);
 	pathes = find_pathes(*env);
 	path = check_path(cmds_cpy->cmd[0], pathes);
+	free_pathes(pathes);
 	switch_files(cmds_cpy, nb_cmds, pfd);
 	close_files(cmds, pfd, nb_cmds);
 	if (cmds->is_builtin)
