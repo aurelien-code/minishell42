@@ -10,7 +10,8 @@
 		"minishell.h": "c",
 		"munit.h": "c",
 		"enums.h": "c",
-		"fcntl.h": "c"
+		"fcntl.h": "c",
+		"type_traits": "cpp"
 	},
 	"pomodoro.make": {
 		"notification": true,

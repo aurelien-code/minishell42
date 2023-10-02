@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 12:30:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/02 03:29:27 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/02 11:28:21 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		prompt_line = ft_prompt();
 		if (!prompt_line)
-			sig_ctrl_d();
+			sig_ctrl_d(cpy_env);
 		write_history(prompt_line);
 		history_size(1);
 		lexer_line = lexer(prompt_line);

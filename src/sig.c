@@ -6,15 +6,24 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 05:04:06 by n4w4k_            #+#    #+#             */
-/*   Updated: 2023/08/26 12:20:01 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/02 10:18:21 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	sig_ctrl_d(void)
+void	sig_ctrl_d(char **cpy_env)
 {
+	int	i;
+
 	ft_putstr_fd("exit\n", 1);
+	i = 0;
+	while (cpy_env[i])
+	{
+		free(cpy_env[i]);
+		i++;
+	}
+	free(cpy_env);
 	exit(0);
 }
 

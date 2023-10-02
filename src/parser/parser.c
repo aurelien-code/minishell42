@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 12:00:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/09/30 16:22:28 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/02 11:22:13 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	add_to_cmd(t_cmd *cmd, char *value)
 		j++;
 	}
 	if (value)
-		new_cmd[i] = ft_strdup(value);
+		new_cmd[j] = ft_strdup(value);
 	else
 		new_cmd[i] = NULL;
 	free(cmd->cmd);

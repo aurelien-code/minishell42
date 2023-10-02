@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/10/01 17:38:39 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/02 10:17:40 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_env		*delete_item(t_env **env, char *name);
 
 /*	sig.c		*/
 void		sig_init(void);
-void		sig_ctrl_d(void);
+void		sig_ctrl_d(char **cpy_env);
 
 /*  lexer.c     */
 t_lexer		*lexer(char *prompt_line);
