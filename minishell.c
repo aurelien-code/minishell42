@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 12:30:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/02 23:01:57 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/03 00:42:46 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,39 +35,57 @@ char	**copy_env_in_heap(char **env)
 	return (env_cpy);
 }
 
+void	init(int argc, char **envp, char ***cpy_env, char **prompt_line)
+{
+	if (!envp || argc > 1)
+		exit(1);
+	sig_setup(1);
+	*cpy_env = copy_env_in_heap(envp);
+	*prompt_line = ft_prompt();
+}
+
+void	lexer_and_parse(char *prompt_line, t_lexer **lexer_line,
+							t_tokens **tokens, char **cpy_env)
+{
+	*lexer_line = lexer(prompt_line);
+	if (!*lexer_line)
+		return ;
+	*tokens = get_tokens(prompt_line, *lexer_line, cpy_env);
+}
+
+void	execute_commands(t_tokens *tokens, t_lexer *lexer_line, \
+						char ***cpy_env)
+{
+	t_cmd	*commands;
+
+	commands = parser(tokens);
+	free_tokens(tokens);
+	free(lexer_line);
+	if (commands)
+	{
+		sig_setup(0);
+		g_exit_code = executer(commands, cpy_env);
+		sig_setup(1);
+		free_commands(commands);
+	}
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char		*prompt_line;
 	t_lexer		*lexer_line;
 	t_tokens	*tokens;
-	t_cmd		*commands;
 	char		**cpy_env;
 
 	(void)argv;
-	if (!envp || argc > 1)
-		return (1);
-	sig_setup(1);
-	prompt_line = NULL;
-	cpy_env = copy_env_in_heap(envp);
-	prompt_line = ft_prompt();
+	init(argc, envp, &cpy_env, &prompt_line);
 	while (prompt_line)
 	{
 		write_history(prompt_line);
 		history_size(1);
-		lexer_line = lexer(prompt_line);
-		if (!lexer_line)
-			continue ;
-		tokens = get_tokens(prompt_line, lexer_line, cpy_env);
-		commands = parser(tokens);
-		free_tokens(tokens);
-		free(lexer_line);
-		if (commands)
-		{
-			sig_setup(0);
-			g_exit_code = executer(commands, &cpy_env);
-			sig_setup(1);
-			free_commands(commands);
-		}
+		lexer_and_parse(prompt_line, &lexer_line, &tokens, cpy_env);
+		if (lexer_line && tokens)
+			execute_commands(tokens, lexer_line, &cpy_env);
 		prompt_line = ft_prompt();
 	}
 	rl_clear_history();

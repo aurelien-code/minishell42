@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/10/02 23:05:32 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/03 00:36:18 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ char		*substr_lexer(t_lexer *lexer_arr, int start, int stop);
 void		handle_dollar(char **env, char *str, int *i, char **new_str);
 void		handle_other_char(char *str, int i, char **new_str);
 t_tokens	*get_quote_token(t_lexer *lexer_arr, int *i, char **env);
-
 
 /*	tokens.c	*/
 t_tokens	*get_tokens(char *str, t_lexer *lexer_arr, char **env);

@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 19:32:19 by aagathe           #+#    #+#             */
-/*   Updated: 2023/10/02 23:05:15 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/03 00:38:32 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ static int	check_num(char *str)
 
 	i = 0;
 	neg = 0;
-	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\f' || str[i] == '\n'
+	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\f' || str[i] == '\n' \
 			|| str[i] == '\r' || str[i] == '\v')
 		str++;
 	if ((str[i] == '-' && ++neg) || str[i] == '+')
 		str++;
 	while (ft_isdigit(str[i]))
 		i++;
-	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\f' || str[i] == '\n'
+	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\f' || str[i] == '\n' \
 			|| str[i] == '\r' || str[i] == '\v')
 		str++;
 	if (str[i])
@@ -51,6 +51,12 @@ void	print_exit_msg(t_cmd *cmds)
 	ft_putstr_fd("minishell: exit: ", 2);
 	ft_putstr_fd(cmds->cmd[1], 2);
 	ft_putendl_fd(": numeric argument required", 2);
+}
+
+void	free_before_exit(char **cpy_env, t_cmd *cmds)
+{
+	ft_free_cpy_env(cpy_env);
+	free_commands(cmds);
 }
 
 int	ft_exit(t_cmd *cmds, char **cpy_env, int fork)
@@ -78,7 +84,6 @@ int	ft_exit(t_cmd *cmds, char **cpy_env, int fork)
 			exit_code = 2;
 		}
 	}
-	ft_free_cpy_env(cpy_env);
-	free_commands(cmds);
+	free_before_exit(cpy_env, cmds);
 	exit(exit_code);
 }
