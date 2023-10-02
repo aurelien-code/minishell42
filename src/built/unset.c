@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:05:45 by ypages            #+#    #+#             */
-/*   Updated: 2023/09/29 11:53:00 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/02 15:56:25 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,11 @@ char	*get_env_key(char **env, int key_pos)
 	int		i;
 
 	i = 0;
+	key = NULL;
 	env_kv = ft_split(env[key_pos], '=');
 	if (env_kv[0])
 		key = ft_strdup(env_kv[0]);
-	while (env_kv[i])
-	{
-		free(env_kv[i]);
-		i++;
-	}
-	free(env_kv);
+	ft_free_split(env_kv);
 	return (key);
 }
 

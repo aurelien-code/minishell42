@@ -6,7 +6,7 @@
 #    By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/07 22:33:15 by aumarin           #+#    #+#              #
-#    Updated: 2023/10/01 17:30:06 by aagathe          ###   ########.fr        #
+#    Updated: 2023/10/02 22:58:13 by aumarin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,6 @@ MSRC	=	minishell.c	# main
 MOBJ	=	$(MSRC:.c=.o)
 
 SRC		= 	src/prompt.c \
-			src/ll_env.c \
 			src/sig.c \
 			src/handle_history.c \
 			src/free_memory.c \
@@ -31,7 +30,9 @@ SRC		= 	src/prompt.c \
 			src/built/exit.c \
 			src/parser/lexer.c \
 			src/parser/tokens.c \
+			src/parser/tokens2.c \
 			src/parser/quotes.c \
+			src/parser/quotes2.c \
 			src/parser/expand.c \
 			src/parser/redirects.c \
 			src/parser/parser.c \

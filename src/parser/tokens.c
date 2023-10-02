@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:58:13 by aumarin           #+#    #+#             */
-/*   Updated: 2023/09/30 16:35:40 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/02 22:58:03 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,34 +42,6 @@ void	append_token(t_tokens **tokens, t_tokens *new_elem)
 	}
 }
 
-t_tokens	*get_word_token(t_lexer *lexer_arr, int *i)
-{
-	char	*str;
-	char	*tmp;
-
-	tmp = NULL;
-	str = NULL;
-	while (lexer_arr[*i].type == NORMAL && lexer_arr[*i].value != ' ' && \
-		lexer_arr[*i].value != '\t')
-	{
-		if (!str && lexer_arr[*i].value)
-			str = ft_strdup(&lexer_arr[*i].value);
-		else
-		{
-			tmp = str;
-			str = ft_strjoin(tmp, &lexer_arr[*i].value);
-			free(tmp);
-		}
-		(*i)++;
-	}
-	if (lexer_arr[*i].value != ' ' && lexer_arr[*i].value != '\t')
-		(*i)--;
-	if (str)
-		return (new_token_item(str, TOKEN));
-	else
-		return (NULL);
-}
-
 void	dbg_print_tokens(t_tokens *tokens)
 {
 	if (!tokens)
@@ -82,7 +54,7 @@ void	dbg_print_tokens(t_tokens *tokens)
 	}
 }
 
-t_tokens	*get_tokens(t_lexer *lexer_arr, char **env)
+t_tokens	*get_tokens(char *str, t_lexer *lexer_arr, char **env)
 {
 	int			i;
 	t_tokens	*tokens;
@@ -91,7 +63,7 @@ t_tokens	*get_tokens(t_lexer *lexer_arr, char **env)
 	i = 0;
 	if (!lexer_arr)
 		return (NULL);
-	while (lexer_arr[i].value)
+	while (i < (int)ft_strlen(str))
 	{
 		if (lexer_arr[i].type == QUOTE)
 			append_token(&tokens, get_quote_token(lexer_arr, &i, env));
@@ -102,7 +74,7 @@ t_tokens	*get_tokens(t_lexer *lexer_arr, char **env)
 		else if (lexer_arr[i].type == REDIRECT)
 			append_token(&tokens, get_redirect_token(lexer_arr, &i));
 		else
-			append_token(&tokens, get_word_token(lexer_arr, &i));
+			append_token(&tokens, get_word_token(lexer_arr, &i, env));
 		i++;
 	}
 	return (tokens);

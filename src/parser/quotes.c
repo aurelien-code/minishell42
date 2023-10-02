@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 17:08:01 by aumarin           #+#    #+#             */
-/*   Updated: 2023/09/30 16:35:43 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/02 22:55:13 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,50 +29,20 @@ int	is_quote_closed(t_lexer *lexer_arr, int i)
 	return (0);
 }
 
-char	*process_new_str(char *base_str, char *old_str, int i, int j)
-{
-	char	*tmp[2];
-	char	*new_str;
-
-	new_str = NULL;
-	tmp[0] = new_str;
-	tmp[1] = ft_substr(base_str, i, j);
-	if (j != 1)
-		new_str = ft_strjoin(old_str, getenv(tmp[1]));
-	else
-		new_str = ft_strjoin(old_str, tmp[1]);
-	if (tmp[0])
-		free(tmp[0]);
-	if (tmp[1])
-		free(tmp[1]);
-	if (old_str)
-		free(old_str);
-	return (new_str);
-}
-
 char	*expand_in_double_quote(char **env, char *str)
 {
 	int		i;
-	int		j;
 	char	*new_str;
 
 	i = 0;
 	new_str = NULL;
 	while (str[i])
 	{
-		j = 1;
 		if (str[i] == '$')
-		{
-			while (str[i + j] != ' ' && str[i + j] && str[i + j] != '$')
-				j++;
-			new_str = ft_getenv(env, ft_substr(str, i + 1, j));
-			i += j;
-		}
-		if (str[i] != '$')
-		{
-			new_str = process_new_str(str, new_str, i, 1);
-			i++;
-		}
+			handle_dollar(env, str, &i, &new_str);
+		else
+			handle_other_char(str, i, &new_str);
+		i++;
 	}
 	free(str);
 	return (new_str);

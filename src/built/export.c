@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:05:45 by ypages            #+#    #+#             */
-/*   Updated: 2023/09/29 11:49:11 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/02 22:41:17 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,10 @@ int	ft_export(t_cmd *cmds, char ***env)
 	if (!is_valid_identifier(cmds->cmd[1]))
 		return (1);
 	env_size = get_env_size(*env);
-	new_env = add_new_env_var(*env, cmds->cmd[1]);
+	if (cmds->cmd[2] && !ft_strncmp(cmds->cmd[1], " ", 1))
+		new_env = add_new_env_var(*env, cmds->cmd[2]);
+	else
+		new_env = add_new_env_var(*env, cmds->cmd[1]);
 	while (i < env_size)
 	{
 		if ((*env)[i])

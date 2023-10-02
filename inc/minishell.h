@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/10/02 18:51:25 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/02 23:05:32 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int			ft_pwd(t_cmd *cmds);
 int			ft_export(t_cmd *cmds, char ***env);
 int			ft_unset(t_cmd *cmds, char ***env);
 int			ft_env(t_cmd *cmds, char *env[]);
-int			ft_exit(t_cmd *cmds, char **env, int fork);
+int			ft_exit(t_cmd *cmds, char **cpy_env, int fork);
 
 /** builtin - utils **/
 int			get_env_size(char **env);
@@ -44,12 +44,6 @@ void		ft_free_cpy_env(char **cpy_env);
 /*  prompt.c    */
 char		*ft_prompt(void);
 
-/*	ll_env.c	*/
-t_env		*convert_env(char **envp);
-t_env		*add_item(t_env *env, char *name, char *value);
-t_env		*modify_item(t_env *env, char *name, char *value);
-t_env		*delete_item(t_env **env, char *name);
-
 /*	sig.c		*/
 void		sig_setup(int mod);
 
@@ -58,11 +52,15 @@ t_lexer		*lexer(char *prompt_line);
 char		*substr_lexer(t_lexer *lexer_arr, int start, int stop);
 
 /*	quotes.c	*/
+void		handle_dollar(char **env, char *str, int *i, char **new_str);
+void		handle_other_char(char *str, int i, char **new_str);
 t_tokens	*get_quote_token(t_lexer *lexer_arr, int *i, char **env);
 
+
 /*	tokens.c	*/
-t_tokens	*get_tokens(t_lexer *lexer_arr, char **env);
+t_tokens	*get_tokens(char *str, t_lexer *lexer_arr, char **env);
 t_tokens	*new_token_item(char *str, t_tokens_enum type);
+t_tokens	*get_word_token(t_lexer *lexer_arr, int *i, char **env);
 
 /*	expand.c	*/
 t_tokens	*expand(t_lexer *lexer_arr, int *i, char **env);

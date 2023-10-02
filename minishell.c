@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 12:30:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/02 17:52:32 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/02 23:01:57 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	main(int argc, char **argv, char **envp)
 		lexer_line = lexer(prompt_line);
 		if (!lexer_line)
 			continue ;
-		tokens = get_tokens(lexer_line, cpy_env);
+		tokens = get_tokens(prompt_line, lexer_line, cpy_env);
 		commands = parser(tokens);
 		free_tokens(tokens);
 		free(lexer_line);
