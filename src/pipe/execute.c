@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aagathe <aagathe@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 17:08:43 by aagathe           #+#    #+#             */
-/*   Updated: 2023/10/02 05:37:11 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/02 12:10:30 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	launch_builtin(t_cmd *cmds, char ***env, int pfd[4])
 	else if (cmds->is_builtin == 6)
 		return (ft_unset(cmds, env));
 	else if (cmds->is_builtin == 7)
-		return (ft_exit(cmds, pfd));
+		return (ft_exit(cmds, pfd, *env));
 	return (0);
 }
 

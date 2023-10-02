@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 19:32:19 by aagathe           #+#    #+#             */
-/*   Updated: 2023/09/30 16:45:03 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/02 12:13:07 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	print_exit_msg(t_cmd *cmds)
 	ft_putendl_fd(": numeric argument required", 2);
 }
 
-int	ft_exit(t_cmd *cmds, int pfd[4])
+int	ft_exit(t_cmd *cmds, int pfd[4], char **cpy_env)
 {
 	int	exit_code;
 
@@ -66,6 +66,7 @@ int	ft_exit(t_cmd *cmds, int pfd[4])
 			exit_code = 2;
 		}
 	}
+	ft_free_cpy_env(cpy_env);
 	free_commands(cmds);
 	exit(exit_code);
 }
