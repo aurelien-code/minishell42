@@ -6,30 +6,34 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 17:08:43 by aagathe           #+#    #+#             */
-/*   Updated: 2023/10/02 17:01:39 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/02 18:48:37 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	launch_builtin(t_cmd *cmds, char ***env, int pfd[4], char *path)
+int	launch_builtin(t_cmd *cmds, char ***env, char *path)
 {
+	int	ret;
+
 	free(path);
+	ret = 0;
 	if (cmds->is_builtin == 1)
-		return (ft_echo(cmds));
+		ret = (ft_echo(cmds));
 	else if (cmds->is_builtin == 2)
-		return (ft_cd(cmds, *env));
+		ret = (ft_cd(cmds, *env));
 	else if (cmds->is_builtin == 3)
-		return (ft_env(cmds, *env));
+		ret = (ft_env(cmds, *env));
 	else if (cmds->is_builtin == 4)
-		return (ft_export(cmds, env));
+		ret = (ft_export(cmds, env));
 	else if (cmds->is_builtin == 5)
-		return (ft_pwd(cmds));
+		ret = (ft_pwd(cmds));
 	else if (cmds->is_builtin == 6)
-		return (ft_unset(cmds, env));
+		ret = (ft_unset(cmds, env));
 	else if (cmds->is_builtin == 7)
-		return (ft_exit(cmds, pfd, *env));
-	return (0);
+		ret = (ft_exit(cmds, *env, 1));
+	free_pathes(*env);
+	return (ret);
 }
 
 int	launch_cmd_next(char *path, char **cmd, char **env)
@@ -48,11 +52,38 @@ int	launch_cmd_next(char *path, char **cmd, char **env)
 		error = ft_strjoin(cmd[0], ": command not found");
 		ft_putendl_fd(error, 2);
 		free(error);
+		free_pathes(env);
 		return (127);
 	}
 }
 
-int	launch_cmd(t_cmd *cmds, int nb_cmds, int pfd[4], char ***env)
+int	launch_builtin_solo(t_cmd *cmds, char ***env)
+{
+	int	ret;
+
+	unswitch_files(cmds, 0);
+	switch_files(cmds, 1, NULL);
+	close_files(cmds, NULL, 1);
+	ret = 0;
+	if (cmds->is_builtin == 1)
+		ret = (ft_echo(cmds));
+	else if (cmds->is_builtin == 2)
+		ret = (ft_cd(cmds, *env));
+	else if (cmds->is_builtin == 3)
+		ret = (ft_env(cmds, *env));
+	else if (cmds->is_builtin == 4)
+		ret = (ft_export(cmds, env));
+	else if (cmds->is_builtin == 5)
+		ret = (ft_pwd(cmds));
+	else if (cmds->is_builtin == 6)
+		ret = (ft_unset(cmds, env));
+	else if (cmds->is_builtin == 7)
+		ret = (ft_exit(cmds, *env, 0));
+	unswitch_files(cmds, 1);
+	return (ret);
+}
+
+void	launch_cmd(t_cmd *cmds, int nb_cmds, int pfd[4], char ***env)
 {
 	int		ret;
 	char	*path;
@@ -63,22 +94,14 @@ int	launch_cmd(t_cmd *cmds, int nb_cmds, int pfd[4], char ***env)
 	pathes = find_pathes(*env);
 	path = check_path(cmds_cpy->cmd[0], pathes);
 	free_pathes(pathes);
-	unswitch_files(cmds, pfd, 0);
 	switch_files(cmds_cpy, nb_cmds, pfd);
 	close_files(cmds, pfd, nb_cmds);
 	if (cmds->is_builtin)
-	{
-		ret = launch_builtin(cmds_cpy, env, pfd, path);
-		unswitch_files(cmds, pfd, 1);
-	}
+		ret = launch_builtin(cmds_cpy, env, path);
 	else
 		ret = launch_cmd_next(path, cmds_cpy->cmd, *env);
-	if (pfd)
-	{
-		free_commands(cmds);
-		exit(ret);
-	}
-	return (ret);
+	free_commands(cmds);
+	exit(ret);
 }
 
 int	check_status(int wstatus)
@@ -116,7 +139,7 @@ int	executer(t_cmd *cmds, char **env[])
 		return (close_files(cmds, NULL, nb_cmds), 1);
 	cmds_cpy = cmds;
 	if (cmds->is_builtin && !cmds->next)
-		return (launch_cmd(cmds, 1, NULL, env));
+		return (launch_builtin_solo(cmds, env));
 	while (cmds_cpy && ++nb_cmds)
 	{
 		if (open_pipe(pfd, nb_cmds, cmds_cpy->next))

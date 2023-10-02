@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:05:45 by ypages            #+#    #+#             */
-/*   Updated: 2023/09/28 11:53:02 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/02 18:27:33 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	is_option(char *arg)
 		return (0);
 	if (!*arg)
 		return (0);
-	ft_putstr_fd("minishell: ft_pwd: -", 2);
+	ft_putstr_fd("minishell: pwd: -", 2);
 	ft_putchar_fd(*arg, 2);
 	ft_putendl_fd(" : invalid option", 2);
 	return (1);
@@ -34,7 +34,7 @@ int	ft_pwd(t_cmd *cmds)
 		return (2);
 	if (getcwd(buf, sizeof(buf)) == NULL)
 	{
-		perror("ft_pwd");
+		perror("pwd");
 		return (1);
 	}
 	ft_putstr_fd(buf, 1);

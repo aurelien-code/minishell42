@@ -6,7 +6,7 @@
 /*   By: aagathe <aagathe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 17:16:47 by aagathe           #+#    #+#             */
-/*   Updated: 2023/10/02 14:19:24 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/02 18:38:05 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,8 @@ void	close_files(t_cmd *cmds, int pfd[4], int nb_cmds)
 	}
 }
 
-void	unswitch_files(t_cmd *cmds, int pfd[4], int action)
+void	unswitch_files(t_cmd *cmds, int action)
 {
-	if (pfd || !cmds->is_builtin)
-		return ;
 	if (action)
 	{
 		if (cmds->redr_in)

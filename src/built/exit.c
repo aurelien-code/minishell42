@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 19:32:19 by aagathe           #+#    #+#             */
-/*   Updated: 2023/10/02 16:54:53 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/02 18:49:55 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,17 @@ static int	check_num(char *str)
 
 void	print_exit_msg(t_cmd *cmds)
 {
-	ft_putstr_fd("minishell: ft_exit: ", 2);
+	ft_putstr_fd("minishell: exit: ", 2);
 	ft_putstr_fd(cmds->cmd[1], 2);
 	ft_putendl_fd(": numeric argument required", 2);
 }
 
-int	ft_exit(t_cmd *cmds, int pfd[4], char **cpy_env)
+int	ft_exit(t_cmd *cmds, char **cpy_env, int fork)
 {
 	int	exit_code;
 
 	exit_code = 0;
-	if (!pfd)
+	if (!fork)
 		write(2, "exit\n", 5);
 	if (cmds->cmd[1])
 	{
@@ -66,7 +66,7 @@ int	ft_exit(t_cmd *cmds, int pfd[4], char **cpy_env)
 		{
 			if (cmds->cmd[2])
 			{
-				ft_putendl_fd("minishell: ft_exit: too many arguments", 2);
+				ft_putendl_fd("minishell: exit: too many arguments", 2);
 				return (1);
 			}
 			else

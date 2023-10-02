@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/10/02 17:37:53 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/02 18:51:25 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int			ft_pwd(t_cmd *cmds);
 int			ft_export(t_cmd *cmds, char ***env);
 int			ft_unset(t_cmd *cmds, char ***env);
 int			ft_env(t_cmd *cmds, char *env[]);
-int			ft_exit(t_cmd *cmds, int pfd[4], char **env);
+int			ft_exit(t_cmd *cmds, char **env, int fork);
 
 /** builtin - utils **/
 int			get_env_size(char **env);
@@ -85,7 +85,7 @@ int			executer(t_cmd *cmds, char **env[]);
 /* manage_files */
 int			open_pipe(int pfd[4], int nb_cmds, t_cmd *next);
 void		close_files(t_cmd *cmds, int pfd[4], int nb_cmds);
-void		unswitch_files(t_cmd *cmds, int pfd[4], int action);
+void		unswitch_files(t_cmd *cmds, int action);
 void		switch_files(t_cmd *cmds, int id_cmd, int pfd[4]);
 
 /* open_files.c */
