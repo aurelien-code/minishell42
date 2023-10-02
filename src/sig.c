@@ -6,45 +6,39 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 05:04:06 by n4w4k_            #+#    #+#             */
-/*   Updated: 2023/10/02 12:13:34 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/02 17:37:40 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	sig_ctrl_d(char **cpy_env)
+extern int	g_exit_code;
+
+void	sig_int_handler(int signum)
 {
-	ft_putstr_fd("exit\n", 1);
-	ft_free_cpy_env(cpy_env);
-	exit(0);
+	(void)signum;
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	write(2, "\n", 1);
+	rl_redisplay();
+	g_exit_code = 130;
 }
 
-void	sig_int_handler(int signum, siginfo_t *info, void *context)
+void	sig_setup(int mod)
 {
-	(void)info;
-	(void)context;
-	if (signum == SIGINT)
+	if (mod == 0)
 	{
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		printf("\n");
-		rl_redisplay();
+		signal(SIGINT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
+	}
+	else if (mod == 1)
+	{
+		signal(SIGINT, sig_int_handler);
+		signal(SIGQUIT, SIG_IGN);
 	}
 	else
-		printf("unkown signal received %d\n", signum);
-}
-
-void	sig_init(void)
-{
-	struct sigaction	sig_int;
-	struct sigaction	sig_quit;
-
-	sigemptyset(&sig_int. sa_mask);
-	sig_int.sa_sigaction = &sig_int_handler;
-	sig_int.sa_flags = SA_SIGINFO;
-	sigaction(SIGINT, &sig_int, NULL);
-	sigemptyset(&sig_quit. sa_mask);
-	sig_quit.sa_handler = SIG_IGN;
-	sig_quit.sa_flags = 0;
-	sigaction(SIGQUIT, &sig_quit, NULL);
+	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 19:32:19 by aagathe           #+#    #+#             */
-/*   Updated: 2023/10/02 12:13:07 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/02 16:54:53 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,25 @@ static int	exit_atoi(char *str)
 static int	check_num(char *str)
 {
 	int	i;
+	int	neg;
 
 	i = 0;
-	if (str[i] == '-' || str[i] == '+')
-		i++;
+	neg = 0;
+	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\f' || str[i] == '\n'
+			|| str[i] == '\r' || str[i] == '\v')
+		str++;
+	if ((str[i] == '-' && ++neg) || str[i] == '+')
+		str++;
 	while (ft_isdigit(str[i]))
 		i++;
+	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\f' || str[i] == '\n'
+			|| str[i] == '\r' || str[i] == '\v')
+		str++;
 	if (str[i])
+		return (0);
+	if (i > 19
+		|| (!neg && i == 19 && ft_strncmp(str, "9223372036854775807", 19) > 0)
+		|| (neg && i == 19 && ft_strncmp(str, "9223372036854775808", 19) > 0))
 		return (0);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 12:30:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/02 11:28:21 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/02 17:52:32 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,12 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	if (!envp || argc > 1)
 		return (1);
-	sig_init();
+	sig_setup(1);
 	prompt_line = NULL;
 	cpy_env = copy_env_in_heap(envp);
-	while (1)
+	prompt_line = ft_prompt();
+	while (prompt_line)
 	{
-		prompt_line = ft_prompt();
-		if (!prompt_line)
-			sig_ctrl_d(cpy_env);
 		write_history(prompt_line);
 		history_size(1);
 		lexer_line = lexer(prompt_line);
@@ -65,10 +63,15 @@ int	main(int argc, char **argv, char **envp)
 		free(lexer_line);
 		if (commands)
 		{
+			sig_setup(0);
 			g_exit_code = executer(commands, &cpy_env);
+			sig_setup(1);
 			free_commands(commands);
 		}
+		prompt_line = ft_prompt();
 	}
 	rl_clear_history();
+	ft_putstr_fd("exit\n", 1);
+	ft_free_cpy_env(cpy_env);
 	return (0);
 }

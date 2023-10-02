@@ -6,14 +6,15 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 17:08:43 by aagathe           #+#    #+#             */
-/*   Updated: 2023/10/02 14:18:41 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/02 17:01:39 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	launch_builtin(t_cmd *cmds, char ***env, int pfd[4])
+int	launch_builtin(t_cmd *cmds, char ***env, int pfd[4], char *path)
 {
+	free(path);
 	if (cmds->is_builtin == 1)
 		return (ft_echo(cmds));
 	else if (cmds->is_builtin == 2)
@@ -67,7 +68,7 @@ int	launch_cmd(t_cmd *cmds, int nb_cmds, int pfd[4], char ***env)
 	close_files(cmds, pfd, nb_cmds);
 	if (cmds->is_builtin)
 	{
-		ret = launch_builtin(cmds_cpy, env, pfd);
+		ret = launch_builtin(cmds_cpy, env, pfd, path);
 		unswitch_files(cmds, pfd, 1);
 	}
 	else
@@ -124,7 +125,10 @@ int	executer(t_cmd *cmds, char **env[])
 		if (pid < 0)
 			return (254);
 		if (pid == 0)
+		{
+			sig_setup(2);
 			launch_cmd(cmds, nb_cmds, pfd, env);
+		}
 		cmds_cpy = cmds_cpy->next;
 	}
 	close_files(cmds, pfd, nb_cmds);
