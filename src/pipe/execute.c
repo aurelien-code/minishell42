@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 17:08:43 by aagathe           #+#    #+#             */
-/*   Updated: 2023/10/02 12:10:30 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/02 14:18:41 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,14 @@ int	launch_cmd(t_cmd *cmds, int nb_cmds, int pfd[4], char ***env)
 	pathes = find_pathes(*env);
 	path = check_path(cmds_cpy->cmd[0], pathes);
 	free_pathes(pathes);
+	unswitch_files(cmds, pfd, 0);
 	switch_files(cmds_cpy, nb_cmds, pfd);
 	close_files(cmds, pfd, nb_cmds);
 	if (cmds->is_builtin)
+	{
 		ret = launch_builtin(cmds_cpy, env, pfd);
+		unswitch_files(cmds, pfd, 1);
+	}
 	else
 		ret = launch_cmd_next(path, cmds_cpy->cmd, *env);
 	if (pfd)
