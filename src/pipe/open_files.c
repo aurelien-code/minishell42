@@ -6,7 +6,7 @@
 /*   By: aagathe <aagathe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 17:19:09 by aagathe           #+#    #+#             */
-/*   Updated: 2023/10/01 17:23:44 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/02 05:39:22 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	entry_error(const char *filename)
 	char	*nb_line;
 
 	nb_line = ft_itoa(history_size(0));
-	error = ft_strjoin("minishell: warning : here-document at the line ",
+	error = ft_strjoin("minishell: warning: here-document at the line ",
 			nb_line);
 	free(nb_line);
 	error2 = ft_strjoin(error, " delimited by end-of-file (wanted `");

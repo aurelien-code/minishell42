@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 13:46:44 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/01 03:22:57 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/02 05:38:09 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@
 # endif
 
 # ifndef TEMP_FILE_ERR 
-#  define TEMP_FILE_ERR "minishell : cannot create temp file for here-document"
+#  define TEMP_FILE_ERR "minishell: cannot create temp file for here-document"
 # endif
 
 #endif

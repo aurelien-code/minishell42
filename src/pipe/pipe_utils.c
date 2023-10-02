@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipe.c                                             :+:      :+:    :+:   */
+/*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 17:33:45 by aagathe           #+#    #+#             */
-/*   Updated: 2023/10/01 17:26:22 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/02 05:33:23 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,19 @@ char	*check_path(char *cmd, char **pathes)
 	char	*path;
 	char	*slash;
 
-	while (*pathes)
+	if (ft_strlen(cmd))
 	{
-		slash = ft_strjoin(*pathes++, "/");
-		path = ft_strjoin(slash, cmd);
-		free(slash);
-		if (!access(path, F_OK))
-			return (path);
-		free(path);
+		while (*pathes)
+		{
+			slash = ft_strjoin(*pathes++, "/");
+			path = ft_strjoin(slash, cmd);
+			free(slash);
+			if (!access(path, X_OK))
+				return (path);
+			free(path);
+		}
 	}
-	if (!access(cmd, F_OK))
+	if (!access(cmd, X_OK))
 		return (ft_strdup(cmd));
 	return (NULL);
 }

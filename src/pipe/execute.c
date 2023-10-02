@@ -6,7 +6,7 @@
 /*   By: aagathe <aagathe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 17:08:43 by aagathe           #+#    #+#             */
-/*   Updated: 2023/10/01 17:24:24 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/02 05:37:11 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	launch_cmd_next(char *path, char **cmd, char **env)
 	}
 	else
 	{
-		error = ft_strjoin(cmd[0], " : command not found");
+		error = ft_strjoin(cmd[0], ": command not found");
 		ft_putendl_fd(error, 2);
 		free(error);
 		return (127);
