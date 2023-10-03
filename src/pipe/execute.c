@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 17:08:43 by aagathe           #+#    #+#             */
-/*   Updated: 2023/10/03 07:09:43 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/03 20:50:44 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,35 +58,63 @@ int	launch_builtin(t_cmd *cmds, char ***env, char *path)
 		ret = (ft_unset(cmds, env));
 	else if (cmds->is_builtin == 7)
 		ret = (ft_exit(cmds, *env, 1));
-	free_pathes(*env);
 	return (ret);
 }
 
-int	launch_cmd_next(char *path, char **cmd, char **env)
+void	check_directory(char *path)
 {
-	int		ret;
-	char	*error;
+	char		*err;
+	char		*err2;
+	struct stat	path_stat;
 
-	if (path)
+	if (stat(path, &path_stat) == 0)
 	{
-		execve(path, cmd, env);
-		error = ft_strjoin("minishell: ", path);
-		perror(error);
-		free(error);
-		if (!access(path, F_OK))
-			ret = 126;
+		if (S_ISDIR(path_stat.st_mode))
+		{
+			err = ft_strjoin("minishell: ", path);
+			err2 = ft_strjoin(err, ": Is a directory");
+			ft_putendl_fd(err2, 2);
+			free(err);
+			free(err2);
+		}
 		else
-			ret = 127;
+		{
+			err = ft_strjoin("minishell: ", path);
+			err2 = ft_strjoin(err, ": Permission denied");
+			ft_putendl_fd(err2, 2);
+			free(err);
+			free(err2);
+		}
+	}
+	else
+		perror("stat");
+}
+
+int	check_access(char *path, char **pathes)
+{
+	char	*err;
+
+	if (errno == EACCES)
+	{
+		check_directory(path);
+		return (126);
 	}
 	else
 	{
-		error = ft_strjoin(cmd[0], ": command not found");
-		ft_putendl_fd(error, 2);
-		free(error);
-		free_pathes(env);
-		ret = 127;
+		if (ft_strchr(path, '/') || !pathes)
+		{
+			err = ft_strjoin("minishell: ", path);
+			perror(err);
+			free(err);
+		}
+		else
+		{
+			err = ft_strjoin(path, ": command not found");
+			ft_putendl_fd(err, 2);
+			free(err);
+		}
+		return (127);
 	}
-	return (ret);
 }
 
 void	launch_cmd(t_cmd *cmds, int nb_cmds, int pfd[4], char ***env)
@@ -97,20 +125,23 @@ void	launch_cmd(t_cmd *cmds, int nb_cmds, int pfd[4], char ***env)
 	t_cmd	*cmds_cpy;
 	
 	cmds_cpy = go_to_cmds(cmds, nb_cmds);
-	if (cmds_cpy->cmd)
-	{
-		pathes = find_pathes(*env);
-		path = check_path(cmds_cpy->cmd[0], pathes);
-		free_pathes(pathes);
-	}
 	switch_files(cmds_cpy, nb_cmds, pfd);
 	close_files(cmds, pfd, nb_cmds);
 	if (!cmds_cpy->cmd)
+	{
+		free_commands(cmds);
 		exit(0) ;
+	}
+	pathes = find_pathes(*env);
+	path = check_path(cmds_cpy->cmd[0], pathes);
 	if (cmds_cpy->is_builtin)
 		ret = launch_builtin(cmds_cpy, env, path);
 	else
-		ret = launch_cmd_next(path, cmds_cpy->cmd, *env);
+		execve(path, cmds->cmd, *env);
+	if (!cmds_cpy->is_builtin)
+		ret = check_access(path, pathes);
+	free_pathes(pathes);
+	free_pathes(*env);
 	free_commands(cmds);
 	exit(ret);
 }

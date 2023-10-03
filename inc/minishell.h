@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/10/03 03:02:34 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/03 20:36:28 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <errno.h>
 # include <signal.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 # include "../libft/libft.h"
 # include "./strings.h"
 # include "./enums.h"

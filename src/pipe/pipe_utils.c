@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 17:33:45 by aagathe           #+#    #+#             */
-/*   Updated: 2023/10/03 06:39:50 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/03 20:14:13 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,6 @@ t_cmd	*go_to_cmds(t_cmd *cmds, int nb_cmds)
 	return (cmds);
 }
 
-int	is_path(char *cmd)
-{
-	if (*cmd != '/' && ft_strncmp(cmd, "./", 2) && ft_strncmp(cmd, "../", 3))
-		return (0);
-	return (1);
-}
-
 char	*check_path(char *cmd, char **pathes)
 {
 	char	*ret;
@@ -33,7 +26,7 @@ char	*check_path(char *cmd, char **pathes)
 	char	*slash;
 
 	ret = NULL;
-	if (ft_strlen(cmd) && !is_path(cmd))
+	if (pathes && ft_strlen(cmd) && !ft_strchr(cmd, '/'))
 	{
 		while (*pathes)
 		{
@@ -50,7 +43,7 @@ char	*check_path(char *cmd, char **pathes)
 			free(path);
 		}
 	}
-	else
+	if (!ret)
 		ret = ft_strdup(cmd);
 	return (ret);
 }
@@ -59,6 +52,8 @@ char	**find_pathes(char *env[])
 {
 	while (*env && ft_strncmp(*env, "PATH", 4))
 		env++;
+	if (!*env)
+		return (NULL);
 	return (ft_split(*env + 5, ':'));
 }
 
@@ -83,6 +78,8 @@ void	free_pathes(char **pathes)
 {
 	int	i;
 
+	if (!pathes)
+		return ;
 	i = 0;
 	while ((pathes[i]))
 		free(pathes[i++]);
