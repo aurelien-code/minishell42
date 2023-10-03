@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 12:00:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/03 04:25:10 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/03 04:51:22 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ t_cmd	*init_or_get_cmd(t_cmd **head_cmds, t_cmd *current_cmd)
 	if (!current_cmd)
 	{
 		current_cmd = ft_calloc(1, sizeof(t_cmd));
+		current_cmd->pid = -1;
 		if (!(*head_cmds))
 			*head_cmds = current_cmd;
 		else
