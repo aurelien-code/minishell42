@@ -6,11 +6,13 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 22:47:43 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/02 22:49:19 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/03 23:27:47 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_exit_code;
 
 char	*ft_strndup(const char *s1, size_t n)
 {
@@ -49,6 +51,15 @@ void	handle_dollar(char **env, char *str, int *i, char **new_str)
 	char	*env_value;
 
 	j = 1;
+	if (str[*i + j] && str[*i + j] == '?')
+	{
+		if (*new_str)
+			*new_str = join_and_free(*new_str, ft_itoa(g_exit_code));
+		else
+			*new_str = ft_itoa(g_exit_code);
+		(*i)++;
+		return ;
+	}
 	while (str[*i + j] && str[*i + j] != ' ' && str[*i + j] != '\t' && \
 			str[*i + j] != '$')
 		j++;
