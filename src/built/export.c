@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:05:45 by ypages            #+#    #+#             */
-/*   Updated: 2023/10/03 08:20:06 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/03 20:37:08 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,6 @@ int	is_valid_identifier(char *id)
 	{
 		id_split = ft_split(id, '=');
 		if (id_split[0] && ft_strchr(id_split[0], '-') != NULL)
-			ret_value = 0;
-		else if (!ft_strchr(id, '='))
 			ret_value = 0;
 		else
 			ret_value = 1;
