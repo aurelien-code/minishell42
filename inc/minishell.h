@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/10/03 00:36:18 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/03 03:02:34 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,6 @@ t_tokens	*get_redirect_token(t_lexer *lexer_arr, int *i);
 t_tokens	*handle_redirection(t_cmd *cmd, t_tokens *tokens);
 /*	free_memory.c */
 void		free_tokens(t_tokens *tokens);
-
-/*	history.c	*/
-int			write_history(const char *input);
 
 t_cmd		*parser(t_tokens *tokens);
 
