@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:05:45 by ypages            #+#    #+#             */
-/*   Updated: 2023/10/02 22:41:17 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/03 03:19:08 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	ft_export_no_options(char **env)
 		ft_putstr_fd("\n", 1);
 		i++;
 	}
-	return (0);
+	return (1);
 }
 
 int	is_valid_identifier(char *id)
@@ -100,12 +100,7 @@ int	is_valid_identifier(char *id)
 		ret_value = 0;
 	else
 		ret_value = 1;
-	if (id_split[0])
-		free(id_split[0]);
-	if (id_split[1])
-		free(id_split[1]);
-	if (id_split)
-		free(id_split);
+	ft_free_split(id_split);
 	return (ret_value);
 }
 
@@ -135,5 +130,5 @@ int	ft_export(t_cmd *cmds, char ***env)
 	}
 	free(*env);
 	*env = new_env;
-	return (1);
+	return (0);
 }

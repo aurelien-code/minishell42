@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 12:00:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/03 02:57:36 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/03 04:25:10 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ t_cmd	*parser(t_tokens *tokens)
 		if (tokens->type == TOKEN)
 		{
 			add_to_cmd(current_cmd, tokens->value);
-			if (!current_cmd->cmd[1])
+			if (!current_cmd->cmd[1] && tokens->value)
 				current_cmd->is_builtin = is_builtin(tokens);
 		}
 		else if (tokens->type >= D_REDIR_L && tokens->type <= S_REDIR_R)
