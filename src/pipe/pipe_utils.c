@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 17:33:45 by aagathe           #+#    #+#             */
-/*   Updated: 2023/10/02 05:33:23 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/03 06:39:50 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,21 @@ t_cmd	*go_to_cmds(t_cmd *cmds, int nb_cmds)
 	return (cmds);
 }
 
+int	is_path(char *cmd)
+{
+	if (*cmd != '/' && ft_strncmp(cmd, "./", 2) && ft_strncmp(cmd, "../", 3))
+		return (0);
+	return (1);
+}
+
 char	*check_path(char *cmd, char **pathes)
 {
+	char	*ret;
 	char	*path;
 	char	*slash;
 
-	if (ft_strlen(cmd))
+	ret = NULL;
+	if (ft_strlen(cmd) && !is_path(cmd))
 	{
 		while (*pathes)
 		{
@@ -33,12 +42,17 @@ char	*check_path(char *cmd, char **pathes)
 			free(slash);
 			if (!access(path, X_OK))
 				return (path);
+			if (!access(path, F_OK))
+			{
+				free(ret);
+				ret = ft_strdup(path);
+			}
 			free(path);
 		}
 	}
-	if (!access(cmd, X_OK))
-		return (ft_strdup(cmd));
-	return (NULL);
+	else
+		ret = ft_strdup(cmd);
+	return (ret);
 }
 
 char	**find_pathes(char *env[])
