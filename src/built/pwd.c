@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:05:45 by ypages            #+#    #+#             */
-/*   Updated: 2023/10/02 18:27:33 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/03 18:06:10 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,17 @@ static int	is_option(char *arg)
 	return (1);
 }
 
+static int	memory_err()
+{
+	perror("minishell: pwd: write error");
+	return (1);
+}
+
 int	ft_pwd(t_cmd *cmds)
 {
 	char	buf[4096];
+	size_t	count;
+	size_t	size;
 
 	if (is_option(cmds->cmd[1]))
 		return (2);
@@ -37,7 +45,12 @@ int	ft_pwd(t_cmd *cmds)
 		perror("pwd");
 		return (1);
 	}
-	ft_putstr_fd(buf, 1);
-	ft_putstr_fd("\n", 1);
+	size = ft_strlen(buf);
+	count = write(1, buf, size);
+	if (count != size)
+		return (memory_err());
+	count = write(1, "\n", 1);
+	if (count != 1)
+		return (memory_err());
 	return (0);
 }
