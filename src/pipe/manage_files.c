@@ -6,7 +6,7 @@
 /*   By: aagathe <aagathe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 17:16:47 by aagathe           #+#    #+#             */
-/*   Updated: 2023/10/03 02:31:31 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/04 14:16:07 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	open_pipe(int pfd[4], int nb_cmds, t_cmd *next)
 
 void	close_pfd(int nb_cmds, int pfd[4], t_cmd *cmds)
 {
+	if (!pfd)
+		return ;
 	if (!cmds->next)
 	{
 		if (nb_cmds > 1)
