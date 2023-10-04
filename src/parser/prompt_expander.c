@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:59:51 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/04 14:13:15 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/04 14:18:42 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char	*expand_prompt_line(char *str, char **env)
 		new_str = ft_strdup("");
 	while (i < (int)ft_strlen(str))
 	{
-		if (str[i] == '"')
+		if (str[i] == '"' && !sg_quote)
 			db_quote = !db_quote;
 		if (str[i] == '\'' && !db_quote)
 			sg_quote = !sg_quote;
