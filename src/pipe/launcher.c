@@ -6,7 +6,7 @@
 /*   By: aagathe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 13:29:32 by aagathe           #+#    #+#             */
-/*   Updated: 2023/10/04 13:34:36 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/04 15:29:52 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ int	check_access(char *path, char **pathes)
 		}
 		else
 		{
-			err = ft_strjoin(path, ": command not found");
-			ft_putendl_fd(err, 2);
+			err = ft_strjoin(path, ": command not found\n");
+			ft_putstr_fd(err, 2);
 			free(err);
 		}
 		free(path);
