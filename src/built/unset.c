@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:05:45 by ypages            #+#    #+#             */
-/*   Updated: 2023/10/03 20:11:55 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/04 13:13:43 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,14 +84,18 @@ int	ft_unset(t_cmd *cmds, char ***env)
 {
 	char	*var_to_del;
 	char	**new_env;
+	int		i;
 
+	i = 0;
 	if (!cmds->cmd[1])
 		return (1);
-	if (!cmds->cmd[1])
-		return (1);
-	var_to_del = cmds->cmd[1];
-	new_env = build_new_env(*env, var_to_del);
-	free_env(env, new_env);
-	*env = new_env;
+	while (cmds->cmd[i])
+	{
+		var_to_del = cmds->cmd[i];
+		new_env = build_new_env(*env, var_to_del);
+		free_env(env, new_env);
+		*env = new_env;
+		i++;
+	}
 	return (0);
 }
