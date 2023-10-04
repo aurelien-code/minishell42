@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 17:08:01 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/04 16:19:37 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/04 17:07:59 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,13 @@ t_tokens	*get_quote_token(t_lexer *lexer_arr, int *i)
 		j++;
 		if (lexer_arr[j].value == lexer_arr[*i].value)
 		{
+			if (lexer_arr[j + 1].value == lexer_arr[*i].value)
+			{
+				lexer_arr[j].value = ' ';
+				lexer_arr[j+1].value = '\b';
+				j++;
+				continue ;
+			}
 			str = substr_lexer(lexer_arr, *i, j);
 			(*i) = j;
 			return (new_token_item(str, TOKEN));
