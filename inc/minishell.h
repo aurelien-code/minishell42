@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/10/04 02:24:13 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/04 10:01:50 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,16 @@
 # include "./strings.h"
 # include "./enums.h"
 # include "./structs.h"
+
+/*	prompt-manager 1/2 */
+void		apply_changes(char **new_str, char *tmp, char *tmp2, char *key);
+void		join_one(char **new_str, int *i, char *str);
+int			calculate_j(int i, char *str);
+char		*ft_strnjoin(char const *s1, char const *s2, size_t len);
+char		*get_key(char *str, int *idx);
+void		assign_tmps(char **tmp, char **tmp2, char *key, char **new_str);
+void		handle_fking_dollar(char *str, char **env, char **new_str, int *i);
+char		*expand_prompt_line(char *str, char **env);
 
 /*	builtin	*/
 int			ft_cd(t_cmd *cmds, char *env[]);
