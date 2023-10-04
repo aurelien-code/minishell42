@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 17:08:43 by aagathe           #+#    #+#             */
-/*   Updated: 2023/10/04 10:09:07 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/04 10:59:00 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ void	launch_cmd(t_cmd *cmds, int nb_cmds, int pfd[4], char ***env)
 	path = check_path(cmds_cpy->cmd[0], pathes);
 	if (cmds_cpy->is_builtin)
 		ret = launch_builtin(cmds_cpy, env, path);
-	else
+	else if (ft_strchr(path, '/'))
 		execve(path, cmds_cpy->cmd, *env);
 	if (!cmds_cpy->is_builtin)
 		ret = check_access(path, pathes);

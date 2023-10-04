@@ -6,11 +6,13 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 19:32:19 by aagathe           #+#    #+#             */
-/*   Updated: 2023/10/04 04:56:59 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/04 10:20:00 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_exit_code;
 
 static int	exit_atoi(char *str)
 {
@@ -69,7 +71,7 @@ int	ft_exit(t_cmd *cmds, char **cpy_env, int fork)
 {
 	int	exit_code;
 
-	exit_code = 0;
+	exit_code = g_exit_code;
 	if (!fork)
 		write(2, "exit\n", 5);
 	if (cmds->cmd[1])
