@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 17:08:43 by aagathe           #+#    #+#             */
-/*   Updated: 2023/10/04 02:55:57 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/04 03:53:48 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	check_access(char *path, char **pathes)
 {
 	char	*err;
 
-	if (errno == EACCES)
+	if (errno == EACCES && ft_strchr(path, '/'))
 	{
 		check_directory(path);
 		free(path);
