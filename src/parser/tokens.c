@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:58:13 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/04 10:07:22 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/04 11:24:32 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,14 +73,10 @@ t_tokens	*get_tokens(char *str, t_lexer *lexer_arr, char **env)
 	tokens = NULL;
 	i = 0;
 	ret = 1;
-	if (!lexer_arr)
-		return (NULL);
 	while (i < (int)ft_strlen(str))
 	{
 		if (lexer_arr[i].type == QUOTE)
 			append_token(&tokens, get_quote_token(lexer_arr, &i, env));
-		else if (lexer_arr[i].type == EXPAND)
-			ret = append_token(&tokens, expand(lexer_arr, &i, env));
 		else if (lexer_arr[i].type == PIPE)
 			append_token(&tokens, new_token_item(NULL, T_PIPE));
 		else if (lexer_arr[i].type == REDIRECT)

@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 12:00:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/04 10:07:47 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/04 12:21:41 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,35 +35,6 @@ int	is_builtin(t_tokens	*tokens)
 		return (7);
 	else
 		return (0);
-}
-
-void	dbg_print_cmd(t_cmd *cmds)
-{
-	int	i;
-	int	j;
-
-	j = 0;
-	i = 1;
-	while (cmds)
-	{
-		printf("command #%d\n", i);
-		printf("	-> is_builtin = %d\n	-> cmd = ", cmds->is_builtin);
-		while (cmds->cmd[j])
-		{
-			printf("%s ", cmds->cmd[j]);
-			j++;
-		}
-		printf("\n");
-		if (cmds->redr_in)
-			printf("	-> redr_in = (%d)%s\n", cmds->redr_in->type, \
-				cmds->redr_in->filename);
-		if (cmds->redr_out)
-			printf("	-> redr_out = (%d)%s\n", cmds->redr_out->type, \
-				cmds->redr_out->filename);
-		j = 0;
-		i++;
-		cmds = cmds->next;
-	}
 }
 
 void	add_to_cmd(t_cmd *cmd, char *value)
@@ -112,6 +83,23 @@ t_cmd	*init_or_get_cmd(t_cmd **head_cmds, t_cmd *current_cmd)
 	return (current_cmd);
 }
 
+int	handle_pipe_case(t_tokens *tokens, t_cmd **current_cmd, t_cmd **head_cmds)
+{
+	if (tokens->type == T_PIPE && (!(*current_cmd) || !(*current_cmd)->cmd))
+	{
+		throw_parsing_error(NULL, NULL, *head_cmds, NO_PIPE_ENTRY);
+		return (0);
+	}
+	else if (tokens->type == T_PIPE && !tokens->next)
+	{
+		throw_parsing_error(NULL, NULL, *head_cmds, NO_OUT_CMD);
+		return (0);
+	}
+	else if (tokens->type == T_PIPE)
+		*current_cmd = NULL;
+	return (1);
+}
+
 t_cmd	*parser(t_tokens *tokens)
 {
 	t_cmd	*head_cmds;
@@ -130,12 +118,9 @@ t_cmd	*parser(t_tokens *tokens)
 		}
 		else if (tokens->type >= D_REDIR_L && tokens->type <= S_REDIR_R)
 			tokens = handle_redirection(current_cmd, tokens);
-		else if (tokens->type == T_PIPE && (!current_cmd || !current_cmd->cmd))
-			return (throw_parsing_error(NULL, NULL, head_cmds, NO_PIPE_ENTRY));
-		else if (tokens->type == T_PIPE && !tokens->next)
-			return (throw_parsing_error(NULL, NULL, head_cmds, NO_OUT_CMD));
-		else if (tokens->type == T_PIPE)
-			current_cmd = NULL;
+		else if (tokens->type == T_PIPE && \
+			!handle_pipe_case(tokens, &current_cmd, &head_cmds))
+			return (NULL);
 		if (!tokens)
 			return (NULL);
 		tokens = tokens->next;

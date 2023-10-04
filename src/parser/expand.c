@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:43:39 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/04 04:01:37 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/04 11:20:16 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,25 @@ char	*ft_getenv(char **env, char *var)
 	return (result);
 }
 
+void	process_expand(char **env, char **new_str, t_lexer *lexer_arr, int *i)
+{
+	int		j;
+	char	*tmp_sublxr;
+
+	j = (*i) + 1;
+	while (lexer_arr[j].value && lexer_arr[j].value != ' ' && \
+		lexer_arr[j].value != '$' && lexer_arr[j].type == NORMAL)
+			j++;
+	tmp_sublxr = substr_lexer(lexer_arr, *i, j);
+	*new_str = ft_getenv(env, tmp_sublxr);
+	free(tmp_sublxr);
+	*i = j;
+}
+
 t_tokens	*expand(t_lexer	*lexer_arr, int	*i, char **env)
 {
 	int		j;
 	char	*new_str;
-	char	*tmp_sublxr;
 
 	new_str = "";
 	j = (*i) + 1;
@@ -56,7 +70,8 @@ t_tokens	*expand(t_lexer	*lexer_arr, int	*i, char **env)
 		(*i) = j;
 		return (new_token_item(ft_itoa(g_exit_code), TOKEN));
 	}
-	else if (lexer_arr[j].value == ' ' || lexer_arr[j].value == '\t' || !lexer_arr[j].value)
+	else if (lexer_arr[j].value == ' ' || lexer_arr[j].value == '\t' \
+			|| !lexer_arr[j].value)
 	{
 		lexer_arr[*i].type = NORMAL;
 		(*i)--;
@@ -64,13 +79,7 @@ t_tokens	*expand(t_lexer	*lexer_arr, int	*i, char **env)
 	}
 	if (lexer_arr[*i].value == '$')
 	{
-		while (lexer_arr[j].value && lexer_arr[j].value != ' ' && \
-			lexer_arr[j].value != '$' && lexer_arr[j].type == NORMAL)
-				j++;
-		tmp_sublxr = substr_lexer(lexer_arr, *i, j);
-		new_str = ft_getenv(env, tmp_sublxr);
-		free(tmp_sublxr);
-		*i = j;
+		process_expand(env, &new_str, lexer_arr, i);
 	}
 	return (new_token_item(new_str, TOKEN));
 }

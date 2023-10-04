@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 22:47:43 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/04 01:50:16 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/04 11:09:27 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,29 @@ char	*join_and_free(char *s1, char *s2)
 	return (new_str);
 }
 
+int	process_specific_cases(char *str, int *i, char **new_str)
+{
+	if (str[*i + 1] && str[*i + 1] == '?')
+	{
+		if (*new_str)
+			*new_str = join_and_free(*new_str, ft_itoa(g_exit_code));
+		else
+			*new_str = ft_itoa(g_exit_code);
+		(*i)++;
+		return (0);
+	}
+	else if (str[*i + 1] == ' ' || !str[*i + 1] || str[*i + 1] == '\t')
+	{
+		if (*new_str)
+			*new_str = join_and_free(*new_str, ft_strdup("$"));
+		else
+			*new_str = ft_strdup("$");
+		(*i)++;
+		return (0);
+	}
+	return (1);
+}
+
 void	handle_dollar(char **env, char *str, int *i, char **new_str)
 {
 	int		j;
@@ -51,24 +74,8 @@ void	handle_dollar(char **env, char *str, int *i, char **new_str)
 	char	*env_value;
 
 	j = 1;
-	if (str[*i + j] && str[*i + j] == '?')
-	{
-		if (*new_str)
-			*new_str = join_and_free(*new_str, ft_itoa(g_exit_code));
-		else
-			*new_str = ft_itoa(g_exit_code);
-		(*i)++;
+	if (!process_specific_cases(str, i, new_str))
 		return ;
-	}
-	else if (str[*i + j] == ' ' || !str[*i + j] || str[*i + j] == '\t')
-	{
-		if (*new_str)
-			*new_str = join_and_free(*new_str, ft_strdup("$"));
-		else
-			*new_str = ft_strdup("$");
-		(*i)++;
-		return ;
-	}
 	while (str[*i + j] && str[*i + j] != ' ' && str[*i + j] != '\t' && \
 			str[*i + j] != '$')
 		j++;

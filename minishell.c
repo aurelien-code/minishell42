@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 12:30:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/04 09:58:42 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/04 11:25:52 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argv;
 	init(argc, envp, &cpy_env, &prompt_line);
+	tokens = NULL;
 	while (prompt_line)
 	{
 		history_size(1);
@@ -90,9 +91,7 @@ int	main(int argc, char **argv, char **envp)
 		if (lexer_line && tokens)
 			execute_commands(tokens, lexer_line, &cpy_env);
 		else if (!tokens)
-		{
 			free(lexer_line);
-		}
 		prompt_line = ft_prompt();
 	}
 	rl_clear_history();

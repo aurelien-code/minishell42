@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 22:57:19 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/04 08:43:00 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/04 12:15:01 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,23 @@ void	handle_other(t_lexer *lexer_arr, int *i, char **str)
 	(*i)++;
 }
 
+int	should_continue(t_lexer *lexer_arr, int *i, char **str)
+{
+	if (lexer_arr[*i].type > 1 && lexer_arr[*i].type < 6)
+	{
+		(*i)--;
+		return (0);
+	}
+	else
+		handle_other(lexer_arr, i, str);
+	if (lexer_arr[*i].type == PIPE)
+	{
+		(*i)--;
+		return (0);
+	}
+	return (1);
+}
+
 t_tokens	*get_word_token(t_lexer *lexer_arr, int *i, char **env)
 {
 	char		*str;
@@ -84,18 +101,8 @@ t_tokens	*get_word_token(t_lexer *lexer_arr, int *i, char **env)
 				return (NULL);
 			}
 		}
-		if (lexer_arr[*i].type > 1 && lexer_arr[*i].type < 6)
-		{
-			(*i)--;
+		if (!should_continue(lexer_arr, i, &str))
 			break ;
-		}
-		else
-			handle_other(lexer_arr, i, &str);
-		if (lexer_arr[*i].type == PIPE)
-		{
-			(*i)--;
-			break ;
-		}
 	}
 	if (str)
 		return (new_token_item(str, TOKEN));

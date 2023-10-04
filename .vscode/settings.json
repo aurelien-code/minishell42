@@ -11,7 +11,14 @@
 		"munit.h": "c",
 		"enums.h": "c",
 		"fcntl.h": "c",
-		"type_traits": "cpp"
+		"type_traits": "cpp",
+		"cmath": "c",
+		"compare": "c",
+		"concepts": "c",
+		"exception": "c",
+		"limits": "c",
+		"new": "c",
+		"typeinfo": "c"
 	},
 	"pomodoro.make": {
 		"notification": true,

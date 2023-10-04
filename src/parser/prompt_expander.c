@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:59:51 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/04 10:05:14 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/04 12:12:58 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,29 +49,43 @@ void	handle_fking_dollar(char *str, char **env, char **new_str, int *i)
 		join_one(new_str, i, str);
 }
 
+int	check_quotes(int db_quote, int sg_quote, char *new_str)
+{
+	if (db_quote || sg_quote)
+	{
+		ft_putstr_fd(UNCLOSE_QUOTE_ERR, 2);
+		free(new_str);
+		return (0);
+	}
+	else
+		return (1);
+}
+
 char	*expand_prompt_line(char *str, char **env)
 {
 	char	*new_str;
 	int		i;
-	int		is_quoted;
-	int		is_db_quote;
+	int		sg_quote;
+	int		db_quote;
 
 	i = 0;
-	is_quoted = 0;
-	is_db_quote = 0;
+	sg_quote = 0;
+	db_quote = 0;
 	new_str = ft_strdup("");
 	while (i < (int)ft_strlen(str))
 	{
 		if (str[i] == '"')
-			is_db_quote = !is_db_quote;
-		if (str[i] == '\'' && !is_db_quote)
-			is_quoted = !is_quoted;
-		if (str[i] == '$' && !is_quoted)
+			db_quote = !db_quote;
+		if (str[i] == '\'' && !db_quote)
+			sg_quote = !sg_quote;
+		if (str[i] == '$' && !sg_quote)
 		{
 			handle_fking_dollar(str, env, &new_str, &i);
 		}
 		else
 			join_one(&new_str, &i, str);
 	}
+	if (!check_quotes(db_quote, sg_quote, new_str))
+		return (NULL);
 	return (new_str);
 }
