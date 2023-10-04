@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 19:32:19 by aagathe           #+#    #+#             */
-/*   Updated: 2023/10/03 14:04:25 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/04 04:56:59 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,16 @@ void	print_exit_msg(t_cmd *cmds)
 	ft_putendl_fd(": numeric argument required", 2);
 }
 
-void	free_before_exit(char **cpy_env, t_cmd *cmds, int fork)
+void	free_before_exit(char **cpy_env, t_cmd *cmds, int fork, int exit_code)
 {
-	ft_free_cpy_env(cpy_env);
 	if (!fork)
 	{
+		ft_free_cpy_env(cpy_env);
 		close(cmds->old_stdin);
 		close(cmds->old_stdout);
+		free_commands(cmds);
+		exit(exit_code);
 	}
-	free_commands(cmds);
 }
 
 int	ft_exit(t_cmd *cmds, char **cpy_env, int fork)
@@ -89,6 +90,6 @@ int	ft_exit(t_cmd *cmds, char **cpy_env, int fork)
 			exit_code = 2;
 		}
 	}
-	free_before_exit(cpy_env, cmds, fork);
-	exit(exit_code);
+	free_before_exit(cpy_env, cmds, fork, exit_code);
+	return (exit_code);
 }
