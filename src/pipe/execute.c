@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 17:08:43 by aagathe           #+#    #+#             */
-/*   Updated: 2023/10/04 00:32:11 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/04 02:55:57 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ int	check_access(char *path, char **pathes)
 	if (errno == EACCES)
 	{
 		check_directory(path);
+		free(path);
 		return (126);
 	}
 	else
@@ -113,6 +114,7 @@ int	check_access(char *path, char **pathes)
 			ft_putendl_fd(err, 2);
 			free(err);
 		}
+		free(path);
 		return (127);
 	}
 }

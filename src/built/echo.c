@@ -6,23 +6,30 @@
 /*   By: ypages <ypages@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:05:45 by ypages            #+#    #+#             */
-/*   Updated: 2023/10/03 13:38:16 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/04 01:49:02 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	is_option(char *arg)
+static int	is_option(char **args)
 {
-	if (!arg)
-		return (0);
-	if (*arg++ != '-')
-		return (0);
-	while (*arg == 'n')
-		arg++;
-	if (*arg)
-		return (0);
-	return (1);
+	int i;
+	int j;
+
+	i = 0;
+	while (args[i + 1])
+	{
+		j = 0;
+		if (args[i + 1][j++] != '-')
+			break ;
+		while (args[i + 1][j] == 'n')
+			j++;
+		if (args[i + 1][j])
+			break ;
+		i++;
+	}
+	return (i);
 }
 
 static int	memory_err(size_t count, size_t n)
@@ -40,7 +47,7 @@ int	ft_echo(t_cmd *cmds)
 	size_t	count_c;
 	size_t	w_size;
 
-	opt = is_option(cmds->cmd[1]);
+	opt = is_option(cmds->cmd);
 	i = opt + 1;
 	while (cmds->cmd[i])
 	{
@@ -55,8 +62,9 @@ int	ft_echo(t_cmd *cmds)
 		if (memory_err(count_c, w_size))
 			return (1);
 	}
-	count_c = write(1, "\n", ((opt - 1) * -1));
-	if (memory_err(count_c, ((opt - 1) * -1)))
+	if (!opt)
+		count_c = write(1, "\n", 1);
+	if (!opt && memory_err(count_c, 1))
 		return (1);
 	return (0);
 }
