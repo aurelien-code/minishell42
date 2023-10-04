@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:58:13 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/04 04:14:50 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/04 04:20:56 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,11 @@ t_tokens	*get_tokens(char *str, t_lexer *lexer_arr, char **env)
 		else if (lexer_arr[i].type == PIPE)
 			append_token(&tokens, new_token_item(NULL, T_PIPE));
 		else if (lexer_arr[i].type == REDIRECT)
-			append_token(&tokens, get_redirect_token(lexer_arr, &i));
+			ret = append_token(&tokens, get_redirect_token(lexer_arr, &i));
 		else
 			ret = append_token(&tokens, get_word_token(lexer_arr, &i, env));
 		if (ret == 0)
 		{
-			printf("ici \n");
 			free_tokens(tokens);
 			return (NULL);
 		}
