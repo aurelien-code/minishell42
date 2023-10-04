@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:43:39 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/04 03:08:06 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/04 04:01:37 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*ft_getenv(char **env, char *var)
 			if (env_kv[1])
 				result = ft_strdup(env_kv[1]);
 			else
-				result = ft_strdup("");
+				result = NULL;
 			ft_free_split(env_kv);
 			return (result);
 		}
