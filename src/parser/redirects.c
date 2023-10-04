@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:17:04 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/04 04:32:23 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/04 10:05:50 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ t_tokens	*handle_redirection(t_cmd *cmd, t_tokens *tokens)
 	{
 		free(redirection);
 		ft_putstr_fd(NO_FILE_TO_REDR, 2);
-		//throw_parsing_error(NULL, tokens, cmd, NO_FILE_TO_REDR);
 		return (NULL);
 	}
 	redirection->filename = ft_strdup(tokens->value);

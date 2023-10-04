@@ -6,11 +6,13 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:05:45 by ypages            #+#    #+#             */
-/*   Updated: 2023/10/04 04:17:52 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/04 10:55:15 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_exit_code;
 
 int	should_modify(char **env, char *new_var)
 {
@@ -88,7 +90,7 @@ int	ft_export_no_options(char **env)
 		}
 		i++;
 	}
-	return (1);
+	return (2);
 }
 
 int	is_valid_identifier(char *id)
@@ -97,9 +99,9 @@ int	is_valid_identifier(char *id)
 	int		ret_value;
 
 	ret_value = 0;
-	if (id[0] && ft_isdigit(id[0]))
+	if (id[0] && (ft_isdigit(id[0]) || id[0] == '='))
 		ret_value = 0;
-	if (ft_strlen(id) < 1)
+	else if (ft_strlen(id) < 1)
 		ret_value = 0;
 	else
 	{
@@ -129,9 +131,9 @@ int	ft_export(t_cmd *cmds, char ***env)
 	if (!cmds->cmd[1] && *env)
 		return (ft_export_no_options(*env));
 	if (!cmds->cmd[0] || !(*env))
-		return (1);
+		return (2);
 	if (!is_valid_identifier(cmds->cmd[1]))
-		return (1);
+		return (2);
 	env_size = get_env_size(*env);
 	if (cmds->cmd[2] && !ft_strncmp(cmds->cmd[1], " ", 1))
 		new_env = add_new_env_var(*env, cmds->cmd[2]);

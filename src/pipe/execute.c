@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 17:08:43 by aagathe           #+#    #+#             */
-/*   Updated: 2023/10/04 04:56:11 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/04 10:09:07 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,14 +125,14 @@ void	launch_cmd(t_cmd *cmds, int nb_cmds, int pfd[4], char ***env)
 	char	*path;
 	char	**pathes;
 	t_cmd	*cmds_cpy;
-	
+
 	cmds_cpy = go_to_cmds(cmds, nb_cmds);
 	switch_files(cmds_cpy, nb_cmds, pfd);
 	close_files(cmds, pfd, nb_cmds);
 	if (!cmds_cpy->cmd)
 	{
 		free_commands(cmds);
-		exit(0) ;
+		exit (0);
 	}
 	pathes = find_pathes(*env);
 	path = check_path(cmds_cpy->cmd[0], pathes);

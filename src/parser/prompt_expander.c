@@ -6,13 +6,13 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:59:51 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/04 10:02:39 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/04 10:05:14 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern int g_exit_code;
+extern int	g_exit_code;
 
 void	assign_tmps(char **tmp, char **tmp2, char *key, char **new_str)
 {

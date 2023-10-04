@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:05:45 by ypages            #+#    #+#             */
-/*   Updated: 2023/10/03 18:06:10 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/04 10:08:32 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	is_option(char *arg)
 	return (1);
 }
 
-static int	memory_err()
+static int	memory_err(void)
 {
 	perror("minishell: pwd: write error");
 	return (1);
