@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 22:57:19 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/04 12:15:01 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/04 16:25:48 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ void	handle_expand(t_lexer *lexer_arr, int *i, char **env, char **str)
 	free_tokens(tk);
 }
 
-int	handle_quote(t_lexer *lexer_arr, int *i, char **env, char **str)
+int	handle_quote(t_lexer *lexer_arr, int *i, char **str)
 {
 	t_tokens	*tk;
 	char		*tmp;
 
-	tk = get_quote_token(lexer_arr, i, env);
+	tk = get_quote_token(lexer_arr, i);
 	(*i)++;
 	if (!tk)
 		return (0);
@@ -94,7 +94,7 @@ t_tokens	*get_word_token(t_lexer *lexer_arr, int *i, char **env)
 			handle_expand(lexer_arr, i, env, &str);
 		else if (lexer_arr[*i].type == QUOTE)
 		{
-			if (!handle_quote(lexer_arr, i, env, &str))
+			if (!handle_quote(lexer_arr, i, &str))
 			{
 				if (str)
 					free(str);
