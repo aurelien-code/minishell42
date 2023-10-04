@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 17:08:01 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/04 01:13:06 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/04 16:19:37 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,26 +31,12 @@ int	is_quote_closed(t_lexer *lexer_arr, int i)
 	return (0);
 }
 
-char	*expand_in_double_quote(char **env, char *str)
-{
-	int		i;
-	char	*new_str;
-
-	i = 0;
-	new_str = NULL;
-	while (str[i])
-	{
-		if (str[i] == '$')
-			handle_dollar(env, str, &i, &new_str);
-		else
-			handle_other_char(str, i, &new_str);
-		i++;
-	}
-	free(str);
-	return (new_str);
-}
-
-t_tokens	*get_quote_token(t_lexer *lexer_arr, int *i, char **env)
+/*
+DANS CETTE FONCTION IL FAUT CHECK S'IL N'Y A PAS ENCORE UNE QUOTE APRES
+DANS LE CAS OU IL Y EN A UNE -> ON EN FAIT UN TOKEN
+DANS LE CAS OU IL Y EN A PAS -> MEME COMPORTEMENT QUE MNT
+*/
+t_tokens	*get_quote_token(t_lexer *lexer_arr, int *i)
 {
 	int		j;
 	char	*str;
@@ -70,8 +56,6 @@ t_tokens	*get_quote_token(t_lexer *lexer_arr, int *i, char **env)
 		if (lexer_arr[j].value == lexer_arr[*i].value)
 		{
 			str = substr_lexer(lexer_arr, *i, j);
-			if (lexer_arr[*i].value == '"' && ft_strchr(str, '$') && str)
-				str = expand_in_double_quote(env, str);
 			(*i) = j;
 			return (new_token_item(str, TOKEN));
 		}
