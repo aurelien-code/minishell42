@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 10:00:24 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/04 10:00:39 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/04 12:51:49 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ int	calculate_j(int i, char *str)
 
 	j = 1;
 	while (str[i + j] && str[i + j] != ' ' && str[i + j] != '\t' \
-				&& str[i + j] != '$' && str[i + j] != '\'' && str[i + j] != '"')
+				&& str[i + j] != '=' && str[i + j] != '$' && str[i + j] \
+					!= '\'' && str[i + j] != '"')
 	{
 		if (str[i + j] == '?' || str[i + j] == '$')
 		{
