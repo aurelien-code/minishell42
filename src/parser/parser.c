@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 12:00:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/04 03:01:20 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/04 03:14:10 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,5 +140,6 @@ t_cmd	*parser(t_tokens *tokens)
 			return (NULL);
 		tokens = tokens->next;
 	}
+	dbg_print_cmd(head_cmds);
 	return (head_cmds);
 }

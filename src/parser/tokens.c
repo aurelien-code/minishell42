@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:58:13 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/04 02:24:05 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/04 03:55:53 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	append_token(t_tokens **tokens, t_tokens *new_elem)
 
 	if (!new_elem)
 		return (0);
+	if (new_elem->type == 0)
+		return (1);
 	if (!(*tokens))
 		(*tokens) = new_elem;
 	else
@@ -65,27 +67,29 @@ t_tokens	*get_tokens(char *str, t_lexer *lexer_arr, char **env)
 
 	tokens = NULL;
 	i = 0;
+	ret = 1;
 	if (!lexer_arr)
 		return (NULL);
 	while (i < (int)ft_strlen(str))
 	{
 		if (lexer_arr[i].type == QUOTE)
-			ret = append_token(&tokens, get_quote_token(lexer_arr, &i, env));
+			append_token(&tokens, get_quote_token(lexer_arr, &i, env));
 		else if (lexer_arr[i].type == EXPAND)
 			ret = append_token(&tokens, expand(lexer_arr, &i, env));
 		else if (lexer_arr[i].type == PIPE)
-			ret = append_token(&tokens, new_token_item(NULL, T_PIPE));
+			append_token(&tokens, new_token_item(NULL, T_PIPE));
 		else if (lexer_arr[i].type == REDIRECT)
-			ret = append_token(&tokens, get_redirect_token(lexer_arr, &i));
+			append_token(&tokens, get_redirect_token(lexer_arr, &i));
 		else
 			ret = append_token(&tokens, get_word_token(lexer_arr, &i, env));
 		if (ret == 0)
 		{
+			printf("ici \n");
 			free_tokens(tokens);
 			return (NULL);
 		}
 		i++;
 	}
-//	dbg_print_tokens(tokens);
+	dbg_print_tokens(tokens);
 	return (tokens);
 }
