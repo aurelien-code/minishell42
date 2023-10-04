@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:59:51 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/04 12:12:58 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/04 12:25:29 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,9 @@ char	*expand_prompt_line(char *str, char **env)
 	i = 0;
 	sg_quote = 0;
 	db_quote = 0;
-	new_str = ft_strdup("");
+	new_str = NULL;
+	if (ft_strlen(str) > 0)
+		new_str = ft_strdup("");
 	while (i < (int)ft_strlen(str))
 	{
 		if (str[i] == '"')
@@ -79,9 +81,7 @@ char	*expand_prompt_line(char *str, char **env)
 		if (str[i] == '\'' && !db_quote)
 			sg_quote = !sg_quote;
 		if (str[i] == '$' && !sg_quote)
-		{
 			handle_fking_dollar(str, env, &new_str, &i);
-		}
 		else
 			join_one(&new_str, &i, str);
 	}
