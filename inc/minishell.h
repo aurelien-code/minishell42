@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/10/04 10:01:50 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/04 13:34:59 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,10 @@ t_cmd		*parser(t_tokens *tokens);
 
 /* execute.c*/
 int			executer(t_cmd *cmds, char **env[]);
+
+/* launcher.c */
+int			launch_builtin_solo(t_cmd *cmds, char ***env);
+void		launch_cmd(t_cmd *cmds, int nb_cmds, int pfd[4], char ***env);
 
 /* manage_files */
 int			open_pipe(int pfd[4], int nb_cmds, t_cmd *next);

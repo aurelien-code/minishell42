@@ -6,7 +6,7 @@
 #    By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/07 22:33:15 by aumarin           #+#    #+#              #
-#    Updated: 2023/10/04 10:02:19 by aumarin          ###   ########.fr        #
+#    Updated: 2023/10/04 13:33:01 by aagathe          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,8 @@ SRC		= 	src/prompt.c \
 			src/pipe/execute.c \
 			src/pipe/manage_files.c \
 			src/pipe/open_files.c \
-			src/pipe/pipe_utils.c
+			src/pipe/pipe_utils.c \
+			src/pipe/launcher.c
 
 OBJ		=	$(SRC:.c=.o)
 

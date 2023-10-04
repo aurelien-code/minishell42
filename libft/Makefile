@@ -6,7 +6,7 @@
 #    By: aagathe <aagathe@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/09 23:20:14 by aagathe           #+#    #+#              #
-#    Updated: 2022/05/04 12:10:54 by aagathe          ###   ########.fr        #
+#    Updated: 2023/10/04 13:10:12 by aagathe          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SRCS_B	=	ft_lstadd_back_bonus.c ft_lstadd_front_bonus.c ft_lstclear_bonus.c \
 			ft_lstmap_bonus.c ft_lstnew_bonus.c ft_lstsize_bonus.c 
 OBJS	=	$(SRCS:.c=.o)
 OBJS_B	=	$(SRCS_B:.c=.o)
-CC		=	gcc
+CC		=	cc
 FLAGS	=	-Wall -Wextra -Werror
 RM		=	rm -f
 
