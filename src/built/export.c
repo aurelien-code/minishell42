@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:05:45 by ypages            #+#    #+#             */
-/*   Updated: 2023/10/04 13:22:02 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/04 13:34:41 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,49 +122,18 @@ int	is_valid_identifier(char *id)
 	return (ret_value);
 }
 
-void	dbg_print_cmd(t_cmd *cmds)
-{
-	int	i;
-	int	j;
-
-	j = 0;
-	i = 1;
-	while (cmds)
-	{
-		printf("command #%d\n", i);
-		printf("	-> is_builtin = %d\n	-> cmd = ", cmds->is_builtin);
-		while (cmds->cmd[j])
-		{
-			printf("%s ", cmds->cmd[j]);
-			j++;
-		}
-		printf("\n");
-		if (cmds->redr_in)
-			printf("	-> redr_in = (%d)%s\n", cmds->redr_in->type, \
-				cmds->redr_in->filename);
-		if (cmds->redr_out)
-			printf("	-> redr_out = (%d)%s\n", cmds->redr_out->type, \
-				cmds->redr_out->filename);
-		j = 0;
-		i++;
-		cmds = cmds->next;
-	}
-}
-
 int	ft_export(t_cmd *cmds, char ***env)
 {
 	char	**new_env;
-	int		i;
 	int		env_size;
 	int		j;
 
-	i = 0;
 	j = 1;
+	new_env = NULL;
 	if (!cmds->cmd[1] || !(*env))
 		return (2);
 	while (cmds->cmd[j])
 	{
-		i = 0;
 		if (!cmds->cmd[j] && *env)
 			return (ft_export_no_options(*env));
 		if (!is_valid_identifier(cmds->cmd[j]))
@@ -174,14 +143,7 @@ int	ft_export(t_cmd *cmds, char ***env)
 			new_env = add_new_env_var(*env, cmds->cmd[j + 1]);
 		else
 			new_env = add_new_env_var(*env, cmds->cmd[j]);
-		while (i < env_size)
-		{
-			if ((*env)[i])
-				free((*env)[i]);
-			i++;
-		}
-		free(*env);
-		*env = new_env;
+		replace_env(env, new_env);
 		j++;
 	}
 	return (0);

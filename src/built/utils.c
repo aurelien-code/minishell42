@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 04:22:34 by ypages            #+#    #+#             */
-/*   Updated: 2023/10/02 12:12:44 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/04 13:35:28 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,19 @@ void	ft_free_cpy_env(char **cpy_env)
 		i++;
 	}
 	free(cpy_env);
+}
+
+void	replace_env(char ***env, char **new_env)
+{
+	int	i;
+
+	i = 0;
+	while (i < get_env_size(*env))
+	{
+		if ((*env)[i])
+			free((*env)[i]);
+		i++;
+	}
+	free(*env);
+	*env = new_env;
 }

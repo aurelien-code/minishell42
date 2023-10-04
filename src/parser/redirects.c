@@ -6,11 +6,13 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:17:04 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/04 13:23:36 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/04 13:37:52 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_exit_code;
 
 t_tokens	*handle_double_redirect(t_lexer *lexer_arr, int *i, int j)
 {
@@ -103,6 +105,7 @@ t_tokens	*handle_redirection(t_cmd *cmd, t_tokens *tokens)
 		free(redirection);
 		ft_putstr_fd(NO_FILE_TO_REDR, 2);
 		free_commands(cmd);
+		g_exit_code = 2;
 		return (NULL);
 	}
 	redirection->filename = ft_strdup(tokens->value);

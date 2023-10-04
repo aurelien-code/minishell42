@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/10/04 13:34:59 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/04 13:39:19 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int			ft_exit(t_cmd *cmds, char **cpy_env, int fork);
 int			get_env_size(char **env);
 void		ft_free_split(char **list);
 void		ft_free_cpy_env(char **cpy_env);
+void		replace_env(char ***env, char **new_env);
 
 /*  prompt.c    */
 char		*ft_prompt(void);
