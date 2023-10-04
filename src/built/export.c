@@ -72,14 +72,20 @@ char	**add_new_env_var(char **env, char *new_var)
 
 int	ft_export_no_options(char **env)
 {
-	int	i;
+	int		i;
+	size_t	count;
+	size_t	size;
 
 	i = 0;
 	while (env[i])
 	{
-		ft_putstr_fd("declare -x ", 1);
-		ft_putstr_fd(env[i], 1);
-		ft_putstr_fd("\n", 1);
+		size = ft_strlen(env[i]) + 12;
+		count = printf("declare -x %s\n", env[i]);
+		if (size != count)
+		{
+			perror("minishell: export: write error");
+			return (1);
+		}
 		i++;
 	}
 	return (1);
