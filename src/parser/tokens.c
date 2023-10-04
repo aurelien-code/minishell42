@@ -6,11 +6,13 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:58:13 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/04 04:26:50 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/04 08:36:24 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_exit_code;
 
 t_tokens	*new_token_item(char *str, t_tokens_enum type)
 {
@@ -61,6 +63,7 @@ void	dbg_print_tokens(t_tokens *tokens)
 		tokens = tokens->next;
 	}
 }
+
 
 t_tokens	*get_tokens(char *str, t_lexer *lexer_arr, char **env)
 {

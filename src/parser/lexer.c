@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:51:15 by aumarin           #+#    #+#             */
-/*   Updated: 2023/08/26 13:18:18 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/04 08:49:55 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_lexer	*lexer(char *prompt_line)
 	if (!prompt_line || ft_strlen(prompt_line) < 1)
 		return (NULL);
 	i = 0;
-	lexer = ft_calloc(ft_strlen(prompt_line) + 1, sizeof(t_lexer));
+	lexer = ft_calloc(ft_strlen(prompt_line) + 2, sizeof(t_lexer));
 	if (!lexer)
 		return (NULL);
 	while (prompt_line[i] != '\0')
@@ -50,8 +50,6 @@ t_lexer	*lexer(char *prompt_line)
 			lexer[i].type = PIPE;
 		else if (prompt_line[i] == '<' || prompt_line[i] == '>')
 			lexer[i].type = REDIRECT;
-		else if (prompt_line[i] == '$')
-			lexer[i].type = EXPAND;
 		else
 			lexer[i].type = NORMAL;
 		lexer[i].value = prompt_line[i];
