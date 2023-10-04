@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 22:57:19 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/04 03:55:27 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/04 04:12:39 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,5 @@ t_tokens	*get_word_token(t_lexer *lexer_arr, int *i, char **env)
 	if (str)
 		return (new_token_item(str, TOKEN));
 	else
-		return (new_token_item(NULL, 0));
+		return (new_token_item(ft_strdup(""), 10));
 }

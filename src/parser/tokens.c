@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:58:13 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/04 04:09:46 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/04 04:14:12 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,11 @@ int	append_token(t_tokens **tokens, t_tokens *new_elem)
 
 	if (!new_elem)
 		return (0);
-	if (new_elem->type == 0)
+	if (new_elem->type == 10)
+	{
+		free_tokens(new_elem);
 		return (1);
+	}
 	if (!(*tokens))
 		(*tokens) = new_elem;
 	else
@@ -90,6 +93,6 @@ t_tokens	*get_tokens(char *str, t_lexer *lexer_arr, char **env)
 		}
 		i++;
 	}
-//	dbg_print_tokens(tokens);
+	dbg_print_tokens(tokens);
 	return (tokens);
 }
