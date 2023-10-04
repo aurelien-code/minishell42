@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:59:51 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/04 12:25:29 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/04 14:13:15 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	check_quotes(int db_quote, int sg_quote, char *new_str)
 	if (db_quote || sg_quote)
 	{
 		ft_putstr_fd(UNCLOSE_QUOTE_ERR, 2);
+		g_exit_code = 2;
 		free(new_str);
 		return (0);
 	}

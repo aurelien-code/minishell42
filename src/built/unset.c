@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:05:45 by ypages            #+#    #+#             */
-/*   Updated: 2023/10/04 13:13:43 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/04 14:11:59 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	ft_unset(t_cmd *cmds, char ***env)
 
 	i = 0;
 	if (!cmds->cmd[1])
-		return (1);
+		return (0);
 	while (cmds->cmd[i])
 	{
 		var_to_del = cmds->cmd[i];
