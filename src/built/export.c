@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:05:45 by ypages            #+#    #+#             */
-/*   Updated: 2023/10/03 20:37:08 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/04 04:17:52 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ int	is_valid_identifier(char *id)
 
 	ret_value = 0;
 	if (id[0] && ft_isdigit(id[0]))
+		ret_value = 0;
+	if (ft_strlen(id) < 1)
 		ret_value = 0;
 	else
 	{
