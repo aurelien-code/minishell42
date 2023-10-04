@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 22:47:43 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/03 23:27:47 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/04 01:50:16 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,16 +60,26 @@ void	handle_dollar(char **env, char *str, int *i, char **new_str)
 		(*i)++;
 		return ;
 	}
+	else if (str[*i + j] == ' ' || !str[*i + j] || str[*i + j] == '\t')
+	{
+		if (*new_str)
+			*new_str = join_and_free(*new_str, ft_strdup("$"));
+		else
+			*new_str = ft_strdup("$");
+		(*i)++;
+		return ;
+	}
 	while (str[*i + j] && str[*i + j] != ' ' && str[*i + j] != '\t' && \
 			str[*i + j] != '$')
 		j++;
-	key = ft_substr(str, *i + 1, j);
+	key = ft_substr(str, *i, j);
+	key++;
 	env_value = ft_getenv(env, key);
 	if (*new_str)
 		*new_str = join_and_free(*new_str, env_value);
 	else
 		*new_str = env_value;
-	free(key);
+	free(--key);
 	*i += j - 1;
 }
 

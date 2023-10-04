@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 22:57:19 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/03 02:56:24 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/04 02:39:56 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	handle_expand(t_lexer *lexer_arr, int *i, char **env, char **str)
 	if (*str)
 	{
 		tmp = *str;
+		if (!tk->value)
+			tk->value = ft_strdup("");
 		*str = ft_strjoin(tmp, tk->value);
 		free(tmp);
 	}
@@ -29,13 +31,15 @@ void	handle_expand(t_lexer *lexer_arr, int *i, char **env, char **str)
 	free_tokens(tk);
 }
 
-void	handle_quote(t_lexer *lexer_arr, int *i, char **env, char **str)
+int	handle_quote(t_lexer *lexer_arr, int *i, char **env, char **str)
 {
 	t_tokens	*tk;
 	char		*tmp;
 
 	tk = get_quote_token(lexer_arr, i, env);
 	(*i)++;
+	if (!tk)
+		return (0);
 	if (*str && tk && tk->value)
 	{
 		tmp = *str;
@@ -43,6 +47,7 @@ void	handle_quote(t_lexer *lexer_arr, int *i, char **env, char **str)
 		free(tmp);
 	}
 	free_tokens(tk);
+	return (1);
 }
 
 void	handle_other(t_lexer *lexer_arr, int *i, char **str)
@@ -71,7 +76,14 @@ t_tokens	*get_word_token(t_lexer *lexer_arr, int *i, char **env)
 		if (lexer_arr[*i].type == EXPAND)
 			handle_expand(lexer_arr, i, env, &str);
 		else if (lexer_arr[*i].type == QUOTE)
-			handle_quote(lexer_arr, i, env, &str);
+		{
+			if (!handle_quote(lexer_arr, i, env, &str))
+			{
+				if (str)
+					free(str);
+				return (NULL);
+			}
+		}
 		else
 			handle_other(lexer_arr, i, &str);
 		if (lexer_arr[*i].type == PIPE)

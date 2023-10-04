@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 12:00:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/03 04:51:22 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/04 03:01:20 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,8 @@ t_cmd	*parser(t_tokens *tokens)
 			tokens = handle_redirection(current_cmd, tokens);
 		else if (tokens->type == T_PIPE && (!current_cmd || !current_cmd->cmd))
 			return (throw_parsing_error(NULL, NULL, head_cmds, NO_PIPE_ENTRY));
+		else if (tokens->type == T_PIPE && !tokens->next)
+			return (throw_parsing_error(NULL, NULL, head_cmds, NO_OUT_CMD));
 		else if (tokens->type == T_PIPE)
 			current_cmd = NULL;
 		if (!tokens)

@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 13:46:44 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/02 14:46:50 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/04 03:01:08 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,11 @@
 # endif
 
 # ifndef TEMP_FILE_ERR
-#  define TEMP_FILE_ERR "minishell: cannot create temp file for here-document"
+#  define TEMP_FILE_ERR "minishell: cannot create temp file for here-document\n"
+# endif
+
+# ifndef NO_OUT_CMD
+#  define NO_OUT_CMD "Syntax error: command expected after pipe\n"
 # endif
 
 #endif

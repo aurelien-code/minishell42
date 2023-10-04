@@ -6,11 +6,13 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 17:08:01 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/02 22:55:13 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/04 01:13:06 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_exit_code;
 
 int	is_quote_closed(t_lexer *lexer_arr, int i)
 {
@@ -58,8 +60,8 @@ t_tokens	*get_quote_token(t_lexer *lexer_arr, int *i, char **env)
 		return (NULL);
 	if (!is_quote_closed(lexer_arr, *i))
 	{
-		lexer_arr[*i].type = NORMAL;
-		(*i)--;
+		g_exit_code = 2;
+		ft_putstr_fd(UNCLOSE_QUOTE_ERR, 2);
 		return (NULL);
 	}
 	while (lexer_arr[j].value)

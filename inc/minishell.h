@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/10/03 20:36:28 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/04 02:24:13 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,6 @@ void		*throw_parsing_error(t_lexer *lex, t_tokens *tok, \
 int			history_size(int should_increment);
 void		free_commands(t_cmd *commands);
 void		dbg_print_tokens(t_tokens *tokens);
+int			is_quote_closed(t_lexer *lexer_arr, int i);
 
 #endif
