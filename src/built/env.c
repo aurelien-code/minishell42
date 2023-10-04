@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 19:02:08 by ypages            #+#    #+#             */
-/*   Updated: 2023/10/03 17:54:48 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/04 10:30:46 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ int	ft_env(t_cmd *cmds, char *env[])
 	i = 0;
 	while (env[i])
 	{
+		if (!ft_strchr(env[i], '=') && ++i)
+			continue ;
 		size = ft_strlen(env[i]);
 		count = write(1, env[i++], size);
 		if (count != size)
