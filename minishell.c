@@ -97,5 +97,5 @@ int	main(int argc, char **argv, char **envp)
 	rl_clear_history();
 	ft_putstr_fd("exit\n", 2);
 	ft_free_cpy_env(cpy_env);
-	return (0);
+	return (g_exit_code);
 }
