@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 17:08:01 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/04 17:07:59 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/05 07:25:19 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,39 +31,50 @@ int	is_quote_closed(t_lexer *lexer_arr, int i)
 	return (0);
 }
 
-/*
-DANS CETTE FONCTION IL FAUT CHECK S'IL N'Y A PAS ENCORE UNE QUOTE APRES
-DANS LE CAS OU IL Y EN A UNE -> ON EN FAIT UN TOKEN
-DANS LE CAS OU IL Y EN A PAS -> MEME COMPORTEMENT QUE MNT
-*/
 t_tokens	*get_quote_token(t_lexer *lexer_arr, int *i)
 {
-	int		j;
-	char	*str;
+	int			j;
+	char		*str;
+	char		*tmp2;
+	char		*tmp;
+	int			x;
 
 	j = *i;
 	if (!lexer_arr || lexer_arr[*i].type != QUOTE)
 		return (NULL);
-	if (!is_quote_closed(lexer_arr, *i))
-	{
-		g_exit_code = 2;
-		ft_putstr_fd(UNCLOSE_QUOTE_ERR, 2);
-		return (NULL);
-	}
+
 	while (lexer_arr[j].value)
 	{
+		tmp2 = NULL;
 		j++;
 		if (lexer_arr[j].value == lexer_arr[*i].value)
 		{
 			if (lexer_arr[j + 1].value == lexer_arr[*i].value)
 			{
 				lexer_arr[j].value = ' ';
-				lexer_arr[j+1].value = '\b';
+				lexer_arr[j + 1].value = '\b';
 				j++;
 				continue ;
 			}
-			str = substr_lexer(lexer_arr, *i, j);
-			(*i) = j;
+			else if (lexer_arr[j + 1].value != ' ' && \
+			lexer_arr[j + 1].value != '\t' && lexer_arr[j + 1].type == NORMAL)
+			{
+				tmp = substr_lexer(lexer_arr, *i, j);
+				x = j;
+				j++;
+				while (lexer_arr[j].value && lexer_arr[j].type == NORMAL)
+					j++;
+				tmp2 = substr_lexer(lexer_arr, x, j);
+			}
+			if (tmp2 && tmp)
+			{
+				str = ft_strjoin(tmp, tmp2);
+				free(tmp);
+				free(tmp2);
+			}
+			else
+				str = substr_lexer(lexer_arr, *i, j);
+			(*i) = j - 1;
 			return (new_token_item(str, TOKEN));
 		}
 	}
