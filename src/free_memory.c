@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 13:35:34 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/02 11:31:14 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/05 23:54:15 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,8 @@ void	free_commands(t_cmd *commands)
 		}
 		if (tmp->res)
 			free(tmp->res);
-		if (tmp->redr_in)
-			free_redirs(tmp->redr_in);
-		if (tmp->redr_out)
-			free_redirs(tmp->redr_out);
+		if (tmp->redr)
+			free_redirs(tmp->redr);
 		free(tmp);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:17:04 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/04 13:37:52 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/05 23:55:18 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,13 @@ void	add_input_redirection(t_cmd *cmd, t_redr *redirection)
 {
 	t_redr	*tmp;
 
-	if (!cmd->redr_in)
+	redirection->direction = 1;
+	if (!cmd->redr)
 	{
-		cmd->redr_in = redirection;
+		cmd->redr = redirection;
 		return ;
 	}
-	tmp = cmd->redr_in;
+	tmp = cmd->redr;
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = redirection;
@@ -79,12 +80,13 @@ void	add_output_redirection(t_cmd *cmd, t_redr *redirection)
 {
 	t_redr	*tmp;
 
-	if (!cmd->redr_out)
+	redirection->direction = 2;
+	if (!cmd->redr)
 	{
-		cmd->redr_out = redirection;
+		cmd->redr = redirection;
 		return ;
 	}
-	tmp = cmd->redr_out;
+	tmp = cmd->redr;
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = redirection;

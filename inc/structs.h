@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:59:13 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/03 04:48:44 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/05 23:54:49 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_redr
 	char			*filename;
 	int				fd;
 	int				pfd[2];
+	int				direction;
 	struct s_redr	*next;
 }	t_redr;
 
@@ -52,8 +53,9 @@ typedef struct s_cmd
 	int				old_stdin;
 	int				old_stdout;
 	int				pid;
-	struct s_redr	*redr_in;
-	struct s_redr	*redr_out;
+	struct s_redr	*redr;
+	//struct s_redr	*redr_in;
+	//struct s_redr	*redr_out;
 	struct s_cmd	*next;
 }	t_cmd;
 
