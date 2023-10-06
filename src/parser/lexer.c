@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:51:15 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/06 15:34:29 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/06 15:50:13 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,16 @@ t_lexer_enum	lex_quotes(char prompt_char, int *in_quote, char *qt_type)
 		return (NORMAL);
 }
 
+t_lexer_enum	get_type(int i, int in_quote, char *prompt_line)
+{
+	if (prompt_line[i] == '|' && !in_quote)
+		return (PIPE);
+	else if ((prompt_line[i] == '<' || prompt_line[i] == '>') && !in_quote)
+		return (REDIRECT);
+	else
+		return (NORMAL);
+}
+
 t_lexer	*lexer(char *prompt_line)
 {
 	int		i;
@@ -62,12 +72,8 @@ t_lexer	*lexer(char *prompt_line)
 	{
 		if (prompt_line[i] == '\'' || prompt_line[i] == '"')
 			lexer[i].type = lex_quotes(prompt_line[i], &in_quote, &quote_type);
-		else if (prompt_line[i] == '|' && !in_quote)
-			lexer[i].type = PIPE;
-		else if ((prompt_line[i] == '<' || prompt_line[i] == '>') && !in_quote)
-			lexer[i].type = REDIRECT;
 		else
-			lexer[i].type = NORMAL;
+			lexer[i].type = get_type(i, in_quote, prompt_line);
 		lexer[i].value = prompt_line[i];
 		i++;
 	}
