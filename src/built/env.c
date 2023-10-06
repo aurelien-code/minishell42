@@ -6,12 +6,35 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 19:02:08 by ypages            #+#    #+#             */
-/*   Updated: 2023/10/04 10:30:46 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/06 21:18:05 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static void	print_error_env(char *s1, char *s2, char *s3)
+{
+	char	*err;
+	char	*err2;
+
+	err = ft_strjoin(s1, s2);
+	err2 = ft_strjoin(err, s3);
+	free(err);
+	ft_putstr_fd(err2, 2);
+	free(err2);
+}
+
+static void	print_error_env2(char *arg)
+{
+	char	*err;
+	char	*err2;
+
+	err = ft_strnjoin("env: invalid option -- '", arg, 1);
+	err2 = ft_strjoin(err, "\'\n");
+	free(err);
+	ft_putstr_fd(err2, 2);
+	free(err2);
+}
 static int	is_option(char *arg, char **cmd)
 {
 	if (!arg)
@@ -28,16 +51,10 @@ static int	is_option(char *arg, char **cmd)
 			cmd[1] = NULL;
 			return (0);
 		}
-		ft_putstr_fd("env: unrecognized option '--", 2);
-		ft_putstr_fd(arg, 2);
-		ft_putendl_fd("\'", 2);
+		print_error_env("env: unrecognized option '--", arg, "\'\n");
 	}
 	else
-	{
-		ft_putstr_fd("env: invalid option -- '", 2);
-		ft_putchar_fd(*arg, 2);
-		ft_putendl_fd("\'", 2);
-	}
+		print_error_env2(arg);
 	return (1);
 }
 
@@ -57,7 +74,7 @@ int	ft_env(t_cmd *cmds, char *env[])
 		return (125);
 	if (cmds->cmd[1])
 	{
-		ft_putendl_fd("minishell: env: too many arguments", 2);
+		ft_putstr_fd("minishell: env: too many arguments\n", 2);
 		return (1);
 	}
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: aagathe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 13:29:32 by aagathe           #+#    #+#             */
-/*   Updated: 2023/10/06 20:38:10 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/06 20:50:56 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,16 @@ void	check_directory(char *path)
 		if (S_ISDIR(path_stat.st_mode))
 		{
 			err = ft_strjoin("minishell: ", path);
-			err2 = ft_strjoin(err, ": Is a directory");
-			ft_putendl_fd(err2, 2);
+			err2 = ft_strjoin(err, ": Is a directory\n");
+			ft_putstr_fd(err2, 2);
 			free(err);
 			free(err2);
 		}
 		else
 		{
 			err = ft_strjoin("minishell: ", path);
-			err2 = ft_strjoin(err, ": Permission denied");
-			ft_putendl_fd(err2, 2);
+			err2 = ft_strjoin(err, ": Permission denied\n");
+			ft_putstr_fd(err2, 2);
 			free(err);
 			free(err2);
 		}

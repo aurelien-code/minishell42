@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 19:32:19 by aagathe           #+#    #+#             */
-/*   Updated: 2023/10/06 20:30:04 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/06 21:17:22 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,14 @@ static int	check_num(char *str)
 
 void	print_exit_msg(t_cmd *cmds)
 {
-	ft_putstr_fd("minishell: exit: ", 2);
-	ft_putstr_fd(cmds->cmd[1], 2);
-	ft_putendl_fd(": numeric argument required", 2);
+	char	*err;
+	char	*err2;
+
+	err = ft_strjoin("minishell: exit: ", cmds->cmd[1]);
+	err2 = ft_strjoin(err, ": numeric argument required\n");
+	free(err);
+	ft_putstr_fd(err2, 2);
+	free(err2);
 }
 
 void	free_before_exit(char **cpy_env, t_cmd *cmds, int pfd[4], int exit_code)

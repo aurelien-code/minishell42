@@ -6,7 +6,7 @@
 /*   By: aagathe <aagathe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 17:19:09 by aagathe           #+#    #+#             */
-/*   Updated: 2023/10/06 20:02:28 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/06 20:54:23 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void	entry_error(const char *filename)
 	free(error);
 	error = ft_strjoin(error2, filename);
 	free(error2);
-	error2 = ft_strjoin(error, "')");
+	error2 = ft_strjoin(error, "')\n");
 	free(error);
-	ft_putendl_fd(error2, 2);
+	ft_putstr_fd(error2, 2);
 	free(error2);
 }
 

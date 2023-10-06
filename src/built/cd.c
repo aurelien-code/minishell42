@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:05:45 by ypages            #+#    #+#             */
-/*   Updated: 2023/10/04 01:15:52 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/06 21:13:55 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,20 @@
 
 static int	is_option(char *arg)
 {
+	char	*err;
+	char	*err2;
+
 	if (!arg)
 		return (0);
 	if (*arg++ != '-')
 		return (0);
 	if (!*arg)
 		return (0);
-	ft_putstr_fd("minishell: cd: -", 2);
-	ft_putchar_fd(*arg, 2);
-	ft_putendl_fd(" : invalid option", 2);
+	err = ft_strnjoin("minishell: cd: -", arg, 1);
+	err2 = ft_strjoin(err, " : invalid option\n");
+	free(err);
+	ft_putstr_fd(err2, 2);
+	free(err2);
 	return (1);
 }
 
