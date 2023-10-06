@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 12:00:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/06 19:33:54 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/06 19:35:44 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	handle_pipe_case(t_tokens *tokens, t_cmd **current_cmd, t_cmd **head_cmds)
 	return (1);
 }
 
-t_tokens	*handle_tok(t_cmd **current, t_cmd **head, t_tokens *tok, int *i)
+t_tokens	*handle_tok(t_cmd **current, t_cmd **head, t_tokens *tok)
 {
 	*current = init_or_get_cmd(head, *current);
 	if (tok->type == TOKEN)
@@ -102,7 +102,7 @@ t_cmd	*parser(t_tokens *tokens)
 	current_cmd = NULL;
 	while (tokens)
 	{
-		tokens = handle_tok(&current_cmd, &head_cmds, tokens, &i);
+		tokens = handle_tok(&current_cmd, &head_cmds, tokens);
 		if (!tokens)
 			return (NULL);
 		tokens = tokens->next;
