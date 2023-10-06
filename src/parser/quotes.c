@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 17:08:01 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/06 11:38:28 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/06 11:44:23 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_tokens	*get_quote_token(t_lexer *lexer_arr, int *i)
 	tmp = NULL;
 	while (lexer_arr[j].value)
 	{
-		if (lexer_arr[j].type != QUOTE)
+		if (lexer_arr[j].type != QUOTE && lexer_arr[j].type == NORMAL)
 		{
 			k = j;
 			while (lexer_arr[j].value && lexer_arr[j].value != lexer_arr[*i].value && \
@@ -67,13 +67,15 @@ t_tokens	*get_quote_token(t_lexer *lexer_arr, int *i)
 		}
 		else
 		{
-			(*i) = j;
+			(*i) = j - 1;
+			//printf("str(1): %s\n", str);
 			return (new_token_item(str, TOKEN));
 		}
 	}
 	if (str)
 	{
-			(*i) = j;
+			(*i) = j - 1;
+			//printf("str(2): %s\n", str);
 			return (new_token_item(str, TOKEN));
 	}
 	return (NULL);
