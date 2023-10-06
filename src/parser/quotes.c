@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 17:08:01 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/06 07:03:51 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/06 11:38:28 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,56 +33,48 @@ int	is_quote_closed(t_lexer *lexer_arr, int i)
 
 t_tokens	*get_quote_token(t_lexer *lexer_arr, int *i)
 {
-	int			j;
-	char		*str;
-	char		*tmp2;
-	char		*tmp;
-	int			x;
+	int		j;
+	int		k;
+	char	*str;
+	char	*tmp;
 
-	j = *i;
 	if (!lexer_arr || lexer_arr[*i].type != QUOTE)
 		return (NULL);
-
+	j = *i + 1;
+	str = NULL;
+	tmp = NULL;
 	while (lexer_arr[j].value)
 	{
-		tmp2 = NULL;
-		j++;
-		if (lexer_arr[j].value == lexer_arr[*i].value)
+		if (lexer_arr[j].type != QUOTE)
 		{
-			if (lexer_arr[j + 1].value == lexer_arr[*i].value)
-			{
-				lexer_arr[j].value = ' ';
-				lexer_arr[j + 1].value = '\b';
+			k = j;
+			while (lexer_arr[j].value && lexer_arr[j].value != lexer_arr[*i].value && \
+				lexer_arr[j].value != ' ' && lexer_arr[j].value != '\t' && lexer_arr[j].type == NORMAL)
 				j++;
-				continue ;
-			}
-			else if (lexer_arr[j + 1].value != ' ' && \
-				lexer_arr[j + 1].value != '\t' && (lexer_arr[j + 1].type == NORMAL || lexer_arr[j+1].type == NORMAL))
-			{
-				tmp = substr_lexer(lexer_arr, *i, j);
-				x = j;
-				j++;
-				while (lexer_arr[j].value && lexer_arr[j].type == NORMAL)
-					j++;
-				tmp2 = substr_lexer(lexer_arr, x, j);
-			}
-			if (tmp2 && tmp)
-			{
-				str = ft_strjoin(tmp, tmp2);
-				free(tmp);
-				free(tmp2);
-			}
+			tmp = substr_lexer(lexer_arr, k - 1, j);
+			if (!str && tmp && ft_strlen(tmp) > 0)
+				str = tmp;
+			else if (ft_strlen(tmp) == 0)
+				break ;
 			else
-				str = substr_lexer(lexer_arr, *i, j);
-			if (lexer_arr[j].type == QUOTE)
-				{/*ICI
-				IL
-				FAUT
-				FAIRE
-				UN TRUC*/ continue ;}
-			(*i) = j - 1;
+				str = ft_strjoin(str, tmp);
+		}
+		else if ((lexer_arr[j].type == QUOTE || lexer_arr[j].type == NORMAL) && \
+				lexer_arr[j].value != ' ' && lexer_arr[j].value != '\t' && lexer_arr[j+1].type)
+		{
+			j++;
+			continue;
+		}
+		else
+		{
+			(*i) = j;
 			return (new_token_item(str, TOKEN));
 		}
+	}
+	if (str)
+	{
+			(*i) = j;
+			return (new_token_item(str, TOKEN));
 	}
 	return (NULL);
 }
