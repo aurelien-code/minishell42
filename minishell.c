@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 12:30:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/05 23:48:54 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/06 14:04:09 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void	lexer_and_parse(char *prompt_line, t_lexer **lexer_line,
 	char	*line_after_expand;
 
 	line_after_expand = expand_prompt_line(prompt_line, cpy_env);
+	if (!line_after_expand)
+		return ;
 	*lexer_line = lexer(line_after_expand);
 	if (!*lexer_line)
 		return ;
@@ -81,17 +83,20 @@ int	main(int argc, char **argv, char **envp)
 	t_tokens	*tokens;
 	char		**cpy_env;
 
-	(void)argv;
+	lexer_line = NULL;
 	init(argc, envp, &cpy_env, &prompt_line);
 	tokens = NULL;
-	while (prompt_line)
+	while (prompt_line && argv)
 	{
 		history_size(1);
-		lexer_and_parse(prompt_line, &lexer_line, &tokens, cpy_env);
-		if (lexer_line && tokens)
-			execute_commands(tokens, lexer_line, &cpy_env);
-		else if (!tokens)
-			free(lexer_line);
+		if (prompt_line && ft_strlen(prompt_line) >= 1)
+		{
+			lexer_and_parse(prompt_line, &lexer_line, &tokens, cpy_env);
+			if (lexer_line && tokens)
+				execute_commands(tokens, lexer_line, &cpy_env);
+			else if (!tokens)
+				free(lexer_line);
+		}
 		prompt_line = ft_prompt();
 	}
 	rl_clear_history();

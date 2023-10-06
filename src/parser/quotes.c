@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 17:08:01 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/06 12:50:27 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/06 14:18:44 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,77 +14,79 @@
 
 extern int	g_exit_code;
 
-int	is_quote_closed(t_lexer *lexer_arr, int i)
+int	is_quote_closed(t_lexer *lex, int i)
 {
 	char	quote;
 
-	if (lexer_arr[i].type == QUOTE)
-			quote = lexer_arr[i].value;
+	if (lex[i].type == QUOTE)
+			quote = lex[i].value;
 	else
 		return (0);
-	while (lexer_arr[i].value)
+	while (lex[i].value)
 	{
 		i++;
-		if (lexer_arr[i].value == quote)
+		if (lex[i].value == quote)
 			return (1);
 	}
 	return (0);
 }
 
-t_tokens	*get_quote_token(t_lexer *lexer_arr, int *i)
+char	*join_str(char *str, char *tmp)
+{
+	char	*new_str;
+
+	if (!str && tmp && ft_strlen(tmp) > 0)
+		new_str = tmp;
+	else
+	{
+		new_str = ft_strjoin(str, tmp);
+		free(tmp);
+	}
+	return (new_str);
+}
+
+void	handle_basic(t_lexer *lex, int *j, int i, char **str)
+{
+	int		k;
+	char	*tmp;
+	char	*tmp2;
+
+	k = *j;
+	tmp2 = NULL;
+	while (lex[*j].value && lex[*j].value != lex[i].value)
+	{
+		(*j)++;
+		if (lex[*j].value == lex[i].value || lex[*j].type != NORMAL)
+			break ;
+	}
+	tmp = substr_lexer(lex, k - 1, *j);
+	tmp2 = *str;
+	*str = join_str(tmp2, tmp);
+	if (tmp2)
+		free(tmp2);
+}
+
+t_tokens	*get_quote_token(t_lexer *lex, int *i)
 {
 	int		j;
-	int		k;
 	char	*str;
-	char	*tmp;
 
-	if (!lexer_arr || lexer_arr[*i].type != QUOTE)
-		return (NULL);
 	j = *i + 1;
 	str = NULL;
-	tmp = NULL;
-	while (lexer_arr[j].value)
+	while (lex[j].value)
 	{
-		if (lexer_arr[j].type != QUOTE && lexer_arr[j].type == NORMAL)
-		{
-			k = j;
-			while (lexer_arr[j].value && lexer_arr[j].value != lexer_arr[*i].value)
-			{
-				j++;
-				if (lexer_arr[j].value == lexer_arr[*i].value || lexer_arr[j].type != NORMAL)
-					break;
-			}	
-			tmp = substr_lexer(lexer_arr, k - 1, j);
-			if (!str && tmp && ft_strlen(tmp) > 0)
-				str = tmp;
-			else if (ft_strlen(tmp) == 0 && lexer_arr[j].value == ' ')
-			{
-				str = ft_strjoin(str, " ");
-				j++;
-			}
-			else if (ft_strlen(tmp) == 0 && lexer_arr[j].value != ' ')
-				break ;
-			else
-				str = ft_strjoin(str, tmp);
-		}
-		else if ((lexer_arr[j].type == QUOTE || lexer_arr[j].type == NORMAL) && \
-				lexer_arr[j].value != ' ' && lexer_arr[j].value != '\t' && lexer_arr[j+1].type)
-		{
+		if (lex[j].type != QUOTE && lex[j].type == NORMAL)
+			handle_basic(lex, &j, *i, &str);
+		else if ((lex[j].type == QUOTE || lex[j].type == NORMAL) && \
+				lex[j].value != ' ' && lex[j].value != '\t' && lex[j + 1].type)
 			j++;
-			continue;
-		}
 		else
-		{
-			(*i) = j - 1;
-			//printf("str(1): %s\n", str);
-			return (new_token_item(str, TOKEN));
-		}
+			break ;
 	}
 	if (str)
 	{
-			(*i) = j - 1;
-			//printf("str(2): %s\n", str);
-			return (new_token_item(str, TOKEN));
+		(*i) = j - 1;
+		return (new_token_item(str, TOKEN));
 	}
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 12:00:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/06 07:06:56 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/06 13:38:22 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ t_cmd	*init_or_get_cmd(t_cmd **head_cmds, t_cmd *current_cmd)
 
 int	handle_pipe_case(t_tokens *tokens, t_cmd **current_cmd, t_cmd **head_cmds)
 {
-	if (tokens->type == T_PIPE && (!(*current_cmd) || (!(*current_cmd)->cmd && !(*current_cmd)->redr)))
+	if (tokens->type == T_PIPE && (!(*current_cmd) || \
+		(!(*current_cmd)->cmd && !(*current_cmd)->redr)))
 	{
 		throw_parsing_error(NULL, NULL, *head_cmds, NO_PIPE_ENTRY);
 		return (0);
