@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 04:22:34 by ypages            #+#    #+#             */
-/*   Updated: 2023/10/04 13:35:28 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/06 19:13:00 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,29 @@ void	replace_env(char ***env, char **new_env)
 	}
 	free(*env);
 	*env = new_env;
+}
+
+int	is_builtin(t_tokens	*tokens)
+{
+	char	*str;
+
+	str = tokens->value;
+	if (!str)
+		return (0);
+	if (!ft_strncmp(str, "echo", 5))
+		return (1);
+	else if (!ft_strncmp(str, "cd", 3))
+		return (2);
+	else if (!ft_strncmp(str, "env", 4))
+		return (3);
+	else if (!ft_strncmp(str, "export", 7))
+		return (4);
+	else if (!ft_strncmp(str, "pwd", 4))
+		return (5);
+	else if (!ft_strncmp(str, "unset", 6))
+		return (6);
+	else if (!ft_strncmp(str, "exit", 5))
+		return (7);
+	else
+		return (0);
 }

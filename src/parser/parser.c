@@ -6,36 +6,11 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 12:00:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/06 18:54:06 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/06 19:13:01 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	is_builtin(t_tokens	*tokens)
-{
-	char	*str;
-
-	str = tokens->value;
-	if (!str)
-		return (0);
-	if (!ft_strncmp(str, "echo", 5))
-		return (1);
-	else if (!ft_strncmp(str, "cd", 3))
-		return (2);
-	else if (!ft_strncmp(str, "env", 4))
-		return (3);
-	else if (!ft_strncmp(str, "export", 7))
-		return (4);
-	else if (!ft_strncmp(str, "pwd", 4))
-		return (5);
-	else if (!ft_strncmp(str, "unset", 6))
-		return (6);
-	else if (!ft_strncmp(str, "exit", 5))
-		return (7);
-	else
-		return (0);
-}
 
 void	add_to_cmd(t_cmd *cmd, char *value)
 {
@@ -101,6 +76,24 @@ int	handle_pipe_case(t_tokens *tokens, t_cmd **current_cmd, t_cmd **head_cmds)
 	return (1);
 }
 
+t_tokens	*handle_tok(t_cmd **current, t_cmd **head, t_tokens *tok, int *i)
+{
+	*current = init_or_get_cmd(head, *current);
+	if (tok->type == TOKEN)
+	{
+		(*current)->nb_cmd = (*i)++ / 2 + 1;
+		add_to_cmd(*current, tok->value);
+		if (!(*current)->cmd[1] && tok->value)
+			(*current)->is_builtin = is_builtin(tok);
+	}
+	else if (tok->type >= D_REDIR_L && tok->type <= S_REDIR_R)
+		tok = handle_redirection(*current, tok);
+	else if (tok->type == T_PIPE \
+		&& !handle_pipe_case(tok, current, head))
+		return (NULL);
+	return (tok);
+}
+
 t_cmd	*parser(t_tokens *tokens)
 {
 	t_cmd	*head_cmds;
@@ -112,19 +105,7 @@ t_cmd	*parser(t_tokens *tokens)
 	current_cmd = NULL;
 	while (tokens)
 	{
-		current_cmd = init_or_get_cmd(&head_cmds, current_cmd);
-		if (tokens->type == TOKEN)
-		{
-			current_cmd->nb_cmd = i++ / 2 + 1;
-			add_to_cmd(current_cmd, tokens->value);
-			if (!current_cmd->cmd[1] && tokens->value)
-				current_cmd->is_builtin = is_builtin(tokens);
-		}
-		else if (tokens->type >= D_REDIR_L && tokens->type <= S_REDIR_R)
-			tokens = handle_redirection(current_cmd, tokens);
-		else if (tokens->type == T_PIPE && \
-			!handle_pipe_case(tokens, &current_cmd, &head_cmds))
-			return (NULL);
+		tokens = handle_tok(&current_cmd, &head_cmds, tokens, &i);
 		if (!tokens)
 			return (NULL);
 		tokens = tokens->next;
