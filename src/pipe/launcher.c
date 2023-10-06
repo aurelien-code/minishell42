@@ -6,7 +6,7 @@
 /*   By: aagathe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 13:29:32 by aagathe           #+#    #+#             */
-/*   Updated: 2023/10/06 20:03:31 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/06 20:21:58 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ void	launch_cmd(t_cmd *cmds, int pfd[4], char ***env, t_cmd *start_cmds)
 	if (open_files(cmds, pfd))
 		exit_fork(NULL, *env, start_cmds, 1);
 	switch_files(cmds, pfd);
-	//if (!cmds->is_builtin)
+	if (!cmds->is_builtin)
 		close_files(cmds, pfd);
 	if (!cmds->cmd)
 		exit_fork(NULL, *env, start_cmds, 0);
@@ -148,7 +148,7 @@ void	launch_cmd(t_cmd *cmds, int pfd[4], char ***env, t_cmd *start_cmds)
 	if (cmds->is_builtin)
 	{
 		ret = launch_builtin(cmds, env, path, pfd);
-		//close_files(cmds, pfd);
+		close_files(cmds, pfd);
 	}
 	else if (ft_strchr(path, '/') || !pathes)
 		execve(path, cmds->cmd, *env);
