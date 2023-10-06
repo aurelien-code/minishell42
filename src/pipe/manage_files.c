@@ -6,7 +6,7 @@
 /*   By: aagathe <aagathe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 17:16:47 by aagathe           #+#    #+#             */
-/*   Updated: 2023/10/06 20:17:50 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/06 20:36:21 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,10 +111,8 @@ void	switch_files(t_cmd *cmds, int pfd[4])
 	}
 	if (redr_in)
 		dup2(redr_in, 0);
-	else if (cmds->nb_cmd > 1 && cmds->nb_cmd % 2)
-		dup2(pfd[2], 0);
 	else if (cmds->nb_cmd > 1)
-		dup2(pfd[0], 0);
+		dup2(pfd[cmds->nb_cmd % 2 * 2], 0);
 	if (redr_out)
 		dup2(redr_out, 1);
 	else if (cmds->next && cmds->nb_cmd % 2)

@@ -6,17 +6,19 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 17:33:45 by aagathe           #+#    #+#             */
-/*   Updated: 2023/10/03 20:14:13 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/06 20:38:29 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_cmd	*go_to_cmds(t_cmd *cmds, int nb_cmds)
+void	exit_fork(char **pathes, char **env, t_cmd *cmds, int ret)
 {
-	while (--nb_cmds)
-		cmds = cmds->next;
-	return (cmds);
+	if (pathes)
+		free_pathes(pathes);
+	free_pathes(env);
+	free_commands(cmds);
+	exit(ret);
 }
 
 char	*check_path(char *cmd, char **pathes)

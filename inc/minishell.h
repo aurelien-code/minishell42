@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/10/06 19:59:11 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/06 20:39:26 by aagathe          ###   ########.fr       */
 /*   Updated: 2023/10/06 19:14:53 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -105,6 +105,7 @@ void		switch_files(t_cmd *cmds, int pfd[4]);
 int			open_files(t_cmd *cmds, int pfd[4]);
 
 /* pipe_utils.c */
+void		exit_fork(char **pathes, char **env, t_cmd *cmds, int ret);
 char		*check_path(char *cmd, char **pathes);
 char		**find_pathes(char *env[]);
 int			try_fork(void);

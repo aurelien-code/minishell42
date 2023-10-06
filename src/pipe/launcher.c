@@ -6,20 +6,11 @@
 /*   By: aagathe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 13:29:32 by aagathe           #+#    #+#             */
-/*   Updated: 2023/10/06 20:21:58 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/06 20:38:10 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	exit_fork(char **pathes, char **env, t_cmd *cmds, int ret)
-{
-	if (pathes)
-		free_pathes(pathes);
-	free_pathes(env);
-	free_commands(cmds);
-	exit(ret);
-}
 
 void	check_directory(char *path)
 {
