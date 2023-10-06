@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:05:45 by ypages            #+#    #+#             */
-/*   Updated: 2023/10/06 21:13:55 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/06 21:29:59 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,15 @@ void	change_pwd(char *env[])
 	}
 }
 
+static void	print_err_cd(char *path)
+{
+	char	*err;
+
+	err = ft_strjoin("minishell: cd: ", path);
+	perror(err);
+	free(err);
+}
+
 int	ft_cd(t_cmd *cmds, char *env[])
 {
 	char	*path;
@@ -66,13 +75,12 @@ int	ft_cd(t_cmd *cmds, char *env[])
 		path = cmds->cmd[1];
 	if (cmds->cmd[1] && cmds->cmd[2])
 	{
-		ft_putendl_fd("minishell: cd: too many arguments", 2);
+		ft_putstr_fd("minishell: cd: too many arguments\n", 2);
 		return (1);
 	}
 	if (chdir(path) != 0)
 	{
-		ft_putstr_fd("minishell: cd: ", 2);
-		perror(path);
+		print_err_cd(path);
 		return (1);
 	}
 	change_pwd(env);

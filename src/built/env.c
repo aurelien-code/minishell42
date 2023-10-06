@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 19:02:08 by ypages            #+#    #+#             */
-/*   Updated: 2023/10/06 21:18:05 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/06 21:33:15 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static void	print_error_env2(char *arg)
 	ft_putstr_fd(err2, 2);
 	free(err2);
 }
+
 static int	is_option(char *arg, char **cmd)
 {
 	if (!arg)
