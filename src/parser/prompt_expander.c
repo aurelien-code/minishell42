@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 09:59:51 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/05 07:24:19 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/06 06:42:00 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,6 @@ char	*expand_prompt_line(char *str, char **env)
 	}
 	if (!check_quotes(db_quote, sg_quote, new_str))
 		return (NULL);
+	printf("new_str=%s\n", new_str);
 	return (new_str);
 }
