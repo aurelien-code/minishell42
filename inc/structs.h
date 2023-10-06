@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:59:13 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/06 06:41:23 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/06 18:39:12 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_cmd
 {
 	char			**cmd;
 	char			*res;
+	int				nb_cmd;
 	int				is_builtin;
 	int				old_stdin;
 	int				old_stdout;
