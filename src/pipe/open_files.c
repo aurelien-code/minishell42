@@ -6,7 +6,7 @@
 /*   By: aagathe <aagathe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 17:19:09 by aagathe           #+#    #+#             */
-/*   Updated: 2023/10/06 00:59:48 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/06 20:02:28 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	open_redr(t_redr *redr)
 	return (0);
 }
 
-int	open_files(t_cmd *cmds, int pfd[4], int nb_cmds)
+int	open_files(t_cmd *cmds, int pfd[4])
 {
 	t_redr	*redr;
 
@@ -97,7 +97,7 @@ int	open_files(t_cmd *cmds, int pfd[4], int nb_cmds)
 	{
 		if (redr->type == 3 || redr->type == 4 || redr->type == 5)
 			if (open_redr(redr))
-				return (close_files(cmds, pfd, nb_cmds), 1);
+				return (close_files(cmds, pfd), 1);
 		redr = redr->next;
 	}
 	return (0);

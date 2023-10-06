@@ -6,7 +6,7 @@
 /*   By: aagathe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 13:29:32 by aagathe           #+#    #+#             */
-/*   Updated: 2023/10/06 02:50:14 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/06 20:03:31 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,11 @@ int	launch_builtin_solo(t_cmd *cmds, char ***env)
 {
 	int	ret;
 
-	if (open_files(cmds, NULL, 1))
-		return (close_files(cmds, NULL, 1), 1);
+	if (open_files(cmds, NULL))
+		return (1);
 	unswitch_files(cmds, 0);
-	switch_files(cmds, 1, NULL);
-	close_files(cmds, NULL, 1);
+	switch_files(cmds, NULL);
+	close_files(cmds, NULL);
 	ret = 0;
 	if (cmds->is_builtin == 1)
 		ret = ft_echo(cmds);
@@ -102,12 +102,12 @@ int	launch_builtin_solo(t_cmd *cmds, char ***env)
 	else if (cmds->is_builtin == 6)
 		ret = ft_unset(cmds, env);
 	else if (cmds->is_builtin == 7)
-		ret = ft_exit(cmds, *env, 0);
+		ret = ft_exit(cmds, *env, 0, NULL);
 	unswitch_files(cmds, 1);
 	return (ret);
 }
 
-int	launch_builtin(t_cmd *cmds, char ***env, char *path)
+int	launch_builtin(t_cmd *cmds, char ***env, char *path, int pfd[4])
 {
 	int	ret;
 
@@ -126,31 +126,33 @@ int	launch_builtin(t_cmd *cmds, char ***env, char *path)
 	else if (cmds->is_builtin == 6)
 		ret = ft_unset(cmds, env);
 	else if (cmds->is_builtin == 7)
-		ret = ft_exit(cmds, *env, 1);
+		ret = ft_exit(cmds, *env, 1, pfd);
 	return (ret);
 }
 
-void	launch_cmd(t_cmd *cmds, int nb_cmds, int pfd[4], char ***env)
+void	launch_cmd(t_cmd *cmds, int pfd[4], char ***env, t_cmd *start_cmds)
 {
 	int		ret;
 	char	*path;
 	char	**pathes;
-	t_cmd	*cmds_cpy;
 
-	cmds_cpy = go_to_cmds(cmds, nb_cmds);
-	if (open_files(cmds_cpy, pfd, nb_cmds))
-		exit_fork(NULL, *env, cmds, 1);
-	switch_files(cmds_cpy, nb_cmds, pfd);
-	close_files(cmds_cpy, pfd, nb_cmds);
-	if (!cmds_cpy->cmd)
-		exit_fork(NULL, *env, cmds, 0);
+	if (open_files(cmds, pfd))
+		exit_fork(NULL, *env, start_cmds, 1);
+	switch_files(cmds, pfd);
+	//if (!cmds->is_builtin)
+		close_files(cmds, pfd);
+	if (!cmds->cmd)
+		exit_fork(NULL, *env, start_cmds, 0);
 	pathes = find_pathes(*env);
-	path = check_path(cmds_cpy->cmd[0], pathes);
-	if (cmds_cpy->is_builtin)
-		ret = launch_builtin(cmds_cpy, env, path);
+	path = check_path(cmds->cmd[0], pathes);
+	if (cmds->is_builtin)
+	{
+		ret = launch_builtin(cmds, env, path, pfd);
+		//close_files(cmds, pfd);
+	}
 	else if (ft_strchr(path, '/') || !pathes)
-		execve(path, cmds_cpy->cmd, *env);
-	if (!cmds_cpy->is_builtin)
+		execve(path, cmds->cmd, *env);
+	if (!cmds->is_builtin)
 		ret = check_access(path, pathes);
-	exit_fork(pathes, *env, cmds, ret);
+	exit_fork(pathes, *env, start_cmds, ret);
 }

@@ -6,7 +6,8 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/10/06 19:13:13 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/06 19:59:11 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/06 19:14:53 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +46,7 @@ int			ft_pwd(t_cmd *cmds);
 int			ft_export(t_cmd *cmds, char ***env);
 int			ft_unset(t_cmd *cmds, char ***env);
 int			ft_env(t_cmd *cmds, char *env[]);
-int			ft_exit(t_cmd *cmds, char **cpy_env, int fork);
+int			ft_exit(t_cmd *cmds, char **cpy_env, int fork, int pfd[4]);
 
 /** builtin - utils **/
 int			get_env_size(char **env);
@@ -91,20 +92,19 @@ int			executer(t_cmd *cmds, char **env[]);
 
 /* launcher.c */
 int			launch_builtin_solo(t_cmd *cmds, char ***env);
-void		launch_cmd(t_cmd *cmds, int nb_cmds, int pfd[4], char ***env);
+void		launch_cmd(t_cmd *cmds, int pfd[4], char ***env, t_cmd *start_cmds);
 
 /* manage_files */
 int			open_pipe(int pfd[4], int nb_cmds, t_cmd *next);
-void		close_pfd(int nb_cmds, int pfd[4], t_cmd *cmds);
-void		close_files(t_cmd *cmds, int pfd[4], int nb_cmds);
+void		close_pfd(t_cmd *cmds, int pfd[4]);
+void		close_files(t_cmd *cmds, int pfd[4]);
 void		unswitch_files(t_cmd *cmds, int action);
-void		switch_files(t_cmd *cmds, int id_cmd, int pfd[4]);
+void		switch_files(t_cmd *cmds, int pfd[4]);
 
 /* open_files.c */
-int			open_files(t_cmd *cmds, int pfd[4], int nb_cmds);
+int			open_files(t_cmd *cmds, int pfd[4]);
 
 /* pipe_utils.c */
-t_cmd		*go_to_cmds(t_cmd *cmds, int nb_cmds);
 char		*check_path(char *cmd, char **pathes);
 char		**find_pathes(char *env[]);
 int			try_fork(void);

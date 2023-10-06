@@ -6,7 +6,7 @@
 /*   By: aagathe <aagathe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 17:16:47 by aagathe           #+#    #+#             */
-/*   Updated: 2023/10/06 01:36:28 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/06 20:17:50 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,23 +34,23 @@ int	open_pipe(int pfd[4], int nb_cmds, t_cmd *next)
 	return (0);
 }
 
-void	close_pfd(int nb_cmds, int pfd[4], t_cmd *cmds)
+void	close_pfd(t_cmd *cmds, int pfd[4])
 {
-	if (!pfd)
+	if (cmds->nb_cmd == 1 && !cmds->next)
 		return ;
 	if (!cmds->next)
 	{
-		if (nb_cmds > 1)
+		if (cmds->nb_cmd > 1)
 		{
-			close(pfd[nb_cmds % 2 * 2]);
-			close(pfd[nb_cmds % 2 * 2 + 1]);
+			close(pfd[cmds->nb_cmd % 2 * 2]);
+			close(pfd[cmds->nb_cmd % 2 * 2 + 1]);
 		}
 	}
 	else
 	{
 		close(pfd[0]);
 		close(pfd[1]);
-		if (nb_cmds > 1)
+		if (cmds->nb_cmd > 1)
 		{
 			close(pfd[2]);
 			close(pfd[3]);
@@ -58,11 +58,11 @@ void	close_pfd(int nb_cmds, int pfd[4], t_cmd *cmds)
 	}
 }
 
-void	close_files(t_cmd *cmds, int pfd[4], int nb_cmds)
+void	close_files(t_cmd *cmds, int pfd[4])
 {
 	t_redr	*redr;
 
-	close_pfd(nb_cmds, pfd, cmds);
+	close_pfd(cmds, pfd);
 	redr = cmds->redr;
 	while (redr)
 	{
@@ -92,7 +92,7 @@ void	unswitch_files(t_cmd *cmds, int action)
 	}
 }
 
-void	switch_files(t_cmd *cmds, int id_cmd, int pfd[4])
+void	switch_files(t_cmd *cmds, int pfd[4])
 {
 	t_redr	*redr;
 	int		redr_in;
@@ -111,13 +111,13 @@ void	switch_files(t_cmd *cmds, int id_cmd, int pfd[4])
 	}
 	if (redr_in)
 		dup2(redr_in, 0);
-	else if (id_cmd > 1 && id_cmd % 2)
+	else if (cmds->nb_cmd > 1 && cmds->nb_cmd % 2)
 		dup2(pfd[2], 0);
-	else if (id_cmd > 1)
+	else if (cmds->nb_cmd > 1)
 		dup2(pfd[0], 0);
 	if (redr_out)
 		dup2(redr_out, 1);
-	else if (cmds->next && id_cmd % 2)
+	else if (cmds->next && cmds->nb_cmd % 2)
 		dup2(pfd[1], 1);
 	else if (cmds->next)
 		dup2(pfd[3], 1);

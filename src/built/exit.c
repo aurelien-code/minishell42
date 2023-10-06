@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 19:32:19 by aagathe           #+#    #+#             */
-/*   Updated: 2023/10/04 10:20:00 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/06 19:59:28 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,32 +55,29 @@ void	print_exit_msg(t_cmd *cmds)
 	ft_putendl_fd(": numeric argument required", 2);
 }
 
-void	free_before_exit(char **cpy_env, t_cmd *cmds, int fork, int exit_code)
+void	free_before_exit(char **cpy_env, t_cmd *cmds, int pfd[4], int exit_code)
 {
-	if (!fork)
-	{
+		write(2, "exit\n", 5);
+		close_files(cmds, pfd);
 		ft_free_cpy_env(cpy_env);
 		close(cmds->old_stdin);
 		close(cmds->old_stdout);
 		free_commands(cmds);
 		exit(exit_code);
-	}
 }
 
-int	ft_exit(t_cmd *cmds, char **cpy_env, int fork)
+int	ft_exit(t_cmd *cmds, char **cpy_env, int fork, int pfd[4])
 {
 	int	exit_code;
 
 	exit_code = g_exit_code;
-	if (!fork)
-		write(2, "exit\n", 5);
 	if (cmds->cmd[1])
 	{
 		if (check_num(cmds->cmd[1]))
 		{
 			if (cmds->cmd[2])
 			{
-				ft_putendl_fd("minishell: exit: too many arguments", 2);
+				ft_putstr_fd("minishell: exit: too many arguments\n", 2);
 				return (1);
 			}
 			else
@@ -92,6 +89,7 @@ int	ft_exit(t_cmd *cmds, char **cpy_env, int fork)
 			exit_code = 2;
 		}
 	}
-	free_before_exit(cpy_env, cmds, fork, exit_code);
+	if (!fork)
+		free_before_exit(cpy_env, cmds, pfd, exit_code);
 	return (exit_code);
 }

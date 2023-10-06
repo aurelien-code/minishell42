@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 17:08:43 by aagathe           #+#    #+#             */
-/*   Updated: 2023/10/06 01:40:15 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/06 20:17:45 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,17 @@ int	check_status(t_cmd *cmds)
 int	executer(t_cmd *cmds, char **env[])
 {
 	int		pfd[4];
-	int		nb_cmds;
 	t_cmd	*cmds_cpy;
+	int		nb_cmd;
 
 	cmds_cpy = cmds;
 	if ((cmds->is_builtin || !cmds->cmd) && !cmds->next)
 		return (launch_builtin_solo(cmds, env));
-	nb_cmds = 0;
-	while (cmds_cpy && ++nb_cmds)
+	nb_cmd = 0;
+	while (cmds_cpy && ++nb_cmd)
 	{
-		if (open_pipe(pfd, nb_cmds, cmds_cpy->next))
+		cmds_cpy->nb_cmd = nb_cmd;
+		if (open_pipe(pfd, cmds_cpy->nb_cmd, cmds_cpy->next))
 			return (129);
 		cmds_cpy->pid = try_fork();
 		if (cmds_cpy->pid < 0)
@@ -61,9 +62,10 @@ int	executer(t_cmd *cmds, char **env[])
 		if (cmds_cpy->pid == 0)
 			sig_setup(2);
 		if (cmds_cpy->pid == 0)
-			launch_cmd(cmds, nb_cmds, pfd, env);
+			launch_cmd(cmds_cpy, pfd, env, cmds);
+		if (!cmds_cpy->next)
+			close_pfd(cmds_cpy, pfd);
 		cmds_cpy = cmds_cpy->next;
 	}
-	close_pfd(nb_cmds, pfd, go_to_cmds(cmds, nb_cmds));
 	return (check_status(cmds));
 }
