@@ -1,2 +1,0 @@
-abc\n
-abc\n
