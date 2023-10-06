@@ -1,3 +1,0 @@
--rw-r--r-- 1 aumarin 2021_paris     0 Oct  6 19:25 output2.txt
--rw-r----- 1 aumarin 2021_paris   121 Oct  6 19:25 output.txt
--rw-r--r-- 1 aumarin 2021_paris    58 Oct  4 12:21 tmp.txt
