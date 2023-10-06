@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 22:47:43 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/04 11:09:27 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/06 20:12:34 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_strndup(const char *s1, size_t n)
 
 	len = ft_strlen(s1);
 	str = malloc(sizeof(char) * (len + 1));
-	if (str == NULL)
+	if (!str)
 		return (NULL);
 	i = 0;
 	while (i < len && i < n)

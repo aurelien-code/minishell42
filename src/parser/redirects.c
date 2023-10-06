@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 10:17:04 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/05 23:55:18 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/06 20:13:51 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ t_tokens	*handle_redirection(t_cmd *cmd, t_tokens *tokens)
 	t_redr	*redirection;
 
 	redirection = ft_calloc(1, sizeof(t_redr));
+	if (!redirection)
+		return (NULL);
 	redirection->type = tokens->type;
 	redirection->fd = -1;
 	redirection->pfd[0] = -1;

@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 12:00:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/06 19:35:44 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/06 20:13:35 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	add_to_cmd(t_cmd *cmd, char *value)
 	while (cmd->cmd && cmd->cmd[i])
 		i++;
 	new_cmd = ft_calloc(i + 2, sizeof(char *));
+	if (!new_cmd)
+		return ;
 	j = 0;
 	while (j < i)
 	{
@@ -44,6 +46,8 @@ t_cmd	*init_or_get_cmd(t_cmd **head_cmds, t_cmd *current_cmd)
 	if (!current_cmd)
 	{
 		current_cmd = ft_calloc(1, sizeof(t_cmd));
+		if (!current_cmd)
+			return (NULL);
 		current_cmd->pid = -1;
 		if (!(*head_cmds))
 			*head_cmds = current_cmd;
