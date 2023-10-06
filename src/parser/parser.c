@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 12:00:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/06 19:13:01 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/06 19:33:54 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ t_tokens	*handle_tok(t_cmd **current, t_cmd **head, t_tokens *tok, int *i)
 	*current = init_or_get_cmd(head, *current);
 	if (tok->type == TOKEN)
 	{
-		(*current)->nb_cmd = (*i)++ / 2 + 1;
 		add_to_cmd(*current, tok->value);
 		if (!(*current)->cmd[1] && tok->value)
 			(*current)->is_builtin = is_builtin(tok);
@@ -98,9 +97,7 @@ t_cmd	*parser(t_tokens *tokens)
 {
 	t_cmd	*head_cmds;
 	t_cmd	*current_cmd;
-	int		i;
 
-	i = 0;
 	head_cmds = NULL;
 	current_cmd = NULL;
 	while (tokens)
