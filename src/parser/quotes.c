@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 17:08:01 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/06 15:40:32 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/06 17:41:41 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ t_tokens	*get_quote_token(t_lexer *lex, int *i)
 	{
 		if (lex[j].type != QUOTE && lex[j].type == NORMAL)
 			handle_basic(lex, &j, *i, &str);
-		else if (lex[j].type == QUOTE && lex[j + 1].value == ' ')
+		else if (lex[j].type == QUOTE && (lex[j + 1].value == ' ' \
+			|| lex[j + 1].value == '\t'))
 		{
 			j++;
 			break ;
