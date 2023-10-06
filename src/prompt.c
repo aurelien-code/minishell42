@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 18:03:43 by aumarin           #+#    #+#             */
-/*   Updated: 2023/04/26 17:20:52 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/05 23:33:49 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ char	*ft_prompt(void)
 	line = readline(PROMPT_NAME);
 	if (!line)
 		return (NULL);
-	add_history(line);
+	if (*line != '\0')
+		add_history(line);
 	return (line);
 }

@@ -6,7 +6,7 @@
 /*   By: aagathe <aagathe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 17:19:09 by aagathe           #+#    #+#             */
-/*   Updated: 2023/10/03 04:02:10 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/06 00:59:48 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	entry_error(const char *filename)
 
 void	write_entry(t_cmd *cmds)
 {
-	const int	name_size = ft_strlen(cmds->redr_in->filename);
+	const int	name_size = ft_strlen(cmds->redr->filename);
 	char		*buffer;
 	int			pfd[2];
 
@@ -43,14 +43,14 @@ void	write_entry(t_cmd *cmds)
 		perror(TEMP_FILE_ERR);
 		return ;
 	}
-	cmds->redr_in->pfd[0] = pfd[0];
-	cmds->redr_in->pfd[1] = pfd[1];
-	cmds->redr_in->fd = pfd[0];
+	cmds->redr->pfd[0] = pfd[0];
+	cmds->redr->pfd[1] = pfd[1];
+	cmds->redr->fd = pfd[0];
 	buffer = NULL;
 	buffer = readline("> ");
 	while (buffer)
 	{
-		if (!ft_strncmp(buffer, cmds->redr_in->filename, name_size + 1))
+		if (!ft_strncmp(buffer, cmds->redr->filename, name_size + 1))
 			break ;
 		write(pfd[1], buffer, ft_strlen(buffer));
 		write(pfd[1], "\n", 1);
@@ -58,73 +58,47 @@ void	write_entry(t_cmd *cmds)
 		buffer = readline("> ");
 	}
 	if (!buffer)
-		entry_error(cmds->redr_in->filename);
+		entry_error(cmds->redr->filename);
 }
 
-int	open_redr_in(t_cmd *cmds)
+int	open_redr(t_redr *redr)
 {
-	int		ret;
-	t_redr	*redr_in;
 	char	*error;
 
-	ret = 0;
-	redr_in = cmds->redr_in;
-	while (cmds->redr_in)
+	if (redr->type == S_REDIR_R)
+		redr->fd = open(redr->filename, O_CREAT | O_TRUNC | O_WRONLY, 0660);
+	else if (redr->type == D_REDIR_R)
+		redr->fd = open(redr->filename, O_CREAT | O_WRONLY | O_APPEND, 0660);
+	else
+		redr->fd = open(redr->filename, O_RDONLY);
+	if (redr->fd < 0)
 	{
-		if (cmds->redr_in->type == S_REDIR_L)
-			cmds->redr_in->fd = open(cmds->redr_in->filename, O_RDONLY);
-		else
+		error = ft_strjoin("minishell: ", redr->filename);
+		perror(error);
+		free(error);
+		return (1);
+	}
+	return (0);
+}
+
+int	open_files(t_cmd *cmds, int pfd[4], int nb_cmds)
+{
+	t_redr	*redr;
+
+	redr = cmds->redr;
+	while (redr)
+	{
+		if (redr->type == D_REDIR_L)
 			write_entry(cmds);
-		if (cmds->redr_in->fd < 0 && cmds->redr_in->type == 4 && ++ret)
-		{
-			error = ft_strjoin("minishell: ", cmds->redr_in->filename);
-			perror(error);
-			free(error);
-		}
-		cmds->redr_in = cmds->redr_in->next;
+		redr = redr->next;
 	}
-	cmds->redr_in = redr_in;
-	return (ret);
-}
-
-int	open_redr_out(t_cmd *cmds)
-{
-	int		ret;
-	t_redr	*redr_out;
-	char	*error;
-
-	ret = 0;
-	redr_out = cmds->redr_out;
-	while (cmds->redr_out)
+	redr = cmds->redr;
+	while (redr)
 	{
-		if (cmds->redr_out->type == S_REDIR_R)
-			cmds->redr_out->fd = open(cmds->redr_out->filename,
-					O_CREAT | O_TRUNC | O_WRONLY, 0660);
-		else
-			cmds->redr_out->fd = open(cmds->redr_out->filename,
-					O_CREAT | O_WRONLY | O_APPEND, 0660);
-		if (cmds->redr_out->fd < 0 && ++ret)
-		{
-			error = ft_strjoin("minishell: ", cmds->redr_out->filename);
-			perror(error);
-			free(error);
-		}
-		cmds->redr_out = cmds->redr_out->next;
+		if (redr->type == 3 || redr->type == 4 || redr->type == 5)
+			if (open_redr(redr))
+				return (close_files(cmds, pfd, nb_cmds), 1);
+		redr = redr->next;
 	}
-	cmds->redr_out = redr_out;
-	return (ret);
-}
-
-int	open_files(t_cmd *cmds)
-{
-	int		ret;
-
-	ret = 0;
-	while (cmds)
-	{
-		ret += open_redr_in(cmds);
-		ret += open_redr_out(cmds);
-		cmds = cmds->next;
-	}
-	return (ret);
+	return (0);
 }

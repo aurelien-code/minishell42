@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:31:43 by ypages            #+#    #+#             */
-/*   Updated: 2023/10/05 05:46:39 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/06 01:35:03 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,13 @@ void		launch_cmd(t_cmd *cmds, int nb_cmds, int pfd[4], char ***env);
 
 /* manage_files */
 int			open_pipe(int pfd[4], int nb_cmds, t_cmd *next);
+void		close_pfd(int nb_cmds, int pfd[4], t_cmd *cmds);
 void		close_files(t_cmd *cmds, int pfd[4], int nb_cmds);
 void		unswitch_files(t_cmd *cmds, int action);
 void		switch_files(t_cmd *cmds, int id_cmd, int pfd[4]);
 
 /* open_files.c */
-int			open_files(t_cmd *cmds);
+int			open_files(t_cmd *cmds, int pfd[4], int nb_cmds);
 
 /* pipe_utils.c */
 t_cmd		*go_to_cmds(t_cmd *cmds, int nb_cmds);

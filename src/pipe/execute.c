@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 17:08:43 by aagathe           #+#    #+#             */
-/*   Updated: 2023/10/04 13:35:39 by aagathe          ###   ########.fr       */
+/*   Updated: 2023/10/06 01:40:15 by aagathe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,8 @@ int	executer(t_cmd *cmds, char **env[])
 	int		nb_cmds;
 	t_cmd	*cmds_cpy;
 
-	if (open_files(cmds))
-		return (close_files(cmds, NULL, 1), 1);
 	cmds_cpy = cmds;
-	if (cmds->is_builtin && !cmds->next)
+	if ((cmds->is_builtin || !cmds->cmd) && !cmds->next)
 		return (launch_builtin_solo(cmds, env));
 	nb_cmds = 0;
 	while (cmds_cpy && ++nb_cmds)
@@ -66,6 +64,6 @@ int	executer(t_cmd *cmds, char **env[])
 			launch_cmd(cmds, nb_cmds, pfd, env);
 		cmds_cpy = cmds_cpy->next;
 	}
-	close_files(cmds, pfd, nb_cmds);
+	close_pfd(nb_cmds, pfd, go_to_cmds(cmds, nb_cmds));
 	return (check_status(cmds));
 }
