@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 17:08:01 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/06 11:44:23 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/06 12:50:27 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,21 @@ t_tokens	*get_quote_token(t_lexer *lexer_arr, int *i)
 		if (lexer_arr[j].type != QUOTE && lexer_arr[j].type == NORMAL)
 		{
 			k = j;
-			while (lexer_arr[j].value && lexer_arr[j].value != lexer_arr[*i].value && \
-				lexer_arr[j].value != ' ' && lexer_arr[j].value != '\t' && lexer_arr[j].type == NORMAL)
+			while (lexer_arr[j].value && lexer_arr[j].value != lexer_arr[*i].value)
+			{
 				j++;
+				if (lexer_arr[j].value == lexer_arr[*i].value || lexer_arr[j].type != NORMAL)
+					break;
+			}	
 			tmp = substr_lexer(lexer_arr, k - 1, j);
 			if (!str && tmp && ft_strlen(tmp) > 0)
 				str = tmp;
-			else if (ft_strlen(tmp) == 0)
+			else if (ft_strlen(tmp) == 0 && lexer_arr[j].value == ' ')
+			{
+				str = ft_strjoin(str, " ");
+				j++;
+			}
+			else if (ft_strlen(tmp) == 0 && lexer_arr[j].value != ' ')
 				break ;
 			else
 				str = ft_strjoin(str, tmp);
