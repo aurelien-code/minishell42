@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:51:15 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/06 13:48:20 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/06 15:34:29 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ t_lexer	*lexer(char *prompt_line)
 	char	quote_type;
 
 	i = 0;
+	if (!prompt_line)
+		return (NULL);
 	lexer = ft_calloc(ft_strlen(prompt_line) + 2, sizeof(t_lexer));
 	if (!lexer)
 		return (NULL);

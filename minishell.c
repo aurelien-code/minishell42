@@ -6,7 +6,7 @@
 /*   By: aumarin <aumarin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 12:30:11 by aumarin           #+#    #+#             */
-/*   Updated: 2023/10/06 14:27:29 by aumarin          ###   ########.fr       */
+/*   Updated: 2023/10/06 15:30:50 by aumarin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ void	lexer_and_parse(char *prompt_line, t_lexer **lexer_line,
 	char	*line_after_expand;
 
 	line_after_expand = expand_prompt_line(prompt_line, cpy_env);
-	if (!line_after_expand)
-		return ;
 	*lexer_line = lexer(line_after_expand);
 	if (!*lexer_line)
 		return ;
@@ -94,7 +92,7 @@ int	main(int argc, char **argv, char **envp)
 			lexer_and_parse(prompt_line, &lexer_line, &tokens, cpy_env);
 			if (lexer_line && tokens)
 				execute_commands(tokens, lexer_line, &cpy_env);
-			else if (!tokens)
+			else if (!tokens && lexer_line)
 				free(lexer_line);
 		}
 		prompt_line = ft_prompt();
